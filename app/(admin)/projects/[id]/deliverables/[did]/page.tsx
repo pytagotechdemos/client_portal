@@ -4,6 +4,7 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { uploadFile } from "@/lib/storage";
+import { sendEmail } from "@/lib/email";
 
 export default async function DeliverableDetailPage({
   params,
@@ -61,6 +62,25 @@ export default async function DeliverableDetailPage({
         status: "REVIEW",
       },
     });
+
+    const clientAccess = await prisma.clientAccess.findFirst({
+      where: { projectId: deliverable!.projectId }
+    });
+    
+    if (clientAccess) {
+      const portalUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/portal/${deliverable!.projectId}`;
+      await sendEmail({
+        to: clientAccess.email,
+        subject: `New Version Uploaded: ${deliverable!.name}`,
+        html: `
+          <h2>A new version is ready for your review!</h2>
+          <p>Project: ${deliverable!.project.name}</p>
+          <p>Deliverable: ${deliverable!.name}</p>
+          <br/>
+          <a href="${portalUrl}" style="padding: 10px 20px; background-color: #0F172A; color: white; text-decoration: none; border-radius: 5px;">Review Deliverable</a>
+        `
+      });
+    }
 
     revalidatePath(`/projects/${deliverable!.projectId}/deliverables/${deliverable!.id}`);
   }

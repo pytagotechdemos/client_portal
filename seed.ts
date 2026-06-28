@@ -1,16 +1,21 @@
 import { prisma } from './lib/prisma';
 
+import bcrypt from "bcryptjs";
+
 async function main() {
+  const hashedPassword = await bcrypt.hash('admin123', 10);
   const admin = await prisma.agencyUser.upsert({
     where: { email: 'admin@studiovolta.com' },
-    update: {},
+    update: {
+      passwordHash: hashedPassword,
+    },
     create: {
       name: 'Admin Volta',
       email: 'admin@studiovolta.com',
-      passwordHash: 'admin123',
+      passwordHash: hashedPassword,
     },
   });
-  console.log('Admin user created:', admin);
+  console.log('Admin user created/updated:', admin);
 }
 
 main()

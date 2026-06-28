@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import bcrypt from "bcryptjs";
+import { sendEmail } from "@/lib/email";
 
 export async function createProject(formData: FormData) {
   const name = formData.get("name") as string;
@@ -34,14 +36,35 @@ export async function createProject(formData: FormData) {
     },
   });
 
+  const hashedPassword = await bcrypt.hash(clientPassword, 10);
+
   // 3. Create ClientAccess for the portal
   await prisma.clientAccess.create({
     data: {
       clientId: client.id,
       projectId: project.id,
       email: contactEmail,
-      passwordHash: clientPassword, // In a real app, hash this with bcrypt!
+      passwordHash: hashedPassword,
     },
+  });
+
+  // 4. Send Welcome Email
+  const portalUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/portal/${project.id}`;
+  
+  await sendEmail({
+    to: contactEmail,
+    subject: `Welcome to Studio Volta - Your Project Portal`,
+    html: `
+      <h1>Welcome ${contactName}!</h1>
+      <p>Your project <strong>${name}</strong> has been created.</p>
+      <p>You can track progress, review deliverables, and access files through your dedicated Client Portal:</p>
+      <br/>
+      <a href="${portalUrl}" style="padding: 10px 20px; background-color: #0F172A; color: white; text-decoration: none; border-radius: 5px;">Access Portal</a>
+      <br/><br/>
+      <p><strong>Login Details:</strong></p>
+      <p>Email: ${contactEmail}</p>
+      <p>Password: ${clientPassword}</p>
+    `
   });
 
   redirect(`/projects/${project.id}`);

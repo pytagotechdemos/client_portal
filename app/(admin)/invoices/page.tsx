@@ -27,7 +27,11 @@ export default async function InvoicesPage() {
         <div className="divide-y divide-[#3F3F46]">
           {invoices.map(invoice => (
             <div key={invoice.id} className="p-4 flex gap-4 items-center hover:bg-[#27272A] transition-colors">
-              <div className="w-32 text-sm text-[#06B6D4]">#{invoice.id.substring(0,8).toUpperCase()}</div>
+              <div className="w-32 text-sm text-[#06B6D4]">
+                <Link href={`/invoices/${invoice.id}`} className="hover:underline">
+                  #{invoice.id.substring(0,8).toUpperCase()}
+                </Link>
+              </div>
               <div className="flex-1">
                 <Link href={`/projects/${invoice.projectId}`} className="font-medium text-white hover:text-[#8B5CF6]">
                   {invoice.project.name}

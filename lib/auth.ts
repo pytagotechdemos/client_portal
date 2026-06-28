@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 import { prisma } from "./prisma";
 
 export const authOptions: NextAuthOptions = {
@@ -26,7 +27,8 @@ export const authOptions: NextAuthOptions = {
           // Here you'd normally compare hashed passwords using bcrypt
           // For MVP demo, simple string match if not hashed, or assume valid if exists
           // IMPORTANT: Replace with actual hash comparison in production
-          if (adminUser.passwordHash === credentials.password) {
+          const isValid = await bcrypt.compare(credentials.password, adminUser.passwordHash);
+          if (isValid) {
             return {
               id: adminUser.id,
               email: adminUser.email,
@@ -49,7 +51,8 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (clientAccess) {
-          if (clientAccess.passwordHash === credentials.password) {
+          const isValid = await bcrypt.compare(credentials.password, clientAccess.passwordHash);
+          if (isValid) {
             return {
               id: clientAccess.id,
               email: clientAccess.email,
