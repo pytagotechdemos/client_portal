@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AgencyClient {
+  id            String         @id @default(cuid())
+  name          String
+  contactName   String
+  contactEmail  String
+  phone         String?
+  companyName   String?
+  projects      Project[]
+  accesses      ClientAccess[]
+  createdAt     DateTime       @default(now())
+}
+
+model Project {
+  id             String          @id @default(cuid())
+  clientId       String
+  client         AgencyClient    @relation(fields: [clientId], references: [id])
+  name           String
+  description    String?
+  startDate      DateTime
+  deadline       DateTime?
+  status         ProjectStatus   @default(ACTIVE)
+  scopeDocUrl    String?
+  portalToken    String          @unique @default(cuid())
+  deliverables   Deliverable[]
+  briefs         Brief[]
+  changeRequests ChangeRequest[]
+  invoices       Invoice[]
+  access         ClientAccess?
+  createdAt      DateTime        @default(now())
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+model Deliverable {
+  id             String               @id @default(cuid())
+  projectId      String
+  project        Project              @relation(fields: [projectId], references: [id])
+  name           String
+  description    String?
+  type           DeliverableType
+  deadline       DateTime?
+  assignedTo     String?
+  status         DeliverableStatus    @default(NOT_STARTED)
+  currentVersion Int                  @default(0)
+  versions       DeliverableVersion[]
+  createdAt      DateTime             @default(now())
+}
+
+enum DeliverableType {
+  DOCUMENT
+  DESIGN
+  VIDEO
+  COPY
+  OTHER
+}
+
+enum DeliverableStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  REVIEW
+  APPROVED
+  REVISION_REQUESTED
+}
+
+model DeliverableVersion {
+  id               String       @id @default(cuid())
+  deliverableId    String
+  deliverable      Deliverable  @relation(fields: [deliverableId], references: [id])
+  version          Int
+  fileUrl          String?
+  linkUrl          String?
+  pmNotes          String?
+  uploadedBy       String
+  uploadedAt       DateTime     @default(now())
+  clientFeedback   String?
+  clientFeedbackAt DateTime?
+  clientAction     ClientAction?
+}
+
+enum ClientAction {
+  APPROVED
+  REVISION_REQUESTED
+}
+
+model Brief {
+  id            String   @id @default(cuid())
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id])
+  deliverableId String?
+  title         String
+  category      String
+  fileUrl       String
+  uploadedBy    String
+  uploadedAt    DateTime @default(now())
+}
+
+model ChangeRequest {
+  id           String    @id @default(cuid())
+  projectId    String
+  project      Project   @relation(fields: [projectId], references: [id])
+  requestedBy  String
+  description  String
+  status       CRStatus  @default(PENDING)
+  responseNote String?
+  respondedAt  DateTime?
+  respondedBy  String?
+  createdAt    DateTime  @default(now())
+}
+
+enum CRStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  DISCUSSED
+}
+
+model ClientAccess {
+  id           String       @id @default(cuid())
+  clientId     String
+  client       AgencyClient @relation(fields: [clientId], references: [id])
+  projectId    String       @unique
+  project      Project      @relation(fields: [projectId], references: [id])
+  email        String
+  passwordHash String
+  lastLoginAt  DateTime?
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  projectId     String
+  project       Project       @relation(fields: [projectId], references: [id])
+  issueDate     DateTime
+  dueDate       DateTime
+  items         Json
+  totalAmount   Decimal
+  notes         String?
+  status        InvoiceStatus @default(DRAFT)
+  pdfUrl        String?
+  sentAt        DateTime?
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+}
+
+model AgencyUser {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+}
