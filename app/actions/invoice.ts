@@ -44,3 +44,11 @@ export async function createInvoice(formData: FormData) {
 
   revalidatePath(`/projects/${projectId}`);
 }
+
+export async function deleteInvoice(id: string) {
+  const invoice = await prisma.invoice.findUnique({ where: { id } });
+  if (invoice) {
+    await prisma.invoice.delete({ where: { id } });
+    revalidatePath(`/projects/${invoice.projectId}`);
+  }
+}

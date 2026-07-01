@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { Plus, Edit } from "lucide-react";
+import { DeleteClientButton } from "@/components/admin/DeleteClientButton";
 
 export default async function ClientsPage() {
   const clients = await prisma.agencyClient.findMany({
@@ -13,6 +15,9 @@ export default async function ClientsPage() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold text-white">Clients</h2>
+        <Link href="/clients/new" className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+          <Plus className="w-4 h-4" /> Add New Client
+        </Link>
       </div>
 
       <div className="bg-surface border border-border rounded-lg overflow-hidden">
@@ -20,6 +25,7 @@ export default async function ClientsPage() {
           <div className="flex-1 font-semibold text-white">Client Name</div>
           <div className="w-64 font-semibold text-white">Contact Person</div>
           <div className="w-32 font-semibold text-white text-right">Projects</div>
+          <div className="w-24 font-semibold text-white text-right">Actions</div>
         </div>
         <div className="divide-y divide-[#3F3F46]">
           {clients.map(client => (
@@ -33,6 +39,12 @@ export default async function ClientsPage() {
               </div>
               <div className="w-32 text-right text-white">
                 {client.projects.length}
+              </div>
+              <div className="w-24 flex justify-end gap-2">
+                <Link href={`/clients/${client.id}/edit`} className="p-2 text-muted hover:text-white hover:bg-surface-light rounded-md transition-colors" title="Edit Client">
+                  <Edit className="w-4 h-4" />
+                </Link>
+                <DeleteClientButton id={client.id} clientName={client.name} />
               </div>
             </div>
           ))}

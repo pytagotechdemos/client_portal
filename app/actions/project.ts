@@ -113,3 +113,9 @@ export async function createProject(formData: FormData) {
     redirect(`/projects/${newProjectId}`);
   }
 }
+
+export async function deleteProject(id: string) {
+  await prisma.project.delete({ where: { id } });
+  revalidatePath("/projects");
+  redirect("/projects");
+}

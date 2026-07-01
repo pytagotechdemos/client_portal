@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PrintButton } from "@/components/client/PrintButton";
+import { DuitkuPaymentButton } from "@/components/client/DuitkuPaymentButton";
 
 export default async function ClientInvoicePage({
   params,
@@ -31,7 +32,12 @@ export default async function ClientInvoicePage({
         >
           &larr; Back to Portal
         </Link>
-        <PrintButton />
+        <div className="flex items-center gap-3">
+          <PrintButton />
+          {invoice.status !== "PAID" && (
+            <DuitkuPaymentButton invoiceId={invoice.id} projectId={project.id} />
+          )}
+        </div>
       </div>
 
       {/* Invoice Paper */}
@@ -80,22 +86,24 @@ export default async function ClientInvoicePage({
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b border-[#E2E8F0]">
-              <td className="py-4 text-foreground">{invoice.title}</td>
-              <td className="py-4 text-right font-medium text-foreground">${invoice.amount.toFixed(2)}</td>
-            </tr>
+            {(invoice.items as { name: string, price: number }[]).map((item, idx) => (
+              <tr key={idx} className="border-b border-[#E2E8F0]">
+                <td className="py-4 text-foreground">{item.name}</td>
+                <td className="py-4 text-right font-medium text-foreground">${Number(item.price).toFixed(2)}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
         <div className="flex justify-end mb-12">
           <div className="w-64">
             <div className="flex justify-between items-center py-2 border-b border-[#E2E8F0]">
-              <span className="font-medium text-[#64748B]">Subtotal</span>
-              <span className="font-medium text-foreground">${invoice.amount.toFixed(2)}</span>
+               <span className="font-medium text-[#64748B]">Subtotal</span>
+               <span className="font-medium text-foreground">${Number(invoice.totalAmount).toFixed(2)}</span>
             </div>
             <div className="flex justify-between items-center py-4 border-b-2 border-foreground">
-              <span className="font-bold text-foreground text-lg">Total Due</span>
-              <span className="font-bold text-foreground text-xl">${invoice.amount.toFixed(2)}</span>
+               <span className="font-bold text-foreground text-lg">Total Due</span>
+               <span className="font-bold text-foreground text-xl">${Number(invoice.totalAmount).toFixed(2)}</span>
             </div>
           </div>
         </div>

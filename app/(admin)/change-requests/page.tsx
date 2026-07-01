@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 
 export default async function ChangeRequestsPage() {

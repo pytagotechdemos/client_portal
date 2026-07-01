@@ -10,12 +10,12 @@ export async function uploadFile(
   file: File,
   bucket: string,
   path: string
-): Promise<{ url: string; error: any }> {
+): Promise<{ url: string; error: unknown }> {
   try {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from(bucket)
       .upload(path, buffer, {
         contentType: file.type,

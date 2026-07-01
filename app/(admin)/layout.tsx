@@ -17,7 +17,7 @@ export default function AdminLayout({
         <aside className="w-64 bg-surface border-r border-border min-h-screen p-6">
           <h1 className="text-xl font-bold text-white mb-8">Pytagotech</h1>
           <nav className="flex flex-col space-y-2">
-            <Link href="/" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Dashboard</Link>
+            <Link href="/dashboard" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Dashboard</Link>
             <Link href="/projects" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Projects</Link>
             <Link href="/clients" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Clients</Link>
             <Link href="/briefs" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Brief Repository</Link>
@@ -25,6 +25,10 @@ export default function AdminLayout({
               Change Requests
             </Link>
             <Link href="/invoices" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Invoices</Link>
+            
+            <div className="pt-4 mt-4 border-t border-border">
+              <Link href="/settings" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors block">Settings</Link>
+            </div>
           </nav>
         </aside>
         

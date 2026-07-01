@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { StatusBadge } from "@/components/shared/StatusBadge";
-import { formatDistanceToNow } from "date-fns";
 
 export default async function ProjectsPage() {
   const projects = await prisma.project.findMany({

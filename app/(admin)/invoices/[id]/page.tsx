@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { StatusBadge } from "@/components/shared/StatusBadge";
 
 export default async function InvoiceDetailPage({
   params,

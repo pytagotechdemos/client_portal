@@ -179,3 +179,13 @@ enum InvoiceStatus {
   PAID
   OVERDUE
 }
+
+model AgencySettings {
+  id                 String   @id @default(cuid())
+  agencyName         String   @default("Pytagotech")
+  contactEmail       String   @default("hello@pytagotech.com")
+  duitkuMerchantCode String?
+  duitkuApiKey       String?
+  duitkuEnv          String   @default("sandbox") // "sandbox" or "production"
+  updatedAt          DateTime @updatedAt
+}

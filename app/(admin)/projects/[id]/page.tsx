@@ -4,6 +4,9 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { updateChangeRequestStatus } from "@/app/actions/changeRequest";
+import { DeleteProjectButton } from "@/components/admin/DeleteProjectButton";
+import { DeleteDeliverableButton } from "@/components/admin/DeleteDeliverableButton";
+import { DeleteInvoiceButton } from "@/components/admin/DeleteInvoiceButton";
 
 export default async function ProjectDetailPage({ params, searchParams }: { params: { id: string }, searchParams: { tab?: string } }) {
   const project = await prisma.project.findUnique({
@@ -30,7 +33,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
   async function addDeliverable(formData: FormData) {
     "use server";
     const name = formData.get("name") as string;
-    const type = formData.get("type") as any; // DeliverableType
+    const type = formData.get("type") as "DESIGN" | "DOCUMENT" | "VIDEO" | "COPY" | "OTHER"; // DeliverableType
     
     await prisma.deliverable.create({
       data: {
@@ -62,6 +65,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
           <Link href={`/projects/${project.id}/invoices/new`} className="bg-[#10B981] hover:bg-[#059669] text-white px-4 py-2 rounded-md transition-colors">
             Generate Invoice
           </Link>
+          <DeleteProjectButton id={project.id} projectName={project.name} />
         </div>
       </div>
 
@@ -99,7 +103,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                               <p className="text-xs text-muted mt-1">{del.type} • v{del.currentVersion}</p>
                             </div>
                           </div>
-                          <div className="text-sm text-[#06B6D4]">View &rarr;</div>
+                          <div className="flex items-center gap-4">
+                            <div className="text-sm text-[#06B6D4]">View &rarr;</div>
+                            <div className="z-10 relative">
+                              <DeleteDeliverableButton id={del.id} />
+                            </div>
+                          </div>
                         </div>
                       </Link>
                     ))}
@@ -231,8 +240,9 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                         </div>
                         <p className="text-xs text-muted mt-1">Issued: {new Date(inv.issueDate).toLocaleDateString()} • Due: {new Date(inv.dueDate).toLocaleDateString()}</p>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right flex items-center gap-4">
                         <p className="text-lg font-bold text-[#10B981]">${Number(inv.totalAmount).toLocaleString()}</p>
+                        <DeleteInvoiceButton id={inv.id} />
                       </div>
                     </div>
                   ))}
