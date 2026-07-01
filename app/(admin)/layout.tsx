@@ -3,6 +3,8 @@ import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const dynamic = 'force-dynamic';
+
 export default function AdminLayout({
   children,
 }: {
