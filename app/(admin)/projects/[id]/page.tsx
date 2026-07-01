@@ -7,8 +7,14 @@ import { updateChangeRequestStatus } from "@/app/actions/changeRequest";
 import { DeleteProjectButton } from "@/components/admin/DeleteProjectButton";
 import { DeleteDeliverableButton } from "@/components/admin/DeleteDeliverableButton";
 import { DeleteInvoiceButton } from "@/components/admin/DeleteInvoiceButton";
+import { CommentSection } from "@/components/shared/CommentSection";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 export default async function ProjectDetailPage({ params, searchParams }: { params: { id: string }, searchParams: { tab?: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) notFound();
+
   const project = await prisma.project.findUnique({
     where: { id: params.id },
     include: {
@@ -24,6 +30,9 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
       },
       invoices: {
         orderBy: { createdAt: "desc" }
+      },
+      comments: {
+        orderBy: { createdAt: "asc" }
       }
     },
   });
@@ -78,7 +87,20 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
             <Link href={`/projects/${project.id}?tab=briefs`} className={`px-4 py-2 ${currentTab === "briefs" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Briefs</Link>
             <Link href={`/projects/${project.id}?tab=changes`} className={`px-4 py-2 ${currentTab === "changes" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Change Requests</Link>
             <Link href={`/projects/${project.id}?tab=invoices`} className={`px-4 py-2 ${currentTab === "invoices" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Invoices</Link>
+            <Link href={`/projects/${project.id}?tab=discussion`} className={`px-4 py-2 ${currentTab === "discussion" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Discussion</Link>
           </div>
+
+          {currentTab === "discussion" && (
+            <div className="bg-surface border border-border rounded-lg p-6">
+              <h3 className="font-semibold text-white mb-6">Project Discussion</h3>
+              <CommentSection 
+                projectId={project.id} 
+                comments={project.comments} 
+                currentUser={{ name: session.user.name || "Admin", role: "ADMIN" }} 
+                theme="dark"
+              />
+            </div>
+          )}
 
           {currentTab === "deliverables" && (
             <>

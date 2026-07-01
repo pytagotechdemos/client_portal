@@ -4,6 +4,7 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { createBrief } from "@/app/actions/brief";
 import { createChangeRequest } from "@/app/actions/changeRequest";
+import { CommentSection } from "@/components/shared/CommentSection";
 
 export default async function ClientPortalDashboard({ params, searchParams }: { params: { projectToken: string }, searchParams: { tab?: string } }) {
   const project = await prisma.project.findUnique({
@@ -19,6 +20,9 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
       },
       invoices: {
         orderBy: { createdAt: "desc" }
+      },
+      comments: {
+        orderBy: { createdAt: "asc" }
       }
     },
   });
@@ -73,7 +77,22 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
         <Link href={`/portal/${project.portalToken}?tab=briefs`} className={`px-6 py-3 font-medium ${currentTab === "briefs" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Briefs & Assets</Link>
         <Link href={`/portal/${project.portalToken}?tab=changes`} className={`px-6 py-3 font-medium ${currentTab === "changes" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Change Requests</Link>
         <Link href={`/portal/${project.portalToken}?tab=invoices`} className={`px-6 py-3 font-medium ${currentTab === "invoices" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Invoices</Link>
+        <Link href={`/portal/${project.portalToken}?tab=discussion`} className={`px-6 py-3 font-medium ${currentTab === "discussion" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Discussion</Link>
       </div>
+
+      {currentTab === "discussion" && (
+        <div className="max-w-3xl">
+          <div className="bg-white border border-[#E2E8F0] rounded-lg p-6 shadow-sm">
+            <h3 className="text-xl font-bold text-foreground mb-6">Project Discussion</h3>
+            <CommentSection 
+              projectId={project.id} 
+              comments={project.comments} 
+              currentUser={{ name: project.client.contactName, role: "CLIENT" }} 
+              theme="light"
+            />
+          </div>
+        </div>
+      )}
 
       {currentTab === "deliverables" && (
         <>

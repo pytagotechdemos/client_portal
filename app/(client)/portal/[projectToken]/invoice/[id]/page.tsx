@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { PrintButton } from "@/components/client/PrintButton";
+import { PDFExportButton } from "@/components/client/PDFExportButton";
 import { DuitkuPaymentButton } from "@/components/client/DuitkuPaymentButton";
 
 export default async function ClientInvoicePage({
@@ -33,7 +33,7 @@ export default async function ClientInvoicePage({
           &larr; Back to Portal
         </Link>
         <div className="flex items-center gap-3">
-          <PrintButton />
+          <PDFExportButton invoice={invoice} project={project} />
           {invoice.status !== "PAID" && (
             <DuitkuPaymentButton invoiceId={invoice.id} projectId={project.id} />
           )}
