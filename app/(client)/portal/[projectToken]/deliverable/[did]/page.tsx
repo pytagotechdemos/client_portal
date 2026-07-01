@@ -103,6 +103,12 @@ export default async function ClientReviewPage({
                         {ver.clientAction === 'APPROVED' ? 'Approved' : 'Revision Requested'}
                       </p>
                     )}
+                    {ver.clientFeedback && (
+                      <div className="mt-2 bg-[#F8FAFC] p-2 rounded border border-[#E2E8F0]">
+                        <p className="text-xs font-medium text-[#64748B] mb-1">Your Note:</p>
+                        <p className="text-xs text-foreground">{ver.clientFeedback}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

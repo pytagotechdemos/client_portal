@@ -16,6 +16,9 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
       },
       changeRequests: {
         orderBy: { createdAt: "desc" }
+      },
+      invoices: {
+        orderBy: { createdAt: "desc" }
       }
     },
   });
@@ -65,10 +68,11 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-[#E2E8F0] mb-8">
+      <div className="flex border-b border-[#E2E8F0] mb-8 overflow-x-auto whitespace-nowrap">
         <Link href={`/portal/${project.portalToken}?tab=deliverables`} className={`px-6 py-3 font-medium ${currentTab === "deliverables" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Deliverables</Link>
         <Link href={`/portal/${project.portalToken}?tab=briefs`} className={`px-6 py-3 font-medium ${currentTab === "briefs" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Briefs & Assets</Link>
         <Link href={`/portal/${project.portalToken}?tab=changes`} className={`px-6 py-3 font-medium ${currentTab === "changes" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Change Requests</Link>
+        <Link href={`/portal/${project.portalToken}?tab=invoices`} className={`px-6 py-3 font-medium ${currentTab === "invoices" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Invoices</Link>
       </div>
 
       {currentTab === "deliverables" && (
@@ -258,6 +262,46 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
                 </button>
               </form>
             </div>
+          </div>
+        </div>
+      )}
+
+      {currentTab === "invoices" && (
+        <div className="max-w-3xl">
+          <h3 className="text-xl font-bold text-foreground mb-4">Invoices & Billing</h3>
+          <div className="bg-white border border-[#E2E8F0] rounded-lg overflow-hidden shadow-sm">
+            {project.invoices.length === 0 ? (
+              <div className="p-8 text-center text-[#64748B]">
+                No invoices found for this project.
+              </div>
+            ) : (
+              <div className="divide-y divide-[#E2E8F0]">
+                {project.invoices.map(invoice => (
+                  <div key={invoice.id} className="p-5 flex justify-between items-center hover:bg-[#F8FAFC] transition-colors">
+                    <div>
+                      <p className="font-bold text-foreground text-lg">{invoice.title}</p>
+                      <p className="text-sm text-[#64748B] mt-1">
+                        Issued on {new Date(invoice.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-6">
+                      <div className="text-right">
+                        <p className="font-bold text-foreground">${invoice.amount.toFixed(2)}</p>
+                        <p className={`text-xs font-medium uppercase mt-1 ${invoice.status === 'PAID' ? 'text-[#10B981]' : invoice.status === 'OVERDUE' ? 'text-[#EF4444]' : 'text-[#F59E0B]'}`}>
+                          {invoice.status}
+                        </p>
+                      </div>
+                      <Link 
+                        href={`/portal/${project.portalToken}/invoice/${invoice.id}`}
+                        className="bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground font-medium px-4 py-2 rounded-md shadow-sm transition-colors text-sm"
+                      >
+                        View Invoice
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

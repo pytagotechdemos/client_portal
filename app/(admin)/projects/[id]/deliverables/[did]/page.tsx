@@ -118,13 +118,31 @@ export default async function DeliverableDetailPage({
                     v{ver.version}
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg border border-border bg-surface">
-                    <div className="flex justify-between mb-2">
-                      <span className="font-bold text-white">Version {ver.version}</span>
-                      <span className="text-xs text-muted">{new Date(ver.uploadedAt).toLocaleDateString()}</span>
-                    </div>
-                    {ver.pmNotes && <p className="text-sm text-muted mb-3">PM Note: {ver.pmNotes}</p>}
-                    
-                    <div className="flex gap-2">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="font-semibold text-white">Version {ver.version}</p>
+                          <p className="text-xs text-muted mb-2">
+                            Uploaded by {ver.uploadedBy} on {new Date(ver.uploadedAt).toLocaleString()}
+                          </p>
+                          
+                          <div className="mt-2 space-y-3">
+                            {ver.pmNotes && (
+                              <p className="text-sm text-[#E2E8F0]">
+                                <span className="font-medium text-[#94A3B8]">Notes:</span> {ver.pmNotes}
+                              </p>
+                            )}
+                            
+                            {ver.clientFeedback && (
+                              <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-md p-3 mt-3">
+                                <p className="text-sm text-[#991B1B] font-medium mb-1">Client Feedback:</p>
+                                <p className="text-sm text-[#7F1D1D] whitespace-pre-wrap">{ver.clientFeedback}</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      
+                    <div className="flex gap-2 mt-4">
                       {ver.fileUrl && (
                         <a href={ver.fileUrl} target="_blank" className="text-xs bg-surface-hover hover:bg-muted text-white px-2 py-1 rounded transition-colors">
                           View File
