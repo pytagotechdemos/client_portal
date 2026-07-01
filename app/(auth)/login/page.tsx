@@ -44,7 +44,7 @@ export default function LoginPage() {
         
         <div className="p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Pytagotech</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2 tracking-tight">Pytagotech</h1>
             <p className="text-muted text-sm">Sign in to the Admin Portal</p>
           </div>
 
@@ -56,7 +56,7 @@ export default function LoginPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5" htmlFor="email">
+              <label className="block text-sm font-medium text-foreground mb-1.5" htmlFor="email">
                 Email Address
               </label>
               <input
@@ -65,13 +65,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 placeholder="admin@pytagotech.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5" htmlFor="password">
+              <label className="block text-sm font-medium text-foreground mb-1.5" htmlFor="password">
                 Password
               </label>
               <input
@@ -80,7 +80,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 placeholder="••••••••"
               />
             </div>
