@@ -6,7 +6,7 @@ const badgeVariants = cva(
   {
     variants: {
       status: {
-        not_started: "bg-[#27272A] text-[#71717A] border-[#3F3F46]",
+        not_started: "bg-surface-hover text-[#71717A] border-border",
         in_progress: "bg-[#083344] text-[#06B6D4] border-[#0E7490]",
         review: "bg-[#451A03] text-[#F59E0B] border-[#B45309] animate-pulse",
         approved: "bg-[#022C22] text-[#10B981] border-[#059669]",

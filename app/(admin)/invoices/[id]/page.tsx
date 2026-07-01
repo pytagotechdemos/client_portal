@@ -25,14 +25,14 @@ export default async function InvoiceDetailPage({
     <div className="max-w-4xl mx-auto pb-20">
       {/* Non-printable header */}
       <div className="flex justify-between items-center mb-8 print:hidden">
-        <div className="text-sm text-[#A1A1AA]">
+        <div className="text-sm text-muted">
           <Link href="/invoices" className="hover:text-white transition-colors">
             &larr; Back to Invoices
           </Link>
         </div>
         <button 
           id="print-btn"
-          className="bg-[#0F172A] border border-[#3F3F46] hover:bg-[#1E293B] text-white px-4 py-2 rounded-md font-medium transition-colors"
+          className="bg-[#0F172A] border border-border hover:bg-[#1E293B] text-white px-4 py-2 rounded-md font-medium transition-colors"
         >
           Download PDF / Print
         </button>

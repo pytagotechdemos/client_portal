@@ -8,7 +8,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`min-h-screen bg-[#F8FAFC] text-[#0F172A] ${inter.className}`}>
+    <div className={`min-h-screen bg-[#F8FAFC] text-foreground ${inter.className}`}>
       {/* Client Header placeholder */}
       <header className="bg-white border-b border-[#E2E8F0] px-8 py-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#7C3AED]">Studio Volta</h1>

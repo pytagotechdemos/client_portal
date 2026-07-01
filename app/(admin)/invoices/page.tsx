@@ -17,8 +17,8 @@ export default async function InvoicesPage() {
         <h2 className="text-2xl font-bold text-white">Invoices</h2>
       </div>
 
-      <div className="bg-[#18181B] border border-[#3F3F46] rounded-lg overflow-hidden">
-        <div className="p-4 border-b border-[#3F3F46] bg-[#27272A]/30 flex gap-4">
+      <div className="bg-surface border border-border rounded-lg overflow-hidden">
+        <div className="p-4 border-b border-border bg-surface-hover/30 flex gap-4">
           <div className="w-32 font-semibold text-white">Invoice #</div>
           <div className="flex-1 font-semibold text-white">Project / Client</div>
           <div className="w-32 font-semibold text-white text-right">Amount</div>
@@ -26,7 +26,7 @@ export default async function InvoicesPage() {
         </div>
         <div className="divide-y divide-[#3F3F46]">
           {invoices.map(invoice => (
-            <div key={invoice.id} className="p-4 flex gap-4 items-center hover:bg-[#27272A] transition-colors">
+            <div key={invoice.id} className="p-4 flex gap-4 items-center hover:bg-surface-hover transition-colors">
               <div className="w-32 text-sm text-[#06B6D4]">
                 <Link href={`/invoices/${invoice.id}`} className="hover:underline">
                   #{invoice.id.substring(0,8).toUpperCase()}
@@ -36,7 +36,7 @@ export default async function InvoicesPage() {
                 <Link href={`/projects/${invoice.projectId}`} className="font-medium text-white hover:text-[#8B5CF6]">
                   {invoice.project.name}
                 </Link>
-                <p className="text-sm text-[#A1A1AA] mt-1">{invoice.project.client.name}</p>
+                <p className="text-sm text-muted mt-1">{invoice.project.client.name}</p>
               </div>
               <div className="w-32 text-right text-white font-medium">
                 Rp {invoice.amount.toLocaleString('id-ID')}
@@ -49,7 +49,7 @@ export default async function InvoicesPage() {
             </div>
           ))}
           {invoices.length === 0 && (
-            <div className="p-8 text-center text-[#A1A1AA]">No invoices generated yet.</div>
+            <div className="p-8 text-center text-muted">No invoices generated yet.</div>
           )}
         </div>
       </div>

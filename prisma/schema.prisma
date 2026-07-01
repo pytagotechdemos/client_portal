@@ -15,14 +15,14 @@ model AgencyClient {
   phone         String?
   companyName   String?
   projects      Project[]
-  accesses      ClientAccess[]
+  users         User[]
   createdAt     DateTime       @default(now())
 }
 
 model Project {
   id             String          @id @default(cuid())
   clientId       String
-  client         AgencyClient    @relation(fields: [clientId], references: [id])
+  client         AgencyClient    @relation(fields: [clientId], references: [id], onDelete: Cascade)
   name           String
   description    String?
   startDate      DateTime
@@ -34,7 +34,7 @@ model Project {
   briefs         Brief[]
   changeRequests ChangeRequest[]
   invoices       Invoice[]
-  access         ClientAccess?
+  projectAccess  ProjectAccess[]
   createdAt      DateTime        @default(now())
 }
 
@@ -48,7 +48,7 @@ enum ProjectStatus {
 model Deliverable {
   id             String               @id @default(cuid())
   projectId      String
-  project        Project              @relation(fields: [projectId], references: [id])
+  project        Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
   name           String
   description    String?
   type           DeliverableType
@@ -79,7 +79,7 @@ enum DeliverableStatus {
 model DeliverableVersion {
   id               String       @id @default(cuid())
   deliverableId    String
-  deliverable      Deliverable  @relation(fields: [deliverableId], references: [id])
+  deliverable      Deliverable  @relation(fields: [deliverableId], references: [id], onDelete: Cascade)
   version          Int
   fileUrl          String?
   linkUrl          String?
@@ -94,12 +94,13 @@ model DeliverableVersion {
 enum ClientAction {
   APPROVED
   REVISION_REQUESTED
+  APPROVED_WITH_TWEAKS
 }
 
 model Brief {
   id            String   @id @default(cuid())
   projectId     String
-  project       Project  @relation(fields: [projectId], references: [id])
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   deliverableId String?
   title         String
   category      String
@@ -111,7 +112,7 @@ model Brief {
 model ChangeRequest {
   id           String    @id @default(cuid())
   projectId    String
-  project      Project   @relation(fields: [projectId], references: [id])
+  project      Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
   requestedBy  String
   description  String
   status       CRStatus  @default(PENDING)
@@ -128,22 +129,38 @@ enum CRStatus {
   DISCUSSED
 }
 
-model ClientAccess {
-  id           String       @id @default(cuid())
-  clientId     String
-  client       AgencyClient @relation(fields: [clientId], references: [id])
-  projectId    String       @unique
-  project      Project      @relation(fields: [projectId], references: [id])
-  email        String
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+model User {
+  id           String          @id @default(cuid())
+  name         String
+  email        String          @unique
   passwordHash String
-  lastLoginAt  DateTime?
+  role         Role            @default(CLIENT)
+  clientId     String?
+  client       AgencyClient?   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projectAccess ProjectAccess[]
+  createdAt    DateTime        @default(now())
+}
+
+model ProjectAccess {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, projectId])
 }
 
 model Invoice {
   id            String        @id @default(cuid())
   invoiceNumber String        @unique
   projectId     String
-  project       Project       @relation(fields: [projectId], references: [id])
+  project       Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
   issueDate     DateTime
   dueDate       DateTime
   items         Json
@@ -161,13 +178,4 @@ enum InvoiceStatus {
   SENT
   PAID
   OVERDUE
-}
-
-model AgencyUser {
-  id           String   @id @default(cuid())
-  name         String
-  email        String   @unique
-  passwordHash String
-  role         String   @default("ADMIN")
-  createdAt    DateTime @default(now())
 }

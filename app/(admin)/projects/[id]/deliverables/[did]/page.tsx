@@ -88,7 +88,7 @@ export default async function DeliverableDetailPage({
   return (
     <div className="max-w-4xl">
       {/* Breadcrumbs */}
-      <div className="text-sm text-[#A1A1AA] mb-4">
+      <div className="text-sm text-muted mb-4">
         <Link href="/projects" className="hover:text-white">Projects</Link> &gt;{" "}
         <Link href={`/projects/${deliverable.projectId}`} className="hover:text-white">{deliverable.project.name}</Link> &gt;{" "}
         <span className="text-white">{deliverable.name}</span>
@@ -99,7 +99,7 @@ export default async function DeliverableDetailPage({
           <h2 className="text-2xl font-bold text-white mb-2">{deliverable.name}</h2>
           <div className="flex items-center gap-3">
             <StatusBadge status={deliverable.status.toLowerCase()} />
-            <span className="text-[#A1A1AA] text-sm">Type: {deliverable.type}</span>
+            <span className="text-muted text-sm">Type: {deliverable.type}</span>
           </div>
         </div>
       </div>
@@ -110,28 +110,28 @@ export default async function DeliverableDetailPage({
           
           <div className="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#3F3F46] before:to-transparent">
             {deliverable.versions.length === 0 ? (
-              <p className="text-[#A1A1AA]">No versions uploaded yet.</p>
+              <p className="text-muted">No versions uploaded yet.</p>
             ) : (
               deliverable.versions.map((ver) => (
                 <div key={ver.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-[#3F3F46] bg-[#18181B] text-[#A1A1AA] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface text-muted shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
                     v{ver.version}
                   </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg border border-[#3F3F46] bg-[#18181B]">
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-lg border border-border bg-surface">
                     <div className="flex justify-between mb-2">
                       <span className="font-bold text-white">Version {ver.version}</span>
-                      <span className="text-xs text-[#A1A1AA]">{new Date(ver.uploadedAt).toLocaleDateString()}</span>
+                      <span className="text-xs text-muted">{new Date(ver.uploadedAt).toLocaleDateString()}</span>
                     </div>
-                    {ver.pmNotes && <p className="text-sm text-[#A1A1AA] mb-3">PM Note: {ver.pmNotes}</p>}
+                    {ver.pmNotes && <p className="text-sm text-muted mb-3">PM Note: {ver.pmNotes}</p>}
                     
                     <div className="flex gap-2">
                       {ver.fileUrl && (
-                        <a href={ver.fileUrl} target="_blank" className="text-xs bg-[#27272A] hover:bg-[#3F3F46] text-white px-2 py-1 rounded transition-colors">
+                        <a href={ver.fileUrl} target="_blank" className="text-xs bg-surface-hover hover:bg-muted text-white px-2 py-1 rounded transition-colors">
                           View File
                         </a>
                       )}
                       {ver.linkUrl && (
-                        <a href={ver.linkUrl} target="_blank" className="text-xs bg-[#27272A] hover:bg-[#3F3F46] text-white px-2 py-1 rounded transition-colors">
+                        <a href={ver.linkUrl} target="_blank" className="text-xs bg-surface-hover hover:bg-muted text-white px-2 py-1 rounded transition-colors">
                           Open Link
                         </a>
                       )}
@@ -152,27 +152,27 @@ export default async function DeliverableDetailPage({
 
         {/* Upload Panel */}
         <div className="col-span-1">
-          <div className="bg-[#18181B] border border-[#3F3F46] rounded-lg p-5 sticky top-6">
+          <div className="bg-surface border border-border rounded-lg p-5 sticky top-6">
             <h3 className="font-bold text-white mb-4">Upload New Version</h3>
             <form action={uploadVersion} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-[#A1A1AA] mb-1">File Upload</label>
-                <input type="file" name="file" className="w-full text-sm text-[#A1A1AA] file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#27272A] file:text-white hover:file:bg-[#3F3F46]" />
+                <label className="block text-xs font-medium text-muted mb-1">File Upload</label>
+                <input type="file" name="file" className="w-full text-sm text-muted file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-surface-hover file:text-white hover:file:bg-muted" />
               </div>
               <div className="flex items-center text-xs text-[#71717A] my-2">
-                <hr className="flex-1 border-[#3F3F46]" />
+                <hr className="flex-1 border-border" />
                 <span className="px-2">OR</span>
-                <hr className="flex-1 border-[#3F3F46]" />
+                <hr className="flex-1 border-border" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#A1A1AA] mb-1">External Link (Figma, Docs, etc)</label>
-                <input type="url" name="linkUrl" placeholder="https://" className="w-full bg-[#0F0F11] border border-[#3F3F46] rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6]" />
+                <label className="block text-xs font-medium text-muted mb-1">External Link (Figma, Docs, etc)</label>
+                <input type="url" name="linkUrl" placeholder="https://" className="w-full bg-background border border-border rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6]" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#A1A1AA] mb-1">Notes for Client (Optional)</label>
-                <textarea name="pmNotes" rows={2} className="w-full bg-[#0F0F11] border border-[#3F3F46] rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6]"></textarea>
+                <label className="block text-xs font-medium text-muted mb-1">Notes for Client (Optional)</label>
+                <textarea name="pmNotes" rows={2} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6]"></textarea>
               </div>
-              <button type="submit" className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-4 py-2 rounded-md font-medium transition-colors text-sm">
+              <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors text-sm">
                 Upload & Request Review
               </button>
             </form>

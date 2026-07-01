@@ -19,7 +19,7 @@ export default async function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
         <div className="bg-white p-8 rounded-lg shadow text-center max-w-md">
-          <h1 className="text-2xl font-bold mb-4 text-[#0F172A]">Welcome to Studio Volta</h1>
+          <h1 className="text-2xl font-bold mb-4 text-foreground">Welcome to Studio Volta</h1>
           <p className="text-[#64748B]">Please use the specific Project Portal Link provided to you via email to access your deliverables.</p>
         </div>
       </div>

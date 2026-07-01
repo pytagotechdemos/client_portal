@@ -36,12 +36,12 @@ export default async function ClientReviewPage({
       <div className="mb-4 text-sm text-[#64748B]">
         <Link href={`/portal/${params.projectToken}`} className="hover:text-[#7C3AED]">Dashboard</Link>
         {" > "}
-        <span className="text-[#0F172A] font-medium">{deliverable.name}</span>
+        <span className="text-foreground font-medium">{deliverable.name}</span>
       </div>
 
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-[#0F172A]">{deliverable.name}</h2>
+          <h2 className="text-2xl font-bold text-foreground">{deliverable.name}</h2>
           <p className="text-sm text-[#64748B]">Version {deliverable.currentVersion}</p>
         </div>
         <StatusBadge status={deliverable.status.toLowerCase()} />
@@ -57,7 +57,7 @@ export default async function ClientReviewPage({
               {latestVersion.pmNotes && (
                 <div className="mt-6 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
                   <p className="text-xs font-bold text-[#64748B] uppercase mb-1">Notes from Team</p>
-                  <p className="text-sm text-[#0F172A]">{latestVersion.pmNotes}</p>
+                  <p className="text-sm text-foreground">{latestVersion.pmNotes}</p>
                 </div>
               )}
             </div>
@@ -73,7 +73,7 @@ export default async function ClientReviewPage({
           {/* Review Form */}
           {isPendingReview && latestVersion && (
             <div className="bg-white p-6 rounded-xl border-2 border-[#7C3AED] shadow-md sticky top-6">
-              <h3 className="text-lg font-bold text-[#0F172A] mb-4">Your Review</h3>
+              <h3 className="text-lg font-bold text-foreground mb-4">Your Review</h3>
               
               <form action={submitReview} className="space-y-4">
                 <input type="hidden" name="deliverableId" value={deliverable.id} />
@@ -89,6 +89,15 @@ export default async function ClientReviewPage({
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                   Approve Deliverable
                 </button>
+
+                <button 
+                  type="submit" 
+                  name="action" 
+                  value="APPROVED_WITH_TWEAKS" 
+                  className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white py-2 rounded-lg font-bold shadow transition-colors flex justify-center items-center gap-2"
+                >
+                  Approve (with minor tweaks)
+                </button>
                 
                 <div className="relative py-2">
                   <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-[#E2E8F0]"></div></div>
@@ -96,12 +105,12 @@ export default async function ClientReviewPage({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[#0F172A] mb-2">Request Revisions</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Feedback or Revision Notes</label>
                   <textarea 
                     name="feedback" 
                     rows={4} 
                     placeholder="Please specify what needs to be changed..."
-                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-md px-3 py-2 text-sm text-[#0F172A] focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED]"
+                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED]"
                   ></textarea>
                 </div>
                 
@@ -119,7 +128,7 @@ export default async function ClientReviewPage({
 
           {/* Revision History */}
           <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm">
-            <h3 className="font-bold text-[#0F172A] mb-4">Revision History</h3>
+            <h3 className="font-bold text-foreground mb-4">Revision History</h3>
             <div className="space-y-4 relative before:absolute before:inset-0 before:ml-3 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#E2E8F0] before:to-transparent">
               {deliverable.versions.map((ver) => (
                 <div key={ver.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
@@ -127,7 +136,7 @@ export default async function ClientReviewPage({
                     {ver.version}
                   </div>
                   <div className="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] py-2">
-                    <p className="text-sm font-bold text-[#0F172A]">v{ver.version}</p>
+                    <p className="text-sm font-bold text-foreground">v{ver.version}</p>
                     <p className="text-xs text-[#64748B]">{new Date(ver.uploadedAt).toLocaleDateString()}</p>
                     {ver.clientAction && (
                       <p className={`mt-1 text-xs font-medium ${ver.clientAction === 'APPROVED' ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
