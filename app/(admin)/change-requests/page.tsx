@@ -28,7 +28,7 @@ export default async function ChangeRequestsPage() {
           {changeRequests.map(cr => (
             <div key={cr.id} className="p-4 flex gap-4 items-center hover:bg-[#27272A] transition-colors">
               <div className="flex-1">
-                <p className="font-medium text-white">{cr.title}</p>
+                <p className="font-medium text-white">From {cr.requestedBy}</p>
                 <p className="text-sm text-[#A1A1AA] mt-1 line-clamp-1">{cr.description}</p>
               </div>
               <div className="w-64">

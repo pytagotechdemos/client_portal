@@ -31,9 +31,8 @@ export default async function InvoiceDetailPage({
           </Link>
         </div>
         <button 
+          id="print-btn"
           className="bg-[#0F172A] border border-[#3F3F46] hover:bg-[#1E293B] text-white px-4 py-2 rounded-md font-medium transition-colors"
-          onClick="window.print()" // Wait, onClick in server component won't work like this. We need a client component for the button or an inline script.
-          // Let's use a small inline script for MVP printing
         >
           Download PDF / Print
         </button>
@@ -41,7 +40,7 @@ export default async function InvoiceDetailPage({
 
       <script dangerouslySetInnerHTML={{
         __html: `
-          document.querySelector('button').addEventListener('click', () => window.print());
+          document.getElementById('print-btn').addEventListener('click', () => window.print());
         `
       }} />
 
@@ -70,7 +69,7 @@ export default async function InvoiceDetailPage({
           <div className="text-right">
             <div className="mb-4">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Issue Date</p>
-              <p className="font-medium text-gray-900">{new Date(invoice.issuedAt).toLocaleDateString()}</p>
+              <p className="font-medium text-gray-900">{new Date(invoice.issueDate).toLocaleDateString()}</p>
             </div>
             <div>
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Due Date</p>
@@ -97,7 +96,7 @@ export default async function InvoiceDetailPage({
             {/* For MVP we don't have line items, just the total amount */}
             <tr className="border-b border-gray-100">
               <td className="py-4 text-gray-900">Services rendered for project: {invoice.project.name}</td>
-              <td className="py-4 text-gray-900 text-right font-medium">${invoice.amount.toLocaleString()}</td>
+              <td className="py-4 text-gray-900 text-right font-medium">${Number(invoice.totalAmount).toLocaleString()}</td>
             </tr>
           </tbody>
         </table>
@@ -116,7 +115,7 @@ export default async function InvoiceDetailPage({
           </div>
           <div className="text-right">
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Due</p>
-            <p className="text-4xl font-black text-gray-900">${invoice.amount.toLocaleString()}</p>
+            <p className="text-4xl font-black text-gray-900">${Number(invoice.totalAmount).toLocaleString()}</p>
           </div>
         </div>
 
