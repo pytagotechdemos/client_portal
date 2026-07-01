@@ -25,7 +25,7 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
   // Example with Resend:
   // const resend = new Resend(process.env.RESEND_API_KEY);
   // await resend.emails.send({
-  //   from: 'Studio Volta <hello@studiovolta.com>',
+  //   from: 'Pytagotech <hello@pytagotech.com>',
   //   to,
   //   subject,
   //   html

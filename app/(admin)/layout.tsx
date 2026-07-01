@@ -15,7 +15,7 @@ export default function AdminLayout({
       {/* Sidebar placeholder */}
       <div className="flex">
         <aside className="w-64 bg-surface border-r border-border min-h-screen p-6">
-          <h1 className="text-xl font-bold text-white mb-8">Studio Volta</h1>
+          <h1 className="text-xl font-bold text-white mb-8">Pytagotech</h1>
           <nav className="flex flex-col space-y-2">
             <Link href="/" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Dashboard</Link>
             <Link href="/projects" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Projects</Link>

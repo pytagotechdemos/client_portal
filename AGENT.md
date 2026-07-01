@@ -336,7 +336,7 @@ export const DeliverableReviewEmail = ({ clientName, projectName, deliverableNam
 ## 8. Seed Data untuk Demo
 
 ```typescript
-// Agensi fiktif: "Studio Volta Creative"
+// Agensi fiktif: "Pytagotech Creative"
 // Klien demo: "PT Nusantara Retail"
 
 // Project 1: Brand Identity Refresh (sudah hampir selesai)
@@ -421,7 +421,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
 RESEND_API_KEY=
-RESEND_FROM_EMAIL=noreply@studiovolta.com  # diganti nama agensi klien
+RESEND_FROM_EMAIL=noreply@pytagotech.com  # diganti nama agensi klien
 
 NEXT_PUBLIC_APP_URL=
 NEXT_PUBLIC_AGENCY_NAME=   # diisi nama agensi klien saat demo

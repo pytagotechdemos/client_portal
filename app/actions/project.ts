@@ -92,7 +92,7 @@ export async function createProject(formData: FormData) {
       
       await sendEmail({
         to: data.contactEmail,
-        subject: `Welcome to Studio Volta - Your Project Portal`,
+        subject: `Welcome to Pytagotech - Your Project Portal`,
         html: `
           <h1>Welcome ${data.contactName}!</h1>
           <p>Your project <strong>${data.name}</strong> has been created.</p>

@@ -54,8 +54,8 @@ export default async function InvoiceDetailPage({
             <p className="text-gray-500 text-sm font-medium">#{invoice.id.substring(0, 8).toUpperCase()}</p>
           </div>
           <div className="text-right">
-            <h2 className="text-xl font-bold text-gray-900">Studio Volta</h2>
-            <p className="text-gray-500 text-sm mt-1">123 Creative Street<br/>Design City, DC 10101<br/>hello@studiovolta.com</p>
+            <h2 className="text-xl font-bold text-gray-900">Pytagotech</h2>
+            <p className="text-gray-500 text-sm mt-1">123 Creative Street<br/>Design City, DC 10101<br/>hello@pytagotech.com</p>
           </div>
         </div>
 

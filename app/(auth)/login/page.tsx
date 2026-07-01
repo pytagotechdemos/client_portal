@@ -44,7 +44,7 @@ export default function LoginPage() {
         
         <div className="p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Studio Volta</h1>
+            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Pytagotech</h1>
             <p className="text-muted text-sm">Sign in to the Admin Portal</p>
           </div>
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                placeholder="admin@studiovolta.com"
+                placeholder="admin@pytagotech.com"
               />
             </div>
 
@@ -104,7 +104,7 @@ export default function LoginPage() {
       </div>
       
       <p className="text-muted text-xs mt-8 text-center">
-        &copy; {new Date().getFullYear()} Studio Volta. All rights reserved.<br/>
+        &copy; {new Date().getFullYear()} Pytagotech. All rights reserved.<br/>
         Client portal access is sent via direct email links.
       </p>
     </div>

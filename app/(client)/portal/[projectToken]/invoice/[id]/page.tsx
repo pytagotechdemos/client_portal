@@ -38,8 +38,8 @@ export default async function ClientInvoicePage({
       <div className="bg-white border border-[#E2E8F0] shadow-sm rounded-lg p-10 print:shadow-none print:border-none print:p-0">
         <div className="flex justify-between items-start border-b border-[#E2E8F0] pb-8 mb-8">
           <div>
-            <h1 className="text-4xl font-black tracking-tighter text-foreground">Studio Volta</h1>
-            <p className="text-[#64748B] mt-2">123 Creative Street<br/>Design City, DC 10001<br/>hello@studiovolta.com</p>
+            <h1 className="text-4xl font-black tracking-tighter text-foreground">Pytagotech</h1>
+            <p className="text-[#64748B] mt-2">123 Creative Street<br/>Design City, DC 10001<br/>hello@pytagotech.com</p>
           </div>
           <div className="text-right">
             <h2 className="text-3xl font-bold text-foreground uppercase tracking-wide">Invoice</h2>
@@ -102,7 +102,7 @@ export default async function ClientInvoicePage({
 
         <div className="pt-8 border-t border-[#E2E8F0] text-[#64748B] text-sm">
           <p className="font-bold mb-2 text-foreground">Payment Instructions</p>
-          <p className="mb-1">Please remit payment via Bank Transfer or PayPal to payments@studiovolta.com.</p>
+          <p className="mb-1">Please remit payment via Bank Transfer or PayPal to payments@pytagotech.com.</p>
           <p>If you have any questions about this invoice, please contact us.</p>
         </div>
       </div>

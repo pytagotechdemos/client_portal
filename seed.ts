@@ -5,13 +5,13 @@ import bcrypt from "bcryptjs";
 async function main() {
   const hashedPassword = await bcrypt.hash('admin123', 10);
   const admin = await prisma.agencyUser.upsert({
-    where: { email: 'admin@studiovolta.com' },
+    where: { email: 'admin@pytagotech.com' },
     update: {
       passwordHash: hashedPassword,
     },
     create: {
       name: 'Admin Volta',
-      email: 'admin@studiovolta.com',
+      email: 'admin@pytagotech.com',
       passwordHash: hashedPassword,
     },
   });
