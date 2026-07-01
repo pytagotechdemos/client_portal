@@ -4,6 +4,7 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { FilePreview } from "@/components/client/FilePreview";
 import { submitReview } from "@/app/actions/review";
+import { ReviewSubmitButtons } from "@/components/client/ReviewSubmitButtons";
 
 export default async function ClientReviewPage({
   params,
@@ -52,7 +53,7 @@ export default async function ClientReviewPage({
         <div className="lg:col-span-2">
           {latestVersion ? (
             <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-sm mb-6">
-              <FilePreview fileUrl={latestVersion.fileUrl} linkUrl={latestVersion.linkUrl} />
+              <FilePreview fileUrl={latestVersion.fileUrl} linkUrl={latestVersion.linkUrl} title={deliverable.name} />
               
               {latestVersion.pmNotes && (
                 <div className="mt-6 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
@@ -80,48 +81,7 @@ export default async function ClientReviewPage({
                 <input type="hidden" name="versionId" value={latestVersion.id} />
                 <input type="hidden" name="portalToken" value={params.projectToken} />
                 
-                <button 
-                  type="submit" 
-                  name="action" 
-                  value="APPROVED" 
-                  className="w-full bg-[#10B981] hover:bg-[#059669] text-white py-3 rounded-lg font-bold shadow transition-colors flex justify-center items-center gap-2"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                  Approve Deliverable
-                </button>
-
-                <button 
-                  type="submit" 
-                  name="action" 
-                  value="APPROVED_WITH_TWEAKS" 
-                  className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white py-2 rounded-lg font-bold shadow transition-colors flex justify-center items-center gap-2"
-                >
-                  Approve (with minor tweaks)
-                </button>
-                
-                <div className="relative py-2">
-                  <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-[#E2E8F0]"></div></div>
-                  <div className="relative flex justify-center"><span className="bg-white px-2 text-xs text-[#64748B]">OR</span></div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Feedback or Revision Notes</label>
-                  <textarea 
-                    name="feedback" 
-                    rows={4} 
-                    placeholder="Please specify what needs to be changed..."
-                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED]"
-                  ></textarea>
-                </div>
-                
-                <button 
-                  type="submit" 
-                  name="action" 
-                  value="REVISION_REQUESTED" 
-                  className="w-full bg-white border border-[#EF4444] text-[#EF4444] hover:bg-[#FEF2F2] py-2 rounded-lg font-medium transition-colors"
-                >
-                  Submit Revision Request
-                </button>
+                <ReviewSubmitButtons />
               </form>
             </div>
           )}

@@ -38,7 +38,7 @@ export default async function ProjectsPage() {
             
             return (
               <Link key={project.id} href={`/projects/${project.id}`}>
-                <div className="bg-surface border border-border rounded-lg p-5 flex items-center hover:border-[#8B5CF6] transition-colors group cursor-pointer relative overflow-hidden">
+                <div className="bg-surface border border-border rounded-lg p-5 flex items-center hover:border-[#8B5CF6] hover:-translate-y-1 hover:shadow-xl transition-all group cursor-pointer relative overflow-hidden">
                   {/* Status Bar Left */}
                   <div className={`absolute left-0 top-0 bottom-0 w-1 ${project.status === "ACTIVE" ? "bg-[#06B6D4]" : "bg-[#52525B]"}`}></div>
                   

@@ -77,12 +77,12 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
           {needsReview.length > 0 && (
             <div className="mb-8">
               <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#F59E0B] animate-pulse"></span>
+                <span className="w-3 h-3 rounded-full bg-[#F59E0B]"></span>
                 Awaiting Your Review
               </h3>
               <div className="grid gap-4">
                 {needsReview.map((del) => (
-                  <div key={del.id} className="bg-white border-2 border-[#FCD34D] rounded-lg p-6 flex justify-between items-center shadow-sm">
+                  <div key={del.id} className="bg-white border-2 border-[#FCD34D] rounded-lg p-6 flex justify-between items-center shadow-sm hover:-translate-y-1 hover:shadow-md transition-all">
                     <div>
                       <h4 className="text-lg font-bold text-foreground">{del.name}</h4>
                       <p className="text-sm text-[#64748B] mt-1">v{del.currentVersion} is ready for your feedback.</p>
@@ -110,7 +110,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
               ) : (
                 <div className="divide-y divide-[#E2E8F0]">
                   {others.map((del) => (
-                    <div key={del.id} className="p-4 flex justify-between items-center hover:bg-[#F8FAFC] transition-colors">
+                    <div key={del.id} className="p-4 flex justify-between items-center hover:bg-[#F8FAFC] hover:-translate-y-0.5 hover:shadow-sm transition-all relative">
                       <div className="flex items-center gap-4">
                         <StatusBadge status={del.status.toLowerCase()} />
                         <div>
@@ -147,7 +147,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
               ) : (
                 <div className="divide-y divide-[#E2E8F0]">
                   {project.briefs.map(brief => (
-                    <div key={brief.id} className="p-4 flex justify-between items-center hover:bg-[#F8FAFC] transition-colors">
+                    <div key={brief.id} className="p-4 flex justify-between items-center hover:bg-[#F8FAFC] hover:-translate-y-0.5 hover:shadow-sm transition-all relative">
                       <div>
                         <p className="font-medium text-foreground">{brief.title}</p>
                         <p className="text-xs text-[#64748B]">

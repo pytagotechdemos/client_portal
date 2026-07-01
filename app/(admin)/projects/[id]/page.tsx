@@ -90,7 +90,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                 ) : (
                   <div className="divide-y divide-[#3F3F46]">
                     {project.deliverables.map(del => (
-                      <Link href={`/projects/${project.id}/deliverables/${del.id}`} key={del.id} className="block p-4 hover:bg-surface-hover transition-colors group">
+                      <Link href={`/projects/${project.id}/deliverables/${del.id}`} key={del.id} className="block p-4 hover:bg-surface-hover hover:-translate-y-0.5 hover:shadow-md transition-all relative group">
                         <div className="flex justify-between items-center">
                           <div className="flex items-center gap-3">
                             <StatusBadge status={del.status.toLowerCase()} />
@@ -140,7 +140,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
               ) : (
                 <div className="divide-y divide-[#3F3F46]">
                   {project.briefs.map(brief => (
-                    <div key={brief.id} className="p-4 hover:bg-surface-hover transition-colors flex justify-between items-center">
+                    <div key={brief.id} className="p-4 hover:bg-surface-hover hover:-translate-y-0.5 hover:shadow-md transition-all relative flex justify-between items-center">
                       <div>
                         <p className="text-white font-medium">{brief.title}</p>
                         <p className="text-xs text-muted mt-1">{brief.category} • Uploaded by {brief.uploadedBy} on {new Date(brief.uploadedAt).toLocaleDateString()}</p>

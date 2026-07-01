@@ -8,7 +8,7 @@ const badgeVariants = cva(
       status: {
         not_started: "bg-surface-hover text-[#71717A] border-border",
         in_progress: "bg-[#083344] text-[#06B6D4] border-[#0E7490]",
-        review: "bg-[#451A03] text-[#F59E0B] border-[#B45309] animate-pulse",
+        review: "bg-[#451A03] text-[#F59E0B] border-[#B45309]",
         approved: "bg-[#022C22] text-[#10B981] border-[#059669]",
         revision_requested: "bg-[#450A0A] text-[#EF4444] border-[#B91C1C]",
       },
