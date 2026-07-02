@@ -72,7 +72,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-[#E2E8F0] mb-8 overflow-x-auto whitespace-nowrap">
+      <div className="flex border-b border-[#E2E8F0] mb-8 overflow-x-auto whitespace-nowrap no-scrollbar pb-1">
         <Link href={`/portal/${project.portalToken}?tab=deliverables`} className={`px-6 py-3 font-medium ${currentTab === "deliverables" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Deliverables</Link>
         <Link href={`/portal/${project.portalToken}?tab=briefs`} className={`px-6 py-3 font-medium ${currentTab === "briefs" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Briefs & Assets</Link>
         <Link href={`/portal/${project.portalToken}?tab=changes`} className={`px-6 py-3 font-medium ${currentTab === "changes" ? "text-primary-hover border-b-2 border-primary-hover" : "text-[#64748B] hover:text-foreground"}`}>Change Requests</Link>

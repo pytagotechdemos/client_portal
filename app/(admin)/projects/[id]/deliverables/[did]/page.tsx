@@ -97,9 +97,14 @@ export default async function DeliverableDetailPage({
       <div className="flex justify-between items-start mb-8">
         <div>
           <h2 className="text-2xl font-bold text-white mb-2">{deliverable.name}</h2>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mt-2">
             <StatusBadge status={deliverable.status.toLowerCase()} />
             <span className="text-muted text-sm">Type: {deliverable.type}</span>
+            {deliverable.assignedTo && (
+              <span className="text-muted text-sm bg-surface-hover px-2 py-1 rounded-md border border-border">
+                Assigned to: <span className="text-white font-medium">{deliverable.assignedTo}</span>
+              </span>
+            )}
           </div>
         </div>
       </div>

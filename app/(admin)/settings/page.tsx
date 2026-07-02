@@ -35,6 +35,31 @@ export default async function SettingsPage() {
               className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary-hover" 
             />
           </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-muted mb-1">Logo URL (Optional)</label>
+              <input 
+                name="logoUrl" 
+                defaultValue={settings?.logoUrl || ""}
+                type="url" 
+                placeholder="https://..."
+                className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary-hover" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-muted mb-1">Primary Color (Hex)</label>
+              <div className="flex items-center gap-2">
+                <input 
+                  type="color" 
+                  name="primaryColor" 
+                  defaultValue={settings?.primaryColor || "#7C3AED"}
+                  className="w-14 h-10 bg-background border border-border rounded-md cursor-pointer p-1" 
+                />
+                <span className="text-sm text-muted">Select a brand color</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Duitku Config */}

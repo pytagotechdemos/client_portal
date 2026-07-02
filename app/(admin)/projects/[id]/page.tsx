@@ -10,6 +10,9 @@ import { DeleteInvoiceButton } from "@/components/admin/DeleteInvoiceButton";
 import { CommentSection } from "@/components/shared/CommentSection";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { sendEmail } from "@/lib/email";
+import { render } from "@react-email/components";
+import NewDeliverableEmail from "@/emails/NewDeliverableEmail";
 
 export default async function ProjectDetailPage({ params, searchParams }: { params: { id: string }, searchParams: { tab?: string } }) {
   const session = await getServerSession(authOptions);
@@ -37,20 +40,47 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
     },
   });
 
+  const adminUsers = await prisma.user.findMany({
+    where: { role: "ADMIN" },
+    select: { id: true, name: true }
+  });
+
   if (!project) notFound();
 
   async function addDeliverable(formData: FormData) {
     "use server";
     const name = formData.get("name") as string;
     const type = formData.get("type") as "DESIGN" | "DOCUMENT" | "VIDEO" | "COPY" | "OTHER"; // DeliverableType
+    const assignedTo = formData.get("assignedTo") as string;
     
     await prisma.deliverable.create({
       data: {
         projectId: project!.id,
         name,
         type,
+        assignedTo: assignedTo || null,
       }
     });
+
+    const settings = await prisma.agencySettings.findFirst();
+    const portalUrl = `${process.env.NEXTAUTH_URL}/portal/${project!.portalToken}`;
+
+    const html = render(
+      <NewDeliverableEmail 
+        clientName={project!.client.contactName}
+        projectName={project!.name}
+        deliverableName={name}
+        portalUrl={portalUrl}
+        agencyName={settings?.agencyName || "Pytagotech"}
+      />
+    );
+
+    await sendEmail({
+      to: project!.client.contactEmail,
+      subject: `New Deliverable Ready: ${name}`,
+      html,
+    });
+
     revalidatePath(`/projects/${project!.id}`);
   }
 
@@ -122,7 +152,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                             <StatusBadge status={del.status.toLowerCase()} />
                             <div>
                               <p className="text-white font-medium group-hover:text-[#8B5CF6] transition-colors">{del.name}</p>
-                              <p className="text-xs text-muted mt-1">{del.type} • v{del.currentVersion}</p>
+                              <p className="text-xs text-muted mt-1">{del.type} • v{del.currentVersion}{del.assignedTo ? ` • Assigned to: ${del.assignedTo}` : ''}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-4">
@@ -147,6 +177,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                   <option value="VIDEO">Video</option>
                   <option value="COPY">Copy</option>
                   <option value="OTHER">Other</option>
+                </select>
+                <select name="assignedTo" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
+                  <option value="">Unassigned</option>
+                  {adminUsers.map(u => (
+                    <option key={u.id} value={u.name}>{u.name}</option>
+                  ))}
                 </select>
                 <button type="submit" className="bg-surface-hover hover:bg-muted border border-border text-white px-4 py-2 rounded-md transition-colors">
                   Add

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       // Payment success
       await prisma.invoice.updateMany({
         where: { invoiceNumber: merchantOrderId },
-        data: { status: "PAID" }
+        data: { status: "PAID", paidAt: new Date() }
       });
       console.log(`Invoice ${merchantOrderId} marked as PAID via Duitku`);
     } else if (resultCode === "01") {

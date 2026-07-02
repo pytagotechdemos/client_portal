@@ -1,10 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { addComment, deleteComment } from "@/app/actions/comment";
 import { formatDistanceToNow } from "date-fns";
 import { SubmitButton } from "./SubmitButton";
 import { Trash2 } from "lucide-react";
+import useSWR from "swr";
+import { toast } from "sonner";
 
 type CommentType = {
   id: string;
@@ -17,7 +19,7 @@ type CommentType = {
 
 interface CommentSectionProps {
   projectId: string;
-  comments: CommentType[];
+  comments: CommentType[]; // Used as initial fallback data
   currentUser: {
     name: string;
     role: "ADMIN" | "CLIENT";
@@ -26,21 +28,59 @@ interface CommentSectionProps {
   theme?: "light" | "dark";
 }
 
-export function CommentSection({ projectId, comments, currentUser, deliverableId, theme = "dark" }: CommentSectionProps) {
+const fetcher = (url: string) => fetch(url).then(r => r.json());
+
+export function CommentSection({ projectId, comments: initialComments, currentUser, deliverableId, theme = "dark" }: CommentSectionProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  
+  const apiUrl = deliverableId 
+    ? `/api/comments?projectId=${projectId}&deliverableId=${deliverableId}`
+    : `/api/comments?projectId=${projectId}`;
+    
+  const { data: comments, mutate } = useSWR<CommentType[]>(apiUrl, fetcher, {
+    fallbackData: initialComments,
+    refreshInterval: 5000, // Poll every 5 seconds
+  });
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    // Scroll to bottom when comments change
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [comments]);
 
   const handleAction = async (formData: FormData) => {
-    await addComment(formData);
-    formRef.current?.reset();
+    // Optimistic update could go here, but for now we just mutate after server action
+    try {
+      await addComment(formData);
+      formRef.current?.reset();
+      mutate(); // trigger immediate re-fetch
+    } catch (e) {
+      toast.error("Failed to post comment");
+    }
   };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteComment(id, projectId);
+      mutate();
+      toast.success("Comment deleted");
+    } catch (e) {
+      toast.error("Failed to delete comment");
+    }
+  };
+
+  const displayComments = comments || initialComments;
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-        {comments.length === 0 ? (
+      <div ref={scrollRef} className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+        {displayComments.length === 0 ? (
           <p className={`text-sm text-center py-4 ${theme === "dark" ? "text-muted" : "text-[#64748B]"}`}>No comments yet. Start the conversation!</p>
         ) : (
-          comments.map((comment) => (
+          displayComments.map((comment) => (
             <div 
               key={comment.id} 
               className={`flex flex-col ${comment.authorRole === currentUser.role ? "items-end" : "items-start"}`}
@@ -58,7 +98,7 @@ export function CommentSection({ projectId, comments, currentUser, deliverableId
                   </span>
                   {comment.authorRole === currentUser.role && (
                     <button 
-                      onClick={() => deleteComment(comment.id, projectId)}
+                      onClick={() => handleDelete(comment.id)}
                       className="text-white/50 hover:text-red-400 transition-colors"
                       title="Delete Comment"
                     >

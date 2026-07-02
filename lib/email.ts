@@ -1,8 +1,4 @@
-/**
- * Mock Email Utility for MVP
- * In production, replace the contents of sendEmail with a real provider 
- * like Resend, SendGrid, or Nodemailer.
- */
+import { Resend } from "resend";
 
 interface EmailOptions {
   to: string;
@@ -11,25 +7,33 @@ interface EmailOptions {
 }
 
 export async function sendEmail({ to, subject, html }: EmailOptions) {
-  if (process.env.NODE_ENV !== "production") {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (process.env.NODE_ENV !== "production" || !apiKey) {
     console.log("==================================================");
     console.log(`📧 MOCK EMAIL SENT`);
     console.log(`TO: ${to}`);
     console.log(`SUBJECT: ${subject}`);
-    console.log(`CONTENT:\n${html.replace(/<[^>]*>?/gm, '')}`); // Strip HTML for console readability
+    console.log(`CONTENT:\n${html.replace(/<[^>]*>?/gm, "")}`); // Strip HTML for console readability
     console.log("==================================================");
+    if (!apiKey && process.env.NODE_ENV === "production") {
+      console.warn("⚠️ Resend API Key is missing. Check your environment variables.");
+    }
     return { success: true };
   }
 
-  // TODO: Add real email provider logic here when deploying to production
-  // Example with Resend:
-  // const resend = new Resend(process.env.RESEND_API_KEY);
-  // await resend.emails.send({
-  //   from: 'Pytagotech <hello@pytagotech.com>',
-  //   to,
-  //   subject,
-  //   html
-  // });
-  
-  return { success: true };
+  try {
+    const resend = new Resend(apiKey);
+    const data = await resend.emails.send({
+      from: "Pytagotech <onboarding@resend.dev>", // Default resend testing email
+      to,
+      subject,
+      html,
+    });
+    console.log("Email sent successfully:", data);
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return { success: false, error };
+  }
 }

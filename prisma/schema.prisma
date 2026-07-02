@@ -186,6 +186,8 @@ model AgencySettings {
   id                 String   @id @default(cuid())
   agencyName         String   @default("Pytagotech")
   contactEmail       String   @default("hello@pytagotech.com")
+  logoUrl            String?
+  primaryColor       String   @default("#7C3AED") // Default to primary purple
   duitkuMerchantCode String?
   duitkuApiKey       String?
   duitkuEnv          String   @default("sandbox") // "sandbox" or "production"

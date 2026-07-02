@@ -10,6 +10,9 @@ export async function updateSettings(formData: FormData) {
   const duitkuApiKey = formData.get("duitkuApiKey") as string;
   const duitkuEnv = formData.get("duitkuEnv") as string;
 
+  const logoUrl = formData.get("logoUrl") as string;
+  const primaryColor = formData.get("primaryColor") as string;
+
   // We assume there's only one settings row.
   const existing = await prisma.agencySettings.findFirst();
 
@@ -19,6 +22,8 @@ export async function updateSettings(formData: FormData) {
       data: {
         agencyName,
         contactEmail,
+        logoUrl,
+        primaryColor,
         duitkuMerchantCode,
         duitkuApiKey,
         duitkuEnv,
@@ -29,6 +34,8 @@ export async function updateSettings(formData: FormData) {
       data: {
         agencyName,
         contactEmail,
+        logoUrl,
+        primaryColor,
         duitkuMerchantCode,
         duitkuApiKey,
         duitkuEnv,

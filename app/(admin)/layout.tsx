@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import Link from "next/link";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,28 +12,11 @@ export default function AdminLayout({
 }) {
   return (
     <div className={`min-h-screen bg-background text-foreground ${inter.className}`}>
-      {/* Sidebar placeholder */}
-      <div className="flex">
-        <aside className="w-64 bg-surface border-r border-border min-h-screen p-6">
-          <h1 className="text-xl font-bold text-white mb-8">Pytagotech</h1>
-          <nav className="flex flex-col space-y-2">
-            <Link href="/dashboard" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Dashboard</Link>
-            <Link href="/projects" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Projects</Link>
-            <Link href="/clients" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Clients</Link>
-            <Link href="/briefs" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Brief Repository</Link>
-            <Link href="/change-requests" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors flex justify-between items-center">
-              Change Requests
-            </Link>
-            <Link href="/invoices" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors">Invoices</Link>
-            
-            <div className="pt-4 mt-4 border-t border-border">
-              <Link href="/settings" className="px-3 py-2 text-muted hover:bg-surface-hover hover:text-white rounded-md transition-colors block">Settings</Link>
-            </div>
-          </nav>
-        </aside>
+      <div className="flex flex-col md:flex-row min-h-screen">
+        <AdminSidebar />
         
         {/* Main Content */}
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           {children}
         </main>
       </div>
