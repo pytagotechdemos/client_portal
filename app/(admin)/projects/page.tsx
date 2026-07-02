@@ -15,7 +15,7 @@ export default async function ProjectsPage() {
 
   return (
     <FadeIn className="max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <FolderKanban className="w-5 h-5 text-primary" />
@@ -25,8 +25,8 @@ export default async function ProjectsPage() {
             <p className="text-sm text-muted">{projects.length} total proyek</p>
           </div>
         </div>
-        <Link href="/projects/new" className="btn btn-primary">
-          <Plus className="w-4 h-4" /> Proyek Baru
+        <Link href="/projects/new" className="btn btn-primary h-10 text-sm px-4">
+          <Plus className="w-4 h-4 mr-2" /> Proyek Baru
         </Link>
       </div>
 
@@ -50,8 +50,8 @@ export default async function ProjectsPage() {
 
             return (
               <Link key={project.id} href={`/projects/${project.id}`}>
-                <div className="bg-surface border border-border rounded-xl p-5 hover:border-primary/50 transition-all group cursor-pointer">
-                  <div className="flex items-center justify-between">
+                <div className="bg-surface border border-border rounded-xl p-6 hover:border-primary/50 transition-all group cursor-pointer">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                       <div className={`w-3 h-3 rounded-full ${project.status === "ACTIVE" ? "bg-emerald-500" : "bg-zinc-500"}`}></div>
                       <div>
@@ -60,7 +60,7 @@ export default async function ProjectsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-8">
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-8">
                       <div className="text-center">
                         <div className="flex items-center gap-2 text-sm text-muted mb-1">
                           <CheckCircle className="w-4 h-4" />

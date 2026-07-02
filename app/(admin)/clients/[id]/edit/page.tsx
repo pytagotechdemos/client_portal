@@ -51,7 +51,7 @@ export default async function EditClientPage({ params }: { params: { id: string 
         </div>
 
         <div className="pt-4 flex justify-end">
-          <SubmitButton label="Perbarui Klien" />
+          <SubmitButton className="w-full">Simpan Perubahan</SubmitButton>
         </div>
       </form>
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Inter } from "next/font/google";
 import { prisma } from "@/lib/prisma";
 
@@ -29,7 +30,7 @@ export default async function ClientLayout({
         )}
         <div className="flex gap-4 items-center">
           <span className="text-sm font-medium text-[#64748B]">Client Portal</span>
-          <button className="text-sm border border-[#E2E8F0] px-3 py-1 rounded">Logout</button>
+          <button className="text-sm font-medium border border-[#E2E8F0] hover:bg-[#F8FAFC] h-10 px-4 rounded-md transition-colors">Logout</button>
         </div>
       </header>
       

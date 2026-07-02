@@ -13,7 +13,7 @@ export function ReviewSubmitButtons() {
         name="action" 
         value="APPROVED" 
         disabled={pending}
-        className="w-full bg-[#10B981] hover:bg-[#059669] text-white py-3 rounded-lg font-bold shadow transition-colors flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full bg-[#10B981] hover:bg-[#059669] text-white h-10 px-4 text-sm font-medium rounded-md shadow transition-colors flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -27,7 +27,7 @@ export function ReviewSubmitButtons() {
         name="action" 
         value="APPROVED_WITH_TWEAKS" 
         disabled={pending}
-        className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white py-2 rounded-lg font-bold shadow transition-colors flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white h-10 px-4 text-sm font-medium rounded-md shadow transition-colors flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {pending ? "Memproses..." : "Setujui (dengan revisi kecil)"}
       </button>
@@ -53,7 +53,7 @@ export function ReviewSubmitButtons() {
         name="action" 
         value="REVISION_REQUESTED" 
         disabled={pending}
-        className="w-full bg-white border border-[#EF4444] text-[#EF4444] hover:bg-[#FEF2F2] py-2 rounded-lg font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full bg-white border border-[#EF4444] text-[#EF4444] hover:bg-[#FEF2F2] h-10 px-4 text-sm font-medium rounded-md transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {pending ? "Memproses..." : "Ajukan Revisi"}
       </button>

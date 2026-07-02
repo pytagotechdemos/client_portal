@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { InvoicePDF } from "./InvoicePDF";
 import { Download } from "lucide-react";
-import { Project, Client, Invoice } from "@prisma/client";
+import { Project, AgencyClient, Invoice } from "@prisma/client";
 
 interface ProjectWithClient extends Project {
-  client: Client;
+  client: AgencyClient;
 }
 
 export function PDFExportButton({ invoice, project }: { invoice: Invoice, project: ProjectWithClient }) {
@@ -19,7 +19,7 @@ export function PDFExportButton({ invoice, project }: { invoice: Invoice, projec
 
   if (!isMounted) {
     return (
-      <button disabled className="flex items-center gap-2 bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground px-4 py-2 rounded-md transition-colors text-sm font-medium shadow-sm opacity-70">
+      <button disabled className="flex items-center gap-2 bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground h-10 px-4 text-sm font-medium rounded-md transition-colors shadow-sm opacity-70">
         <Download className="w-4 h-4" />
         Preparing PDF...
       </button>
@@ -30,9 +30,8 @@ export function PDFExportButton({ invoice, project }: { invoice: Invoice, projec
     <PDFDownloadLink
       document={<InvoicePDF invoice={invoice} project={project} />}
       fileName={`INV-${invoice.id.substring(invoice.id.length - 6).toUpperCase()}.pdf`}
-      className="flex items-center gap-2 bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground px-4 py-2 rounded-md transition-colors text-sm font-medium shadow-sm"
+      className="flex items-center gap-2 bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground h-10 px-4 text-sm font-medium rounded-md transition-colors shadow-sm"
     >
-      {/* @ts-expect-error Types from react-pdf are mismatching slightly */}
       {({ loading }) =>
         loading ? (
           <>

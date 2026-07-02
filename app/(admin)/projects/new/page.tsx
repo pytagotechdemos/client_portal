@@ -22,7 +22,7 @@ export default function NewProjectPage() {
             <textarea data-testid="project-desc-input" name="description" rows={3} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-muted mb-1">Tanggal Mulai *</label>
               <input data-testid="project-start-input" required name="startDate" type="date" className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6] color-scheme-dark" />
@@ -43,7 +43,7 @@ export default function NewProjectPage() {
             <input data-testid="project-client-name" required name="clientName" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-muted mb-1">Nama Kontak *</label>
               <input data-testid="project-contact-name" required name="contactName" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
@@ -60,9 +60,9 @@ export default function NewProjectPage() {
           </div>
         </section>
 
-        <div className="pt-4 flex justify-end gap-3">
-          <Link href="/projects" className="px-4 py-2 text-muted hover:text-white transition-colors">Batal</Link>
-          <SubmitButton data-testid="project-submit" className="bg-primary hover:bg-primary-hover text-white">Buat Proyek</SubmitButton>
+        <div className="pt-4 flex flex-wrap justify-end gap-3">
+          <Link href="/projects" className="h-10 text-sm px-4 flex items-center justify-center text-muted hover:text-white transition-colors border border-transparent">Batal</Link>
+          <SubmitButton data-testid="project-submit" className="h-10 text-sm px-4 bg-primary hover:bg-primary-hover text-white rounded-md">Buat Proyek</SubmitButton>
         </div>
       </form>
     </div>

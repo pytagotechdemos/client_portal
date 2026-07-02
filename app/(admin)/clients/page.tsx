@@ -14,7 +14,7 @@ export default async function ClientsPage() {
 
   return (
     <FadeIn className="max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <Users className="w-5 h-5 text-primary" />
@@ -24,12 +24,12 @@ export default async function ClientsPage() {
             <p className="text-sm text-muted">{clients.length} total klien</p>
           </div>
         </div>
-        <Link href="/clients/new" className="btn btn-primary">
-          <Plus className="w-4 h-4" /> Tambah Klien
+        <Link href="/clients/new" className="btn btn-primary h-10 text-sm px-4">
+          <Plus className="w-4 h-4 mr-2" /> Tambah Klien
         </Link>
       </div>
 
-      <div className="bg-surface border border-border rounded-xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-xl overflow-hidden overflow-x-auto">
         {clients.length === 0 ? (
           <div className="p-12 text-center">
             <div className="w-16 h-16 rounded-full bg-surface-light flex items-center justify-center mx-auto mb-4">
@@ -41,7 +41,7 @@ export default async function ClientsPage() {
             </Link>
           </div>
         ) : (
-          <>
+          <div className="min-w-[800px]">
             <div className="p-4 border-b border-border bg-surface-light/50 grid grid-cols-12 gap-4">
               <div className="col-span-4 font-semibold text-sm text-muted">Klien</div>
               <div className="col-span-4 font-semibold text-sm text-muted">Kontak</div>
@@ -75,7 +75,7 @@ export default async function ClientsPage() {
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
     </FadeIn>

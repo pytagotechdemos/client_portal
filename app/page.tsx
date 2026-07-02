@@ -10,7 +10,7 @@ export default async function Home() {
   }
 
   // Assuming Klien would have "client" role and Admin would have "ADMIN"
-  if (session.user.role === "ADMIN") {
+  if (session?.user?.role === "ADMIN") {
     redirect("/dashboard");
   } else {
     // We don't have project tokens for a global client dashboard in this MVP, 

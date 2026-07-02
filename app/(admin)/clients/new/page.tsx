@@ -38,7 +38,7 @@ export default function NewClientPage() {
         </div>
 
         <div className="pt-4 flex justify-end">
-          <SubmitButton label="Buat Klien" />
+          <SubmitButton>Buat Klien</SubmitButton>
         </div>
       </form>
     </div>

@@ -90,21 +90,21 @@ export default function InvoiceForm({ projectId, deliverables }: { projectId: st
         />
       </div>
 
-      <div className="flex justify-between items-center pt-4 border-t border-border">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-border">
         <div className="text-xl text-white">
           Total: <span className="font-bold text-[#10B981]">Rp {totalAmount.toLocaleString('id-ID')}</span>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3 w-full sm:w-auto">
           <Link 
             href={`/projects/${projectId}`}
-            className="px-4 py-2 text-white bg-surface-hover hover:bg-muted border border-border rounded-md transition-colors"
+            className="h-10 text-sm px-4 flex items-center justify-center text-white bg-surface-hover hover:bg-muted border border-border rounded-md transition-colors"
           >
             Batal
           </Link>
           <button 
             type="submit" 
             disabled={deliverables.length === 0 || isSubmitting}
-            className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-md transition-colors disabled:opacity-50"
+            className="h-10 text-sm px-4 flex items-center justify-center bg-[#10B981] hover:bg-[#059669] text-white rounded-md transition-colors disabled:opacity-50"
           >
             {isSubmitting ? "Membuat..." : "Buat Tagihan"}
           </button>

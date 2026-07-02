@@ -103,7 +103,7 @@ export default async function SettingsPage() {
         </section>
 
         <div className="pt-4 flex justify-end">
-          <SubmitButton label="Simpan Pengaturan" />
+          <SubmitButton>Simpan Pengaturan</SubmitButton>
         </div>
       </form>
     </div>

@@ -19,7 +19,7 @@ export function DeleteProjectButton({ id, projectName }: { id: string, projectNa
     <button 
       onClick={handleDelete}
       disabled={isPending}
-      className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md transition-colors"
+      className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-4 h-10 rounded-md transition-colors text-sm font-medium flex items-center justify-center whitespace-nowrap"
       title="Delete Project"
     >
       <span className="flex items-center gap-2"><Trash2 className="w-4 h-4" /> Delete</span>

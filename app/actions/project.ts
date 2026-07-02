@@ -125,7 +125,7 @@ const updateProjectSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   description: z.string().optional(),
-  status: z.enum(["ACTIVE", "COMPLETED", "PAUSED"]),
+  status: z.enum(["ACTIVE", "COMPLETED", "ON_HOLD", "CANCELLED"]),
   startDate: z.string().pipe(z.coerce.date()),
   deadline: z.string().optional().transform(str => str ? new Date(str) : null),
 });

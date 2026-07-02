@@ -33,7 +33,7 @@ export function DuitkuPaymentButton({ invoiceId, projectId }: { invoiceId: strin
     <button 
       onClick={handlePayment}
       disabled={isLoading}
-      className="bg-[#10B981] hover:bg-[#059669] text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2 font-medium"
+      className="bg-[#10B981] hover:bg-[#059669] text-white h-10 px-4 text-sm font-medium rounded-md transition-colors flex items-center gap-2"
     >
       <CreditCard className="w-4 h-4" />
       {isLoading ? "Processing..." : "Pay with Duitku"}

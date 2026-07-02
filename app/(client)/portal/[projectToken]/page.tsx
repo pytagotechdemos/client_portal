@@ -52,7 +52,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
   return (
     <div>
       {/* Hero Card */}
-      <div className="bg-white p-5 md:p-8 rounded-xl border border-[#E2E8F0] shadow-md mb-8 relative overflow-hidden">
+      <div className="bg-white p-6 md:p-8 rounded-xl border border-[#E2E8F0] shadow-md mb-8 relative overflow-hidden">
         {/* Subtle Gradient background */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
         
@@ -109,14 +109,14 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
               </h3>
               <div className="grid gap-4">
                 {needsReview.map((del) => (
-                  <div key={del.id} className="bg-white border-2 border-[#FCD34D] rounded-xl p-5 md:p-6 flex justify-between items-center shadow-md hover:-translate-y-1 transition-all">
+                  <div key={del.id} className="bg-white border-2 border-[#FCD34D] rounded-xl p-6 flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center shadow-md hover:-translate-y-1 transition-all">
                     <div>
                       <h4 className="text-lg font-bold text-foreground">{del.name}</h4>
                       <p className="text-sm text-[#64748B] mt-1">v{del.currentVersion} siap untuk ditinjau.</p>
                     </div>
                     <Link 
                       href={`/portal/${project.portalToken}/deliverable/${del.id}`}
-                      className="bg-primary-hover hover:bg-[#6D28D9] text-white px-4 md:px-6 py-2 rounded-md font-medium transition-colors text-sm md:text-base text-center"
+                      className="bg-primary-hover hover:bg-[#6D28D9] text-white h-10 px-4 flex items-center justify-center rounded-md font-medium transition-colors text-sm w-full sm:w-auto"
                     >
                       Tinjau Sekarang
                     </Link>
@@ -137,7 +137,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
               ) : (
                 <div className="divide-y divide-[#E2E8F0]">
                   {others.map((del) => (
-                    <div key={del.id} className="p-4 md:p-5 flex justify-between items-center hover:bg-[#F8FAFC] transition-colors">
+                    <div key={del.id} className="p-5 flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center hover:bg-[#F8FAFC] transition-colors">
                       <div className="flex items-center gap-4">
                         <StatusBadge status={del.status.toLowerCase()} />
                         <div>
@@ -148,7 +148,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
                       {del.status !== "NOT_STARTED" && (
                         <Link 
                           href={`/portal/${project.portalToken}/deliverable/${del.id}`}
-                          className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-md transition-colors"
+                          className="inline-flex items-center justify-center h-10 px-4 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-md transition-colors w-full sm:w-auto"
                         >
                           Lihat Detail &rarr;
                         </Link>
@@ -174,14 +174,14 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
               ) : (
                 <div className="divide-y divide-[#E2E8F0]">
                   {project.briefs.map(brief => (
-                    <div key={brief.id} className="p-4 md:p-5 flex justify-between items-center hover:bg-[#F8FAFC] transition-colors">
+                    <div key={brief.id} className="p-5 flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center hover:bg-[#F8FAFC] transition-colors">
                       <div>
                         <p className="font-medium text-foreground">{brief.title}</p>
                         <p className="text-xs text-[#64748B]">
                           {brief.category} • Diunggah oleh {brief.uploadedBy} pada {new Date(brief.uploadedAt).toLocaleDateString('id-ID')}
                         </p>
                       </div>
-                      <a href={brief.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-md transition-colors">
+                      <a href={brief.fileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center h-10 px-4 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-md transition-colors w-full sm:w-auto">
                         Lihat &rarr;
                       </a>
                     </div>
@@ -193,7 +193,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
           
           <div className="md:col-span-1">
             <h3 className="text-xl font-bold text-foreground mb-4">Unggah Aset</h3>
-            <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 md:p-6 shadow-md">
+            <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-md">
               <form action={handleCreateBrief} className="space-y-4">
                 <input type="hidden" name="projectId" value={project.id} />
                 <input type="hidden" name="portalToken" value={project.portalToken} />
@@ -219,11 +219,9 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
                   <input required type="url" name="fileUrl" className="w-full bg-white border border-[#E2E8F0] rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary-hover" placeholder="https://..." />
                 </div>
                 
-                <SubmitButton 
-                  label="Unggah Aset" 
-                  pendingLabel="Mengunggah..." 
-                  className="w-full bg-primary-hover hover:bg-[#6D28D9] text-white px-4 py-2 rounded-md font-medium transition-colors"
-                />
+                <SubmitButton className="w-full bg-primary-hover hover:bg-[#6D28D9] text-white h-10 px-4 text-sm rounded-md font-medium transition-colors">
+                  Unggah Aset
+                </SubmitButton>
               </form>
             </div>
           </div>
@@ -242,7 +240,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
               ) : (
                 <div className="divide-y divide-[#E2E8F0]">
                   {project.changeRequests.map(cr => (
-                    <div key={cr.id} className="p-5 md:p-6 flex flex-col gap-3">
+                    <div key={cr.id} className="p-6 flex flex-col gap-3">
                       <div className="flex justify-between items-start">
                         <div>
                           <StatusBadge status={cr.status.toLowerCase()} />
@@ -264,7 +262,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
           
           <div className="md:col-span-1">
             <h3 className="text-xl font-bold text-foreground mb-4">Permintaan Baru</h3>
-            <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-md p-5 md:p-6">
+            <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-md p-6">
               <p className="text-sm text-[#64748B] mb-4">Ajukan permintaan untuk pekerjaan di luar ruang lingkup awal. Kami akan meninjau dan mendiskusikannya dengan Anda.</p>
               <form action={handleCreateCR} className="space-y-4">
                 <input type="hidden" name="projectId" value={project.id} />
@@ -282,11 +280,9 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
                   />
                 </div>
                 
-                <SubmitButton 
-                  label="Ajukan Permintaan" 
-                  pendingLabel="Mengajukan..." 
-                  className="w-full bg-primary-hover hover:bg-[#6D28D9] text-white px-4 py-2 rounded-md font-medium transition-colors"
-                />
+                <SubmitButton className="w-full bg-primary-hover hover:bg-[#6D28D9] text-white h-10 px-4 text-sm rounded-md font-medium transition-colors">
+                  Ajukan Permintaan
+                </SubmitButton>
               </form>
             </div>
           </div>
@@ -304,15 +300,15 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
             ) : (
               <div className="divide-y divide-[#E2E8F0]">
                 {project.invoices.map(invoice => (
-                  <div key={invoice.id} className="p-5 flex justify-between items-center hover:bg-[#F8FAFC] transition-colors">
+                  <div key={invoice.id} className="p-6 flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center hover:bg-[#F8FAFC] transition-colors">
                     <div>
                       <p className="font-bold text-foreground text-lg">{invoice.invoiceNumber || invoice.id.substring(0, 8).toUpperCase()}</p>
                       <p className="text-sm text-[#64748B] mt-1">
                         Diterbitkan pada {new Date(invoice.createdAt).toLocaleDateString('id-ID')}
                       </p>
                     </div>
-                    <div className="flex items-center gap-6">
-                      <div className="text-right">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 w-full sm:w-auto">
+                      <div className="text-left sm:text-right">
                         <p className="font-bold text-foreground">Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</p>
                         <p className={`text-xs font-medium uppercase mt-1 ${invoice.status === 'PAID' ? 'text-[#10B981]' : invoice.status === 'OVERDUE' ? 'text-[#EF4444]' : 'text-[#F59E0B]'}`}>
                           {invoice.status === 'PAID' ? 'LUNAS' : invoice.status === 'SENT' ? 'TERKIRIM' : invoice.status === 'OVERDUE' ? 'JATUH TEMPO' : 'DRAFT'}
@@ -320,7 +316,7 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
                       </div>
                       <Link
                         href={`/portal/${project.portalToken}/invoice/${invoice.id}`}
-                        className="bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground font-medium px-4 py-2 rounded-md shadow-sm transition-colors text-sm whitespace-nowrap"
+                        className="bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground font-medium h-10 px-4 flex items-center justify-center rounded-md shadow-sm transition-colors text-sm whitespace-nowrap w-full sm:w-auto"
                       >
                         Lihat Tagihan
                       </Link>

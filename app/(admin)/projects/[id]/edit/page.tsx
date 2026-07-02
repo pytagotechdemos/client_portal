@@ -8,7 +8,7 @@ import { SubmitButton } from "@/components/shared/SubmitButton";
 
 export default async function EditProjectPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !session.user || session.user.role !== "ADMIN") {
     redirect("/api/auth/signin");
   }
 

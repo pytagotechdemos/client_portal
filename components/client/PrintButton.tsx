@@ -4,7 +4,7 @@ export function PrintButton() {
   return (
     <button 
       onClick={() => window.print()}
-      className="bg-foreground hover:bg-[#334155] text-white font-medium px-4 py-2 rounded-md shadow transition-colors flex items-center gap-2"
+      className="bg-foreground hover:bg-[#334155] text-white h-10 px-4 text-sm font-medium rounded-md shadow transition-colors flex items-center gap-2"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="6 9 6 2 18 2 18 9"></polyline>

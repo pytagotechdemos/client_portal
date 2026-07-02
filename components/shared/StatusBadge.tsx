@@ -19,17 +19,17 @@ const badgeVariants = cva(
   }
 );
 
-export interface StatusBadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+export interface StatusBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  status?: "not_started" | "in_progress" | "review" | "approved" | "revision_requested" | string | null;
   label?: string;
 }
 
 export function StatusBadge({ className, status, label, ...props }: StatusBadgeProps) {
   // Replace ALL underscores with spaces
   const displayLabel = label || status?.replace(/_/g, " ").toUpperCase();
+  const variantStatus = status as VariantProps<typeof badgeVariants>["status"];
   return (
-    <div className={cn(badgeVariants({ status }), className)} {...props}>
+    <div className={cn(badgeVariants({ status: variantStatus }), className)} {...props}>
       {displayLabel}
     </div>
   );

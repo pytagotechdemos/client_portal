@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { Project, Client, Invoice } from "@prisma/client";
+import { Project, AgencyClient, Invoice } from "@prisma/client";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 type InvoiceItem = { name: string; price: number };
 
 interface ProjectWithClient extends Project {
-  client: Client;
+  client: AgencyClient;
 }
 
 interface InvoicePDFProps {

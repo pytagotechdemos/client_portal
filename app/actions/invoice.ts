@@ -57,7 +57,7 @@ export async function createInvoice(formData: FormData) {
   const settings = await prisma.agencySettings.findFirst();
   const portalUrl = `${process.env.NEXTAUTH_URL}/portal/${project.portalToken}?tab=invoices`;
 
-  const html = render(
+  const html = await render(
     React.createElement(NewInvoiceEmail, {
       clientName: project.client.contactName,
       projectName: project.name,

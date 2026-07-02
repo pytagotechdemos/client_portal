@@ -40,7 +40,7 @@ export default async function ClientReviewPage({
         <span className="text-foreground font-medium">{deliverable.name}</span>
       </div>
 
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center mb-8">
         <div>
           <h2 className="text-2xl font-bold text-foreground">{deliverable.name}</h2>
           <p className="text-sm text-[#64748B]">Versi {deliverable.currentVersion}</p>
@@ -52,7 +52,7 @@ export default async function ClientReviewPage({
         {/* Preview Area */}
         <div className="lg:col-span-2">
           {latestVersion ? (
-            <div className="bg-white p-5 md:p-6 rounded-xl border border-[#E2E8F0] shadow-md mb-6">
+            <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-md mb-6">
               <FilePreview fileUrl={latestVersion.fileUrl} linkUrl={latestVersion.linkUrl} title={deliverable.name} />
               
               {latestVersion.pmNotes && (
@@ -73,7 +73,7 @@ export default async function ClientReviewPage({
         <div className="lg:col-span-1 space-y-6">
           {/* Review Form */}
           {isPendingReview && latestVersion && (
-            <div className="bg-white p-5 md:p-6 rounded-xl border-2 border-[#7C3AED] shadow-md sticky top-6">
+            <div className="bg-white p-6 rounded-xl border-2 border-[#7C3AED] shadow-md sticky top-6">
               <h3 className="text-lg font-bold text-foreground mb-4">Tinjauan Anda</h3>
               
               <form action={submitReview} className="space-y-4">
@@ -87,7 +87,7 @@ export default async function ClientReviewPage({
           )}
 
           {/* Revision History */}
-          <div className="bg-white p-5 md:p-6 rounded-xl border border-[#E2E8F0] shadow-md">
+          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-md">
             <h3 className="font-bold text-foreground mb-4">Riwayat Revisi</h3>
             <div className="space-y-4 relative before:absolute before:inset-0 before:ml-3 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#E2E8F0] before:to-transparent">
               {deliverable.versions.map((ver) => (

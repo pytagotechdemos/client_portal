@@ -39,7 +39,7 @@ export function FilePreview({ fileUrl, linkUrl, title = "Deliverable" }: { fileU
     return (
       <div className="p-8 bg-surface border border-border rounded-lg text-center">
         <p className="text-muted mb-4">No preview available for this file type.</p>
-        <a href={fileUrl} download className="bg-background border border-border text-foreground px-4 py-2 rounded-md font-medium hover:bg-surface">
+        <a href={fileUrl} download className="inline-flex items-center justify-center bg-background border border-border text-foreground h-10 px-4 text-sm rounded-md font-medium hover:bg-surface transition-colors">
           Download File
         </a>
       </div>

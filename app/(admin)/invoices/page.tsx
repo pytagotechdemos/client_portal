@@ -27,7 +27,7 @@ export default async function InvoicesPage() {
 
   return (
     <FadeIn className="max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
             <Receipt className="w-5 h-5 text-emerald-500" />
@@ -50,7 +50,7 @@ export default async function InvoicesPage() {
         </div>
       </div>
 
-      <div className="bg-surface border border-border rounded-xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-xl overflow-hidden overflow-x-auto">
         {invoices.length === 0 ? (
           <div className="p-12 text-center">
             <div className="w-16 h-16 rounded-full bg-surface-light flex items-center justify-center mx-auto mb-4">
@@ -59,7 +59,7 @@ export default async function InvoicesPage() {
             <p className="text-muted">Belum ada tagihan yang dibuat.</p>
           </div>
         ) : (
-          <>
+          <div className="min-w-[800px]">
             <div className="p-4 border-b border-border bg-surface-light/50 grid grid-cols-12 gap-4">
               <div className="col-span-2 font-semibold text-sm text-muted">No. Tagihan</div>
               <div className="col-span-4 font-semibold text-sm text-muted">Proyek / Klien</div>
@@ -104,7 +104,7 @@ export default async function InvoicesPage() {
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
     </FadeIn>

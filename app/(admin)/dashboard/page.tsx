@@ -53,7 +53,7 @@ export default async function DashboardPage() {
 
   return (
     <FadeIn className="max-w-6xl mx-auto space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-white">Ringkasan Dashboard</h2>
           <p className="text-sm text-muted mt-1">Selamat datang kembali, {session?.user?.name || 'Admin'}</p>
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-surface border border-border rounded-xl p-5 hover:border-emerald-500/50 transition-all group">
+        <div className="bg-surface border border-border rounded-xl p-6 hover:border-emerald-500/50 transition-all group">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
               <DollarSign className="w-5 h-5 text-emerald-500" />
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
           <p className="text-xs text-muted">Total Pendapatan</p>
         </div>
 
-        <div className="bg-surface border border-border rounded-xl p-5 hover:border-amber-500/50 transition-all group">
+        <div className="bg-surface border border-border rounded-xl p-6 hover:border-amber-500/50 transition-all group">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
               <Clock className="w-5 h-5 text-amber-500" />
@@ -84,7 +84,7 @@ export default async function DashboardPage() {
           <p className="text-xs text-muted">Belum Dibayar</p>
         </div>
 
-        <div className="bg-surface border border-border rounded-xl p-5 hover:border-primary/50 transition-all group">
+        <div className="bg-surface border border-border rounded-xl p-6 hover:border-primary/50 transition-all group">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Briefcase className="w-5 h-5 text-primary" />
@@ -95,7 +95,7 @@ export default async function DashboardPage() {
           <p className="text-xs text-muted">Proyek Aktif</p>
         </div>
 
-        <div className="bg-surface border border-border rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+        <div className="bg-surface border border-border rounded-xl p-6 hover:border-cyan-500/50 transition-all group">
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
               <Users className="w-5 h-5 text-cyan-400" />

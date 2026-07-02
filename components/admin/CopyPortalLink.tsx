@@ -17,7 +17,7 @@ export function CopyPortalLink({ portalPath }: { portalPath: string }) {
     <button
       data-testid="copy-portal-link"
       onClick={handleCopy}
-      className="bg-surface border border-border hover:bg-surface-hover text-white px-4 py-2 rounded-md transition-colors"
+      className="bg-surface border border-border hover:bg-surface-hover text-white px-4 h-10 rounded-md transition-colors text-sm font-medium flex items-center justify-center whitespace-nowrap"
     >
       Copy Portal Link
     </button>
