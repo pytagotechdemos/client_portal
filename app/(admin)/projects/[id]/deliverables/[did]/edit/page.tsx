@@ -6,9 +6,9 @@ import Link from "next/link";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { ArrowLeft } from "lucide-react";
 
-export default async function EditDeliverablePage({ params }: { params: { id: string, delId: string } }) {
+export default async function EditDeliverablePage({ params }: { params: { id: string, did: string } }) {
   const deliverable = await prisma.deliverable.findUnique({
-    where: { id: params.delId }
+    where: { id: params.did }
   });
   
   const adminUsers = await prisma.user.findMany({
