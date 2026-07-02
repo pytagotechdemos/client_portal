@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createInvoice } from "@/app/actions/invoice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Deliverable = {
   id: string;
@@ -43,7 +44,7 @@ export default function InvoiceForm({ projectId, deliverables }: { projectId: st
       router.push(`/projects/${projectId}`);
     } catch (error) {
       console.error(error);
-      alert("Gagal membuat tagihan");
+      toast.error("Gagal membuat tagihan");
       setIsSubmitting(false);
     }
   };

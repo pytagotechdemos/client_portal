@@ -7,9 +7,11 @@ import { updateChangeRequestStatus } from "@/app/actions/changeRequest";
 import { DeleteProjectButton } from "@/components/admin/DeleteProjectButton";
 import { DeleteDeliverableButton } from "@/components/admin/DeleteDeliverableButton";
 import { DeleteInvoiceButton } from "@/components/admin/DeleteInvoiceButton";
+import { DeleteChangeRequestButton } from "@/components/admin/DeleteChangeRequestButton";
 import { CommentSection } from "@/components/shared/CommentSection";
 import { CopyPortalLink } from "@/components/admin/CopyPortalLink";
-import { ArrowLeft, Edit } from "lucide-react";
+import { DeleteBriefButton } from "@/components/admin/DeleteBriefButton";
+import { ArrowLeft, Edit, Box, FileText, GitPullRequest, Receipt } from "lucide-react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
@@ -175,8 +177,11 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                 </div>
                 
                 {project.deliverables.length === 0 ? (
-                  <div className="p-8 text-center text-muted">
-                    Belum ada hasil pekerjaan. Buat yang pertama di bawah.
+                  <div className="p-8 flex flex-col items-center justify-center text-center text-muted">
+                    <div className="w-12 h-12 bg-surface-hover rounded-full flex items-center justify-center mb-4">
+                      <Box className="w-6 h-6 text-muted" />
+                    </div>
+                    Belum ada hasil pekerjaan. Buat yang pertama di atas.
                   </div>
                 ) : (
                   <div className="divide-y divide-[#3F3F46]">
@@ -220,13 +225,16 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
               </div>
               
               {project.briefs.length === 0 ? (
-                <div className="p-8 text-center text-muted">
+                <div className="p-8 flex flex-col items-center justify-center text-center text-muted">
+                  <div className="w-12 h-12 bg-surface-hover rounded-full flex items-center justify-center mb-4">
+                    <FileText className="w-6 h-6 text-muted" />
+                  </div>
                   Belum ada brief yang diunggah.
                 </div>
               ) : (
                 <div className="divide-y divide-[#3F3F46]">
                   {project.briefs.map(brief => (
-                    <div key={brief.id} className="p-4 hover:bg-surface-hover hover:-translate-y-0.5 hover:shadow-md transition-all relative flex justify-between items-center">
+                    <div key={brief.id} className="p-4 hover:bg-surface-hover hover:-translate-y-0.5 hover:shadow-md transition-all relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                       <div>
                         <p className="text-white font-medium">{brief.title}</p>
                         <p className="text-xs text-muted mt-1">{brief.category} • Diunggah oleh {brief.uploadedBy} pada {new Date(brief.uploadedAt).toLocaleDateString('id-ID')}</p>
@@ -238,6 +246,9 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                         <Link href={`/projects/${project.id}/briefs/${brief.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Brief">
                           <Edit className="w-4 h-4" />
                         </Link>
+                        <div className="z-10 relative">
+                          <DeleteBriefButton id={brief.id} projectId={project.id} />
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -253,7 +264,10 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
               </div>
               
               {project.changeRequests.length === 0 ? (
-                <div className="p-8 text-center text-muted">
+                <div className="p-8 flex flex-col items-center justify-center text-center text-muted">
+                  <div className="w-12 h-12 bg-surface-hover rounded-full flex items-center justify-center mb-4">
+                    <GitPullRequest className="w-6 h-6 text-muted" />
+                  </div>
                   Tidak ada permintaan perubahan.
                 </div>
               ) : (
@@ -266,9 +280,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                           <p className="text-white mt-2">{cr.description}</p>
                           <p className="text-xs text-muted mt-1">Diajukan oleh {cr.requestedBy} pada {new Date(cr.createdAt).toLocaleDateString('id-ID')}</p>
                         </div>
-                        <Link href={`/projects/${project.id}/change-requests/${cr.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Change Request">
-                          <Edit className="w-4 h-4" />
-                        </Link>
+                        <div className="flex items-center gap-4">
+                          <Link href={`/projects/${project.id}/change-requests/${cr.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Change Request">
+                            <Edit className="w-4 h-4" />
+                          </Link>
+                          <DeleteChangeRequestButton id={cr.id} />
+                        </div>
                       </div>
 
                       {cr.responseNote && (
@@ -278,7 +295,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                       )}
 
                       {cr.status === "PENDING" && (
-                        <form action={updateChangeRequestStatus} className="flex gap-2 mt-2">
+                        <form action={updateChangeRequestStatus} className="flex flex-col sm:flex-row gap-2 mt-2">
                           <input type="hidden" name="changeRequestId" value={cr.id} />
                           <input type="hidden" name="projectId" value={project.id} />
                           <input type="hidden" name="respondedBy" value={session.user.name || "Admin"} />
@@ -311,13 +328,16 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
               </div>
               
               {project.invoices.length === 0 ? (
-                <div className="p-8 text-center text-muted">
+                <div className="p-8 flex flex-col items-center justify-center text-center text-muted">
+                  <div className="w-12 h-12 bg-surface-hover rounded-full flex items-center justify-center mb-4">
+                    <Receipt className="w-6 h-6 text-muted" />
+                  </div>
                   Belum ada tagihan yang dibuat.
                 </div>
               ) : (
                 <div className="divide-y divide-[#3F3F46]">
                   {project.invoices.map(inv => (
-                    <div key={inv.id} className="p-4 flex justify-between items-center hover:bg-surface-hover transition-colors">
+                    <div key={inv.id} className="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-surface-hover transition-colors gap-4">
                       <div>
                         <div className="flex items-center gap-3">
                           <StatusBadge status={inv.status.toLowerCase()} />

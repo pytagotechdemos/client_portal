@@ -48,13 +48,16 @@ export async function createChangeRequest(formData: FormData) {
   }
 }
 
-export async function deleteChangeRequest(id: string) {
+export async function deleteChangeRequest(id: string, portalToken?: string) {
   try {
     const cr = await prisma.changeRequest.findUnique({ where: { id } });
     if (!cr) throw new Error("Not found");
     
     await prisma.changeRequest.delete({ where: { id } });
     revalidatePath(`/projects/${cr.projectId}`);
+    if (portalToken) {
+      revalidatePath(`/portal/${portalToken}`);
+    }
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Failed to delete change request");
   }

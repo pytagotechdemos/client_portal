@@ -9,7 +9,13 @@ export default async function ClientsPage({ searchParams }: { searchParams?: { q
   const q = searchParams?.q || "";
 
   const clients = await prisma.agencyClient.findMany({
-    where: q ? { name: { contains: q, mode: 'insensitive' } } : undefined,
+    where: q ? {
+      OR: [
+        { name: { contains: q, mode: 'insensitive' } },
+        { companyName: { contains: q, mode: 'insensitive' } },
+        { contactEmail: { contains: q, mode: 'insensitive' } }
+      ]
+    } : undefined,
     include: {
       projects: true
     },

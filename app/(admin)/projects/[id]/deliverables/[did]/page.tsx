@@ -5,6 +5,8 @@ import Link from "next/link";
 import { revalidatePath } from "next/cache";
 import { uploadFile } from "@/lib/storage";
 import { sendEmail } from "@/lib/email";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 export default async function DeliverableDetailPage({
   params,
@@ -25,6 +27,7 @@ export default async function DeliverableDetailPage({
 
   async function uploadVersion(formData: FormData) {
     "use server";
+    const session = await getServerSession(authOptions);
     const file = formData.get("file") as File;
     const linkUrl = formData.get("linkUrl") as string;
     const pmNotes = formData.get("pmNotes") as string;
@@ -50,7 +53,7 @@ export default async function DeliverableDetailPage({
         fileUrl,
         linkUrl: linkUrl || null,
         pmNotes: pmNotes || null,
-        uploadedBy: "Admin", // TODO: Get from NextAuth session
+        uploadedBy: session?.user?.name || "Admin",
       },
     });
 

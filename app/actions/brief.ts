@@ -63,3 +63,13 @@ export async function updateBrief(formData: FormData) {
 
   revalidatePath(`/projects/${projectId}`);
 }
+
+export async function deleteBrief(id: string, projectId: string, portalToken?: string) {
+  await prisma.brief.delete({
+    where: { id }
+  });
+  revalidatePath(`/projects/${projectId}`);
+  if (portalToken) {
+    revalidatePath(`/portal/${portalToken}`);
+  }
+}

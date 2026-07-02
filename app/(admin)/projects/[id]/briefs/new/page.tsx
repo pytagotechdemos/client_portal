@@ -2,8 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { createBrief } from "@/app/actions/brief";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 export default async function NewBriefPage({ params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
   const project = await prisma.project.findUnique({
     where: { id: params.id },
   });
@@ -29,7 +32,7 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
       <div className="bg-surface border border-border rounded-lg p-6">
         <form action={handleCreateBrief} className="space-y-6">
           <input type="hidden" name="projectId" value={project.id} />
-          <input type="hidden" name="uploadedBy" value="Admin" />
+          <input type="hidden" name="uploadedBy" value={session?.user?.name || "Admin"} />
 
           <div>
             <label className="block text-sm font-medium text-white mb-2">Brief Title</label>

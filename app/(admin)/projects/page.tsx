@@ -13,7 +13,12 @@ export default async function ProjectsPage({ searchParams }: { searchParams?: { 
 
   const projects = await prisma.project.findMany({
     where: {
-      ...(q ? { name: { contains: q, mode: 'insensitive' } } : {}),
+      ...(q ? {
+        OR: [
+          { name: { contains: q, mode: 'insensitive' } },
+          { client: { name: { contains: q, mode: 'insensitive' } } }
+        ]
+      } : {}),
       ...(status ? { status } : {}),
     },
     include: {
