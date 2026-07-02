@@ -28,12 +28,12 @@ export default async function EditChangeRequestPage({ params }: { params: { id: 
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Description</label>
-            <textarea required name="description" defaultValue={cr.description} rows={4} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <textarea required name="description" defaultValue={cr.description} rows={4} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Status</label>
-            <select name="status" defaultValue={cr.status} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none">
+            <select name="status" defaultValue={cr.status} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none">
               <option value="PENDING">Pending</option>
               <option value="ACCEPTED">Accepted</option>
               <option value="REJECTED">Rejected</option>
@@ -43,7 +43,7 @@ export default async function EditChangeRequestPage({ params }: { params: { id: 
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Response Note</label>
-            <input name="responseNote" defaultValue={cr.responseNote || ""} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <input name="responseNote" defaultValue={cr.responseNote || ""} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
 
           <div className="pt-4 flex justify-end gap-3">

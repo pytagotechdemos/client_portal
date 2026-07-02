@@ -13,6 +13,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         surface: "var(--surface)",
         "surface-hover": "var(--surface-hover)",
+        "surface-light": "var(--surface-light)",
         border: "var(--border)",
         muted: "var(--muted)",
         primary: {

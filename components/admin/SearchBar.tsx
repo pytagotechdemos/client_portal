@@ -32,7 +32,7 @@ export function SearchBar({ placeholder = "Cari..." }: { placeholder?: string })
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={placeholder}
-        className="pl-9 pr-4 py-2 bg-surface-light border border-border rounded-lg text-sm text-white focus:outline-none focus:border-primary transition-colors w-full sm:w-64"
+        className="pl-9 pr-4 py-2 bg-surface-light border border-border rounded-lg text-sm text-foreground focus:outline-none focus:border-primary transition-colors w-full sm:w-64"
       />
     </div>
   );

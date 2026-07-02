@@ -154,15 +154,15 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                 
                 <div className="p-4 border-b border-border bg-background/50">
                   <form action={addDeliverable} className="flex flex-col md:flex-row gap-3">
-                    <input data-testid="add-deliverable-name" required name="name" placeholder="Nama pekerjaan (misal: Desain Logo)" className="flex-1 bg-surface border border-border rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6]" />
-                    <select data-testid="add-deliverable-type" name="type" className="bg-surface border border-border rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6] md:w-32">
+                    <input data-testid="add-deliverable-name" required name="name" placeholder="Nama pekerjaan (misal: Desain Logo)" className="flex-1 bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6]" />
+                    <select data-testid="add-deliverable-type" name="type" className="bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6] md:w-32">
                       <option value="DESIGN">Desain</option>
                       <option value="DOCUMENT">Dokumen</option>
                       <option value="VIDEO">Video</option>
                       <option value="COPY">Teks</option>
                       <option value="OTHER">Lainnya</option>
                     </select>
-                    <select data-testid="add-deliverable-assigned" name="assignedTo" className="bg-surface border border-border rounded-md px-3 py-2 text-white text-sm focus:outline-none focus:border-[#8B5CF6] md:w-40">
+                    <select data-testid="add-deliverable-assigned" name="assignedTo" className="bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6] md:w-40">
                       <option value="">Belum Ditugaskan</option>
                       {adminUsers.map(u => (
                         <option key={u.id} value={u.name}>{u.name}</option>
@@ -287,7 +287,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                             className="flex-1 bg-background border border-border rounded-md h-10 px-3 text-sm text-white focus:outline-none focus:border-[#8B5CF6]" 
                             placeholder="Alasan / Catatan (opsional)"
                           />
-                          <select name="status" className="bg-background border border-border rounded-md h-10 px-3 text-sm text-white focus:outline-none focus:border-[#8B5CF6]">
+                          <select name="status" className="bg-background border border-border rounded-md h-10 px-3 text-sm text-foreground focus:outline-none focus:border-[#8B5CF6]">
                             <option value="ACCEPTED">Terima</option>
                             <option value="REJECTED">Tolak</option>
                             <option value="DISCUSSED">Perlu Diskusi</option>

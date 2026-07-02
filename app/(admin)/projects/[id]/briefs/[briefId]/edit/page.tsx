@@ -28,17 +28,17 @@ export default async function EditBriefPage({ params }: { params: { id: string, 
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Title</label>
-            <input required name="title" defaultValue={brief.title} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <input required name="title" defaultValue={brief.title} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Category</label>
-            <input required name="category" defaultValue={brief.category} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <input required name="category" defaultValue={brief.category} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">File URL</label>
-            <input required type="url" name="fileUrl" defaultValue={brief.fileUrl} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <input required type="url" name="fileUrl" defaultValue={brief.fileUrl} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
 
           <div className="pt-4 flex justify-end gap-3">

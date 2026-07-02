@@ -28,12 +28,12 @@ export default async function EditInvoicePage({ params }: { params: { id: string
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Total Amount (Rp)</label>
-            <input required type="number" step="0.01" name="totalAmount" defaultValue={Number(invoice.totalAmount)} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <input required type="number" step="0.01" name="totalAmount" defaultValue={Number(invoice.totalAmount)} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Status</label>
-            <select name="status" defaultValue={invoice.status} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none">
+            <select name="status" defaultValue={invoice.status} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none">
               <option value="DRAFT">Draft</option>
               <option value="SENT">Sent</option>
               <option value="PAID">Paid</option>

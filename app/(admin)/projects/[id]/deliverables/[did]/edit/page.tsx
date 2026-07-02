@@ -33,12 +33,12 @@ export default async function EditDeliverablePage({ params }: { params: { id: st
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Name</label>
-            <input required name="name" defaultValue={deliverable.name} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none" />
+            <input required name="name" defaultValue={deliverable.name} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Type</label>
-            <select name="type" defaultValue={deliverable.type} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none">
+            <select name="type" defaultValue={deliverable.type} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none">
               <option value="DESIGN">Design</option>
               <option value="DOCUMENT">Document</option>
               <option value="VIDEO">Video</option>
@@ -49,7 +49,7 @@ export default async function EditDeliverablePage({ params }: { params: { id: st
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-white">Assigned To</label>
-            <select name="assignedTo" defaultValue={deliverable.assignedTo || ""} className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:border-primary focus:outline-none">
+            <select name="assignedTo" defaultValue={deliverable.assignedTo || ""} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none">
               <option value="">Unassigned</option>
               {adminUsers.map(u => (
                 <option key={u.id} value={u.name}>{u.name}</option>
