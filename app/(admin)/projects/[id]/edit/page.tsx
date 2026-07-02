@@ -41,7 +41,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
               name="name" 
               defaultValue={project.name}
               required 
-              className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-[#8B5CF6]"
+              className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -51,7 +51,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
               name="description" 
               defaultValue={project.description || ""}
               rows={3} 
-              className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-[#8B5CF6]"
+              className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             ></textarea>
           </div>
 
@@ -61,7 +61,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
               <select 
                 name="status" 
                 defaultValue={project.status}
-                className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-[#8B5CF6]"
+                className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               >
                 <option value="ACTIVE">Aktif</option>
                 <option value="PAUSED">Ditunda</option>
@@ -78,7 +78,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
                 type="date" 
                 defaultValue={new Date(project.startDate).toISOString().split('T')[0]}
                 required 
-                className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-[#8B5CF6]"
+                className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
             <div className="space-y-2">
@@ -87,7 +87,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
                 name="deadline" 
                 type="date"
                 defaultValue={project.deadline ? new Date(project.deadline).toISOString().split('T')[0] : ""}
-                className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-[#8B5CF6]"
+                className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
           </div>
@@ -96,7 +96,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
             <Link href={`/projects/${project.id}`} className="px-4 py-2 text-white bg-surface-hover rounded-md transition-colors font-medium">
               Batal
             </Link>
-            <SubmitButton className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white">
+            <SubmitButton className="bg-primary hover:bg-primary-hover text-white">
               Simpan Perubahan
             </SubmitButton>
           </div>

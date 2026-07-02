@@ -25,12 +25,11 @@ interface CommentSectionProps {
     role: "ADMIN" | "CLIENT";
   };
   deliverableId?: string;
-  theme?: "light" | "dark";
 }
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-export function CommentSection({ projectId, comments: initialComments, currentUser, deliverableId, theme = "dark" }: CommentSectionProps) {
+export function CommentSection({ projectId, comments: initialComments, currentUser, deliverableId }: CommentSectionProps) {
   const formRef = useRef<HTMLFormElement>(null);
   
   const apiUrl = deliverableId 
@@ -78,7 +77,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
     <div className="flex flex-col gap-6">
       <div ref={scrollRef} className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
         {displayComments.length === 0 ? (
-          <p className={`text-sm text-center py-4 ${theme === "dark" ? "text-muted" : "text-[#64748B]"}`}>No comments yet. Start the conversation!</p>
+          <p className="text-sm text-center py-4 text-muted">No comments yet. Start the conversation!</p>
         ) : (
           displayComments.map((comment) => (
             <div 
@@ -88,8 +87,8 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
               <div 
                 className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                   comment.authorRole === currentUser.role 
-                    ? theme === "dark" ? "bg-[#8B5CF6] text-white rounded-tr-sm" : "bg-[#7C3AED] text-white rounded-tr-sm"
-                    : theme === "dark" ? "bg-[#1E293B] border border-[#334155] text-white rounded-tl-sm" : "bg-[#F1F5F9] border border-[#E2E8F0] text-[#0F172A] rounded-tl-sm"
+                    ? "bg-primary text-white rounded-tr-sm"
+                    : "bg-surface border border-border text-foreground rounded-tl-sm"
                 }`}
               >
                 <div className="flex justify-between items-start gap-4 mb-1">
@@ -108,7 +107,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
                 </div>
                 <p className="text-sm whitespace-pre-wrap">{comment.content}</p>
               </div>
-              <span className={`text-xs mt-1 px-1 ${theme === "dark" ? "text-muted" : "text-[#64748B]"}`}>
+              <span className="text-xs mt-1 px-1 text-muted">
                 {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
               </span>
             </div>
@@ -128,11 +127,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
           placeholder="Type a message..."
           required
           rows={1}
-          className={`flex-1 rounded-xl px-4 py-3 transition-colors resize-none overflow-hidden focus:outline-none focus:ring-1 ${
-            theme === "dark" 
-              ? "bg-surface border border-border text-white focus:border-[#8B5CF6] focus:ring-[#8B5CF6]" 
-              : "bg-white border border-[#E2E8F0] text-[#0F172A] focus:border-[#7C3AED] focus:ring-[#7C3AED]"
-          }`}
+          className="flex-1 rounded-xl px-4 py-3 transition-colors resize-none overflow-hidden focus:outline-none focus:ring-1 bg-surface border border-border text-foreground focus:border-primary focus:ring-primary"
           onInput={(e) => {
             const target = e.target as HTMLTextAreaElement;
             target.style.height = "auto";

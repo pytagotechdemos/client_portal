@@ -34,8 +34,8 @@ export default async function ClientReviewPage({
 
   return (
     <div>
-      <div className="mb-4 text-sm text-[#64748B]">
-        <Link href={`/portal/${params.projectToken}`} className="hover:text-[#7C3AED]">Dashboard</Link>
+      <div className="mb-4 text-sm text-muted">
+        <Link href={`/portal/${params.projectToken}`} className="hover:text-primary">Dashboard</Link>
         {" > "}
         <span className="text-foreground font-medium">{deliverable.name}</span>
       </div>
@@ -43,7 +43,7 @@ export default async function ClientReviewPage({
       <div className="flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center mb-8">
         <div>
           <h2 className="text-2xl font-bold text-foreground">{deliverable.name}</h2>
-          <p className="text-sm text-[#64748B]">Versi {deliverable.currentVersion}</p>
+          <p className="text-sm text-muted">Versi {deliverable.currentVersion}</p>
         </div>
         <StatusBadge status={deliverable.status.toLowerCase()} />
       </div>
@@ -52,18 +52,18 @@ export default async function ClientReviewPage({
         {/* Preview Area */}
         <div className="lg:col-span-2">
           {latestVersion ? (
-            <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-md mb-6">
+            <div className="bg-surface p-6 rounded-xl border border-border shadow-md mb-6">
               <FilePreview fileUrl={latestVersion.fileUrl} linkUrl={latestVersion.linkUrl} title={deliverable.name} />
               
               {latestVersion.pmNotes && (
-                <div className="mt-6 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-4">
-                  <p className="text-xs font-bold text-[#64748B] uppercase mb-1">Catatan dari Tim</p>
+                <div className="mt-6 bg-background border border-border rounded-lg p-4">
+                  <p className="text-xs font-bold text-muted uppercase mb-1">Catatan dari Tim</p>
                   <p className="text-sm text-foreground">{latestVersion.pmNotes}</p>
                 </div>
               )}
             </div>
           ) : (
-            <div className="bg-white p-8 rounded-xl border border-[#E2E8F0] shadow-md text-center text-[#64748B]">
+            <div className="bg-surface p-8 rounded-xl border border-border shadow-md text-center text-muted">
               Belum ada file yang diunggah.
             </div>
           )}
@@ -73,7 +73,7 @@ export default async function ClientReviewPage({
         <div className="lg:col-span-1 space-y-6">
           {/* Review Form */}
           {isPendingReview && latestVersion && (
-            <div className="bg-white p-6 rounded-xl border-2 border-[#7C3AED] shadow-md sticky top-6">
+            <div className="bg-surface p-6 rounded-xl border-2 border-primary shadow-md sticky top-6">
               <h3 className="text-lg font-bold text-foreground mb-4">Tinjauan Anda</h3>
               
               <form action={submitReview} className="space-y-4">
@@ -87,25 +87,25 @@ export default async function ClientReviewPage({
           )}
 
           {/* Revision History */}
-          <div className="bg-white p-6 rounded-xl border border-[#E2E8F0] shadow-md">
+          <div className="bg-surface p-6 rounded-xl border border-border shadow-md">
             <h3 className="font-bold text-foreground mb-4">Riwayat Revisi</h3>
-            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-3 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#E2E8F0] before:to-transparent">
+            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-3 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
               {deliverable.versions.map((ver) => (
                 <div key={ver.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full border border-[#E2E8F0] bg-white text-[#64748B] text-xs font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full border border-border bg-surface text-muted text-xs font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm">
                     {ver.version}
                   </div>
                   <div className="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] py-2">
                     <p className="text-sm font-bold text-foreground">v{ver.version}</p>
-                    <p className="text-xs text-[#64748B]">{new Date(ver.uploadedAt).toLocaleDateString('id-ID')}</p>
+                    <p className="text-xs text-muted">{new Date(ver.uploadedAt).toLocaleDateString('id-ID')}</p>
                     {ver.clientAction && (
-                      <p className={`mt-1 text-xs font-medium ${ver.clientAction === 'APPROVED' ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                      <p className={`mt-1 text-xs font-medium ${ver.clientAction === 'APPROVED' ? 'text-green-500' : 'text-red-500'}`}>
                         {ver.clientAction === 'APPROVED' ? 'Disetujui' : 'Revisi Diminta'}
                       </p>
                     )}
                     {ver.clientFeedback && (
-                      <div className="mt-2 bg-[#F8FAFC] p-2 rounded border border-[#E2E8F0]">
-                        <p className="text-xs font-medium text-[#64748B] mb-1">Catatan Anda:</p>
+                      <div className="mt-2 bg-background p-2 rounded border border-border">
+                        <p className="text-xs font-medium text-muted mb-1">Catatan Anda:</p>
                         <p className="text-xs text-foreground">{ver.clientFeedback}</p>
                       </div>
                     )}

@@ -13,7 +13,7 @@ export default async function ClientLayout({
   const primaryColor = settings?.primaryColor || "#7C3AED";
   
   return (
-    <div className={`min-h-screen bg-[#F8FAFC] text-foreground ${inter.className}`}>
+    <div className={`min-h-screen bg-background text-foreground ${inter.className}`}>
       <style suppressHydrationWarning>{`
         :root {
           --primary: ${primaryColor};
@@ -22,15 +22,15 @@ export default async function ClientLayout({
       `}</style>
 
       {/* Client Header placeholder */}
-      <header className="bg-white border-b border-[#E2E8F0] px-8 py-4 flex justify-between items-center">
+      <header className="bg-surface border-b border-border px-8 py-4 flex justify-between items-center">
         {settings?.logoUrl ? (
           <img src={settings.logoUrl} alt={settings?.agencyName || "Agency Logo"} className="h-8 object-contain" />
         ) : (
           <h1 className="text-xl font-bold text-primary">{settings?.agencyName || "Pytagotech"}</h1>
         )}
         <div className="flex gap-4 items-center">
-          <span className="text-sm font-medium text-[#64748B]">Client Portal</span>
-          <button className="text-sm font-medium border border-[#E2E8F0] hover:bg-[#F8FAFC] h-10 px-4 rounded-md transition-colors">Logout</button>
+          <span className="text-sm font-medium text-muted">Client Portal</span>
+          <button className="text-sm font-medium border border-border hover:bg-surface-hover text-white h-10 px-4 rounded-md transition-colors">Logout</button>
         </div>
       </header>
       

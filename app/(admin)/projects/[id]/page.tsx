@@ -128,11 +128,11 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
         <div className="lg:col-span-2 space-y-6">
           {/* Tabs */}
           <div className="flex flex-wrap border-b border-border mb-6 overflow-x-auto">
-            <Link href={`/projects/${project.id}?tab=deliverables`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "deliverables" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Hasil Pekerjaan</Link>
-            <Link href={`/projects/${project.id}?tab=briefs`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "briefs" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Brief</Link>
-            <Link href={`/projects/${project.id}?tab=changes`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "changes" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Permintaan Perubahan</Link>
-            <Link href={`/projects/${project.id}?tab=invoices`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "invoices" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Tagihan</Link>
-            <Link href={`/projects/${project.id}?tab=discussion`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "discussion" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Diskusi</Link>
+            <Link href={`/projects/${project.id}?tab=deliverables`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "deliverables" ? "text-primary border-b-2 border-primary" : "text-muted hover:text-white"}`}>Hasil Pekerjaan</Link>
+            <Link href={`/projects/${project.id}?tab=briefs`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "briefs" ? "text-primary border-b-2 border-primary" : "text-muted hover:text-white"}`}>Brief</Link>
+            <Link href={`/projects/${project.id}?tab=changes`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "changes" ? "text-primary border-b-2 border-primary" : "text-muted hover:text-white"}`}>Permintaan Perubahan</Link>
+            <Link href={`/projects/${project.id}?tab=invoices`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "invoices" ? "text-primary border-b-2 border-primary" : "text-muted hover:text-white"}`}>Tagihan</Link>
+            <Link href={`/projects/${project.id}?tab=discussion`} className={`px-4 py-2 whitespace-nowrap ${currentTab === "discussion" ? "text-primary border-b-2 border-primary" : "text-muted hover:text-white"}`}>Diskusi</Link>
           </div>
 
           {currentTab === "discussion" && (
@@ -156,15 +156,15 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                 
                 <div className="p-4 border-b border-border bg-background/50">
                   <form action={addDeliverable} className="flex flex-col md:flex-row gap-3">
-                    <input data-testid="add-deliverable-name" required name="name" placeholder="Nama pekerjaan (misal: Desain Logo)" className="flex-1 bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6]" />
-                    <select data-testid="add-deliverable-type" name="type" className="bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6] md:w-32">
+                    <input data-testid="add-deliverable-name" required name="name" placeholder="Nama pekerjaan (misal: Desain Logo)" className="flex-1 bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
+                    <select data-testid="add-deliverable-type" name="type" className="bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary md:w-32">
                       <option value="DESIGN">Desain</option>
                       <option value="DOCUMENT">Dokumen</option>
                       <option value="VIDEO">Video</option>
                       <option value="COPY">Teks</option>
                       <option value="OTHER">Lainnya</option>
                     </select>
-                    <select data-testid="add-deliverable-assigned" name="assignedTo" className="bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6] md:w-40">
+                    <select data-testid="add-deliverable-assigned" name="assignedTo" className="bg-surface border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary md:w-40">
                       <option value="">Belum Ditugaskan</option>
                       {adminUsers.map(u => (
                         <option key={u.id} value={u.name}>{u.name}</option>
@@ -191,7 +191,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                           <div className="flex items-center gap-3">
                             <StatusBadge status={del.status.toLowerCase()} />
                             <div>
-                              <p className="text-white font-medium group-hover:text-[#8B5CF6] transition-colors">{del.name}</p>
+                              <p className="text-white font-medium group-hover:text-primary transition-colors">{del.name}</p>
                               <p className="text-xs text-muted mt-1">{del.type} • v{del.currentVersion}{del.assignedTo ? ` • Ditugaskan ke: ${del.assignedTo}` : ''}</p>
                             </div>
                           </div>
@@ -219,7 +219,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
             <div className="bg-surface border border-border rounded-lg overflow-hidden">
               <div className="p-4 border-b border-border flex justify-between items-center bg-surface-hover/30">
                 <h3 className="font-semibold text-white">Brief Proyek</h3>
-                <Link href={`/projects/${project.id}/briefs/new`} className="text-sm bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-3 py-1.5 rounded transition-colors">
+                <Link href={`/projects/${project.id}/briefs/new`} className="text-sm bg-primary hover:bg-primary-hover text-white px-3 py-1.5 rounded transition-colors">
                   Unggah Brief
                 </Link>
               </div>
@@ -301,15 +301,15 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                           <input type="hidden" name="respondedBy" value={session.user.name || "Admin"} />
                           <input 
                             name="responseNote" 
-                            className="flex-1 bg-background border border-border rounded-md h-10 px-3 text-sm text-white focus:outline-none focus:border-[#8B5CF6]" 
+                            className="flex-1 bg-background border border-border rounded-md h-10 px-3 text-sm text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
                             placeholder="Alasan / Catatan (opsional)"
                           />
-                          <select name="status" className="bg-background border border-border rounded-md h-10 px-3 text-sm text-foreground focus:outline-none focus:border-[#8B5CF6]">
+                          <select name="status" className="bg-background border border-border rounded-md h-10 px-3 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
                             <option value="ACCEPTED">Terima</option>
                             <option value="REJECTED">Tolak</option>
                             <option value="DISCUSSED">Perlu Diskusi</option>
                           </select>
-                          <button type="submit" className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white text-sm h-10 px-4 rounded-md transition-colors font-medium flex items-center justify-center">
+                          <button type="submit" className="bg-primary hover:bg-primary-hover text-white text-sm h-10 px-4 rounded-md transition-colors font-medium flex items-center justify-center">
                             Perbarui
                           </button>
                         </form>

@@ -33,8 +33,8 @@ export function ReviewSubmitButtons() {
       </button>
       
       <div className="relative py-2">
-        <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-[#E2E8F0]"></div></div>
-        <div className="relative flex justify-center"><span className="bg-white px-2 text-xs text-[#64748B]">ATAU</span></div>
+        <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border"></div></div>
+        <div className="relative flex justify-center"><span className="bg-background px-2 text-xs text-muted">ATAU</span></div>
       </div>
 
       <div>
@@ -44,7 +44,7 @@ export function ReviewSubmitButtons() {
           rows={4} 
           disabled={pending}
           placeholder="Sebutkan detail yang perlu diubah..."
-          className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full bg-surface border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-70 disabled:cursor-not-allowed"
         ></textarea>
       </div>
       
@@ -53,7 +53,7 @@ export function ReviewSubmitButtons() {
         name="action" 
         value="REVISION_REQUESTED" 
         disabled={pending}
-        className="w-full bg-white border border-[#EF4444] text-[#EF4444] hover:bg-[#FEF2F2] h-10 px-4 text-sm font-medium rounded-md transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full bg-surface border border-[#EF4444] text-[#EF4444] hover:bg-red-500/10 h-10 px-4 text-sm font-medium rounded-md transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {pending ? "Memproses..." : "Ajukan Revisi"}
       </button>

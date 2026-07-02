@@ -199,11 +199,11 @@ export default async function DeliverableDetailPage({
               </div>
               <div>
                 <label className="block text-xs font-medium text-muted mb-1">External Link (Figma, Docs, etc)</label>
-                <input type="url" name="linkUrl" placeholder="https://" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6]" />
+                <input type="url" name="linkUrl" placeholder="https://" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-muted mb-1">Notes for Client (Optional)</label>
-                <textarea name="pmNotes" rows={2} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-[#8B5CF6]"></textarea>
+                <textarea name="pmNotes" rows={2} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"></textarea>
               </div>
               <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors text-sm">
                 Upload & Request Review

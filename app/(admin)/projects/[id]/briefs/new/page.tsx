@@ -39,7 +39,7 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
             <input 
               required 
               name="title" 
-              className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" 
+              className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
               placeholder="e.g. Q3 Campaign Visual Guidelines"
             />
           </div>
@@ -49,7 +49,7 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
             <select 
               required 
               name="category" 
-              className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]"
+              className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             >
               <option value="Visual Brief">Visual Brief</option>
               <option value="Copy Brief">Copy Brief</option>
@@ -65,7 +65,7 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
               required 
               type="url"
               name="fileUrl" 
-              className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" 
+              className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
               placeholder="https://..."
             />
             <p className="text-xs text-muted mt-2">For the MVP, please provide a direct link to the file (Google Drive, Dropbox, etc.)</p>
@@ -80,7 +80,7 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
             </Link>
             <button 
               type="submit" 
-              className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-md transition-colors"
+              className="px-4 py-2 bg-primary hover:bg-primary-hover text-white rounded-md transition-colors"
             >
               Upload Brief
             </button>

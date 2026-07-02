@@ -27,7 +27,7 @@ export default function ErrorPage({
         </p>
         <button
           onClick={() => reset()}
-          className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-4 py-2 rounded-md font-medium transition-colors"
+          className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors"
         >
           Try again
         </button>

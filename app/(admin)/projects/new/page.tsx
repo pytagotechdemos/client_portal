@@ -14,22 +14,22 @@ export default function NewProjectPage() {
           
           <div>
             <label className="block text-sm font-medium text-muted mb-1">Nama Proyek *</label>
-            <input data-testid="project-name-input" required name="name" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6]" />
+            <input data-testid="project-name-input" required name="name" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
           </div>
           
           <div>
             <label className="block text-sm font-medium text-muted mb-1">Deskripsi / Ruang Lingkup</label>
-            <textarea data-testid="project-desc-input" name="description" rows={3} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6]" />
+            <textarea data-testid="project-desc-input" name="description" rows={3} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-muted mb-1">Tanggal Mulai *</label>
-              <input data-testid="project-start-input" required name="startDate" type="date" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6] color-scheme-dark" />
+              <input data-testid="project-start-input" required name="startDate" type="date" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary color-scheme-dark" />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-muted mb-1">Tenggat Waktu</label>
-              <input data-testid="project-end-input" name="deadline" type="date" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6] color-scheme-dark" />
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-muted">Batas Waktu (Deadline)</label>
+              <input data-testid="project-end-input" name="deadline" type="date" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary color-scheme-dark" />
             </div>
           </div>
         </section>
@@ -40,23 +40,23 @@ export default function NewProjectPage() {
           
           <div>
             <label className="block text-sm font-medium text-muted mb-1">Perusahaan / Nama Klien *</label>
-            <input data-testid="project-client-name" required name="clientName" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6]" />
+            <input data-testid="project-client-name" required name="clientName" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-muted mb-1">Nama Kontak *</label>
-              <input data-testid="project-contact-name" required name="contactName" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6]" />
+              <input data-testid="project-contact-name" required name="contactName" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-muted mb-1">Alamat Email *</label>
-              <input data-testid="project-contact-email" required name="contactEmail" type="email" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6]" />
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-muted">Email Kontak</label>
+              <input data-testid="project-contact-email" required name="contactEmail" type="email" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-muted mb-1">Kata Sandi Portal untuk Klien *</label>
-            <input data-testid="project-client-password" required name="clientPassword" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-[#8B5CF6]" placeholder="misal: Rahasia123" />
+            <input data-testid="project-client-password" required name="clientPassword" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="misal: Rahasia123" />
           </div>
         </section>
 

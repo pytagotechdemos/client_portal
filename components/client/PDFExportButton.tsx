@@ -19,7 +19,7 @@ export function PDFExportButton({ invoice, project }: { invoice: Invoice, projec
 
   if (!isMounted) {
     return (
-      <button disabled className="flex items-center gap-2 bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground h-10 px-4 text-sm font-medium rounded-md transition-colors shadow-sm opacity-70">
+      <button disabled className="flex items-center gap-2 bg-surface border border-border hover:bg-surface-hover text-white h-10 px-4 text-sm font-medium rounded-md transition-colors shadow-sm opacity-70">
         <Download className="w-4 h-4" />
         Preparing PDF...
       </button>
@@ -30,7 +30,7 @@ export function PDFExportButton({ invoice, project }: { invoice: Invoice, projec
     <PDFDownloadLink
       document={<InvoicePDF invoice={invoice} project={project} />}
       fileName={`INV-${invoice.id.substring(invoice.id.length - 6).toUpperCase()}.pdf`}
-      className="flex items-center gap-2 bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-foreground h-10 px-4 text-sm font-medium rounded-md transition-colors shadow-sm"
+      className="flex items-center gap-2 bg-surface border border-border hover:bg-surface-hover text-white h-10 px-4 text-sm font-medium rounded-md transition-colors shadow-sm"
     >
       {({ loading }) =>
         loading ? (
