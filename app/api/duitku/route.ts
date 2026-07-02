@@ -24,13 +24,15 @@ export async function POST(req: NextRequest) {
     }
 
     const settings = await prisma.agencySettings.findFirst();
-    
-    if (!settings?.duitkuMerchantCode || !settings?.duitkuApiKey) {
-      return NextResponse.json({ error: "Duitku is not configured in Settings" }, { status: 500 });
-    }
 
-    const merchantCode = settings.duitkuMerchantCode;
-    const apiKey = settings.duitkuApiKey;
+    // Get Duitku credentials: DB settings first, fallback to env vars
+    const merchantCode = settings?.duitkuMerchantCode || process.env.DUITKU_MERCHANT_CODE;
+    const apiKey = settings?.duitkuApiKey || process.env.DUITKU_API_KEY;
+    const duitkuEnv = settings?.duitkuEnv || process.env.DUITKU_ENV || 'sandbox';
+
+    if (!merchantCode || !apiKey) {
+      return NextResponse.json({ error: "Duitku is not configured. Set in Settings or environment variables." }, { status: 500 });
+    }
     const paymentAmount = Math.round(Number(invoice.totalAmount)); // Duitku amount is integer
     const paymentMethod = ""; // Empty string for UI popup
     const merchantOrderId = invoice.invoiceNumber;
@@ -77,7 +79,7 @@ export async function POST(req: NextRequest) {
       expiryPeriod
     };
 
-    const isProduction = settings.duitkuEnv === "production";
+    const isProduction = duitkuEnv === "production";
     const endpoint = isProduction 
       ? "https://passport.duitku.com/webapi/api/merchant/v2/inquiry" 
       : "https://sandbox.duitku.com/webapi/api/merchant/v2/inquiry";
