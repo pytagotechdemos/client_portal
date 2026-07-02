@@ -120,7 +120,7 @@ export default async function DashboardPage() {
             <span className="text-xs text-muted">{invoices.length} tagihan</span>
           </div>
           <div className="h-72">
-            <RevenueChart invoices={invoices.map(i => ({...i, amount: Number(i.totalAmount)}))} />
+            <RevenueChart invoices={invoices.map(i => ({...i, totalAmount: Number(i.totalAmount)}))} />
           </div>
         </div>
 
@@ -147,7 +147,7 @@ export default async function DashboardPage() {
             <h3 className="text-base font-semibold text-white">Status Tagihan</h3>
           </div>
           <div className="flex-1 min-h-[280px]">
-             <InvoiceStatusChart invoices={invoices.map(i => ({...i, amount: Number(i.totalAmount)}))} />
+             <InvoiceStatusChart invoices={invoices.map(i => ({...i, totalAmount: Number(i.totalAmount)}))} />
           </div>
         </div>
 

@@ -50,8 +50,8 @@ export function RevenueChart({ invoices }: { invoices: Invoice[] }) {
       <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#3F3F46" vertical={false} />
         <XAxis dataKey="name" stroke="#A1A1AA" tick={{fill: '#A1A1AA'}} tickLine={false} axisLine={false} />
-        <YAxis stroke="#A1A1AA" tick={{fill: '#A1A1AA'}} tickLine={false} axisLine={false} tickFormatter={(val) => `Rp ${val.toLocaleString('id-ID')}`} />
-        <Tooltip cursor={{fill: '#3F3F46', opacity: 0.4}} contentStyle={{ backgroundColor: '#18181B', border: '1px solid #3F3F46', borderRadius: '8px', color: '#fff' }} formatter={(val: number) => [`Rp ${val.toLocaleString('id-ID')}`, 'Pendapatan']} />
+        <YAxis stroke="#A1A1AA" tick={{fill: '#A1A1AA'}} tickLine={false} axisLine={false} tickFormatter={(val) => `Rp ${Number(val).toLocaleString('id-ID')}`} />
+        <Tooltip cursor={{fill: '#3F3F46', opacity: 0.4}} contentStyle={{ backgroundColor: '#18181B', border: '1px solid #3F3F46', borderRadius: '8px', color: '#fff' }} formatter={(val: number) => [`Rp ${Number(val).toLocaleString('id-ID')}`, 'Pendapatan']} />
         <Bar dataKey="Revenue" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
