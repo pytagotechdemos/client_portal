@@ -8,6 +8,7 @@ import { DeleteProjectButton } from "@/components/admin/DeleteProjectButton";
 import { DeleteDeliverableButton } from "@/components/admin/DeleteDeliverableButton";
 import { DeleteInvoiceButton } from "@/components/admin/DeleteInvoiceButton";
 import { CommentSection } from "@/components/shared/CommentSection";
+import { CopyPortalLink } from "@/components/admin/CopyPortalLink";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
@@ -75,11 +76,15 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
       />
     );
 
-    await sendEmail({
-      to: project!.client.contactEmail,
-      subject: `New Deliverable Ready: ${name}`,
-      html,
-    });
+    try {
+      await sendEmail({
+        to: project!.client.contactEmail,
+        subject: `New Deliverable Ready: ${name}`,
+        html,
+      });
+    } catch (error) {
+      console.error("Failed to send email", error);
+    }
 
     revalidatePath(`/projects/${project!.id}`);
   }
@@ -98,9 +103,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
           <p className="text-muted">Client: {project.client.name} | Deadline: {project.deadline ? new Date(project.deadline).toLocaleDateString() : "None"}</p>
         </div>
         <div className="flex gap-3">
-          <button className="bg-surface border border-border hover:bg-surface-hover text-white px-4 py-2 rounded-md transition-colors">
-            Copy Portal Link
-          </button>
+          <CopyPortalLink portalPath={`/portal/${project.portalToken}`} />
           <Link href={`/projects/${project.id}/invoices/new`} className="bg-[#10B981] hover:bg-[#059669] text-white px-4 py-2 rounded-md transition-colors">
             Generate Invoice
           </Link>
@@ -170,21 +173,21 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
 
               {/* Quick Add Deliverable Form */}
               <form action={addDeliverable} className="bg-surface border border-border rounded-lg p-4 flex gap-3">
-                <input required name="name" placeholder="New deliverable name (e.g. Logo Final)" className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
-                <select name="type" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
+                <input data-testid="add-deliverable-name" required name="name" placeholder="New deliverable name (e.g. Logo Final)" className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
+                <select data-testid="add-deliverable-type" name="type" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
                   <option value="DESIGN">Design</option>
                   <option value="DOCUMENT">Document</option>
                   <option value="VIDEO">Video</option>
                   <option value="COPY">Copy</option>
                   <option value="OTHER">Other</option>
                 </select>
-                <select name="assignedTo" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
+                <select data-testid="add-deliverable-assigned" name="assignedTo" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
                   <option value="">Unassigned</option>
                   {adminUsers.map(u => (
                     <option key={u.id} value={u.name}>{u.name}</option>
                   ))}
                 </select>
-                <button type="submit" className="bg-surface-hover hover:bg-muted border border-border text-white px-4 py-2 rounded-md transition-colors">
+                <button data-testid="add-deliverable-button" type="submit" className="bg-surface-hover hover:bg-muted border border-border text-white px-4 py-2 rounded-md transition-colors">
                   Add
                 </button>
               </form>

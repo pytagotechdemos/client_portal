@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { sendEmail } from "@/lib/email";
 import { z } from "zod";
@@ -88,7 +89,7 @@ export async function createProject(formData: FormData) {
       });
       
       // 5. Send Welcome Email
-      const portalUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/portal/${project.id}`;
+      const portalUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/portal/${project.portalToken}`;
       
       await sendEmail({
         to: data.contactEmail,

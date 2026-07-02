@@ -26,7 +26,8 @@ export interface StatusBadgeProps
 }
 
 export function StatusBadge({ className, status, label, ...props }: StatusBadgeProps) {
-  const displayLabel = label || status?.replace("_", " ").toUpperCase();
+  // Replace ALL underscores with spaces
+  const displayLabel = label || status?.replace(/_/g, " ").toUpperCase();
   return (
     <div className={cn(badgeVariants({ status }), className)} {...props}>
       {displayLabel}

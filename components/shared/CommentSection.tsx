@@ -123,6 +123,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
         {deliverableId && <input type="hidden" name="deliverableId" value={deliverableId} />}
         
         <textarea 
+          data-testid="comment-input"
           name="content"
           placeholder="Type a message..."
           required
@@ -138,7 +139,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
             target.style.height = target.scrollHeight + "px";
           }}
         />
-        <SubmitButton className="self-end px-5 py-3 rounded-xl shadow-lg shadow-primary/20">
+        <SubmitButton data-testid="comment-submit" className="self-end px-5 py-3 rounded-xl shadow-lg shadow-primary/20">
           Send
         </SubmitButton>
       </form>

@@ -39,7 +39,7 @@ export default async function InvoicesPage() {
                 <p className="text-sm text-muted mt-1">{invoice.project.client.name}</p>
               </div>
               <div className="w-32 text-right text-white font-medium">
-                Rp {invoice.amount.toLocaleString('id-ID')}
+                Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}
               </div>
               <div className="w-32 text-right">
                 <span className={`text-xs px-2 py-1 rounded-full border ${invoice.status === 'PAID' ? 'bg-[#022C22] border-[#059669] text-[#6EE7B7]' : 'bg-[#450A0A] border-[#B91C1C] text-[#FCA5A5]'}`}>

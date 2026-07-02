@@ -17,7 +17,7 @@ export default async function DashboardPage() {
   const totalClients = await prisma.agencyClient.count();
   
   const invoices = await prisma.invoice.findMany({
-    select: { amount: true, status: true, createdAt: true }
+    select: { totalAmount: true, status: true, createdAt: true }
   });
   
   // Cast Prisma Decimal to number safely, default to 0 if null

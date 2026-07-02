@@ -8,6 +8,7 @@ export function ReviewSubmitButtons() {
   return (
     <div className="space-y-4 mt-4">
       <button 
+        data-testid="approve-deliverable-button"
         type="submit" 
         name="action" 
         value="APPROVED" 

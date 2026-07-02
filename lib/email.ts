@@ -14,7 +14,9 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
     console.log(`📧 MOCK EMAIL SENT`);
     console.log(`TO: ${to}`);
     console.log(`SUBJECT: ${subject}`);
-    console.log(`CONTENT:\n${html.replace(/<[^>]*>?/gm, "")}`); // Strip HTML for console readability
+    // Handle both string and React element HTML
+    const htmlStr = typeof html === 'string' ? html : String(html);
+    console.log(`CONTENT:\n${htmlStr.replace(/<[^>]*>?/gm, "")}`); // Strip HTML for console readability
     console.log("==================================================");
     if (!apiKey && process.env.NODE_ENV === "production") {
       console.warn("⚠️ Resend API Key is missing. Check your environment variables.");

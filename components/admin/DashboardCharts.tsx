@@ -16,7 +16,7 @@ import {
 } from "recharts";
 
 type Invoice = {
-  amount: number;
+  totalAmount: number;
   status: string;
   createdAt: Date;
 };
@@ -37,7 +37,7 @@ export function RevenueChart({ invoices }: { invoices: Invoice[] }) {
       const date = new Date(inv.createdAt);
       if (date.getFullYear() === currentYear && inv.status === "PAID") {
         const monthIndex = date.getMonth();
-        chartData[monthIndex].Revenue += inv.amount;
+        chartData[monthIndex].Revenue += inv.totalAmount;
       }
     });
     
@@ -61,8 +61,16 @@ export function RevenueChart({ invoices }: { invoices: Invoice[] }) {
 export function ProjectStatusChart({ projects }: { projects: Project[] }) {
   const data = useMemo(() => {
     const counts: Record<string, number> = {};
+    // Map enum values to readable labels
+    const statusLabels: Record<string, string> = {
+      'ACTIVE': 'Active',
+      'ON_HOLD': 'On Hold',
+      'COMPLETED': 'Completed',
+      'CANCELLED': 'Cancelled'
+    };
     projects.forEach(p => {
-      counts[p.status] = (counts[p.status] || 0) + 1;
+      const label = statusLabels[p.status] || p.status;
+      counts[label] = (counts[label] || 0) + 1;
     });
     return Object.entries(counts).map(([name, value]) => ({ name, value }));
   }, [projects]);
@@ -87,8 +95,16 @@ export function ProjectStatusChart({ projects }: { projects: Project[] }) {
 export function InvoiceStatusChart({ invoices }: { invoices: Invoice[] }) {
   const data = useMemo(() => {
     const counts: Record<string, number> = {};
+    // Map enum values to readable labels
+    const statusLabels: Record<string, string> = {
+      'DRAFT': 'Draft',
+      'SENT': 'Sent',
+      'PAID': 'Paid',
+      'OVERDUE': 'Overdue'
+    };
     invoices.forEach(i => {
-      counts[i.status] = (counts[i.status] || 0) + 1;
+      const label = statusLabels[i.status] || i.status;
+      counts[label] = (counts[label] || 0) + 1;
     });
     return Object.entries(counts).map(([name, value]) => ({ name, value }));
   }, [invoices]);

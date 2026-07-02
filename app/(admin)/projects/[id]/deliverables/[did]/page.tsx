@@ -63,14 +63,21 @@ export default async function DeliverableDetailPage({
       },
     });
 
-    const clientAccess = await prisma.clientAccess.findFirst({
-      where: { projectId: deliverable!.projectId }
+    const clientAccess = await prisma.projectAccess.findFirst({
+      where: { projectId: deliverable!.projectId },
+      include: { user: true }
     });
-    
-    if (clientAccess) {
-      const portalUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/portal/${deliverable!.projectId}`;
+
+    // Get portalToken for the project
+    const project = await prisma.project.findUnique({
+      where: { id: deliverable!.projectId },
+      select: { portalToken: true }
+    });
+
+    if (clientAccess?.user?.email && project?.portalToken) {
+      const portalUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/portal/${project.portalToken}`;
       await sendEmail({
-        to: clientAccess.email,
+        to: clientAccess.user.email,
         subject: `New Version Uploaded: ${deliverable!.name}`,
         html: `
           <h2>A new version is ready for your review!</h2>
