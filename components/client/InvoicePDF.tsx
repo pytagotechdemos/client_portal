@@ -203,7 +203,7 @@ export const InvoicePDF = ({ invoice, project }: InvoicePDFProps) => (
         {((invoice.items as unknown) as InvoiceItem[]).map((item, idx) => (
           <View key={idx} style={styles.tableRow}>
             <Text style={styles.descCol}>{item.name}</Text>
-            <Text style={styles.amountCol}>${Number(item.price).toFixed(2)}</Text>
+            <Text style={styles.amountCol}>Rp {Number(item.price).toLocaleString('id-ID')}</Text>
           </View>
         ))}
       </View>
@@ -213,11 +213,11 @@ export const InvoicePDF = ({ invoice, project }: InvoicePDFProps) => (
         <View style={styles.totalsBox}>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Subtotal</Text>
-            <Text>${Number(invoice.totalAmount).toFixed(2)}</Text>
+            <Text>Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</Text>
           </View>
           <View style={styles.finalTotalRow}>
             <Text style={styles.finalTotalLabel}>Total Due</Text>
-            <Text style={styles.finalTotalValue}>${Number(invoice.totalAmount).toFixed(2)}</Text>
+            <Text style={styles.finalTotalValue}>Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</Text>
           </View>
         </View>
       </View>

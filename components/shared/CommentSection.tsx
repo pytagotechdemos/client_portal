@@ -57,7 +57,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
       await addComment(formData);
       formRef.current?.reset();
       mutate(); // trigger immediate re-fetch
-    } catch (e) {
+    } catch {
       toast.error("Failed to post comment");
     }
   };
@@ -67,7 +67,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
       await deleteComment(id, projectId);
       mutate();
       toast.success("Comment deleted");
-    } catch (e) {
+    } catch {
       toast.error("Failed to delete comment");
     }
   };

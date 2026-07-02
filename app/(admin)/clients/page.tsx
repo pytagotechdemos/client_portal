@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { Plus, Edit } from "lucide-react";
+import { Plus, Edit, Users } from "lucide-react";
 import { DeleteClientButton } from "@/components/admin/DeleteClientButton";
+import { FadeIn } from "@/components/shared/FadeIn";
 
 export default async function ClientsPage() {
   const clients = await prisma.agencyClient.findMany({
@@ -12,47 +13,71 @@ export default async function ClientsPage() {
   });
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-2xl font-bold text-white">Clients</h2>
-        <Link href="/clients/new" className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Add New Client
+    <FadeIn className="max-w-5xl mx-auto">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Users className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-white">Klien</h2>
+            <p className="text-sm text-muted">{clients.length} total klien</p>
+          </div>
+        </div>
+        <Link href="/clients/new" className="btn btn-primary">
+          <Plus className="w-4 h-4" /> Tambah Klien
         </Link>
       </div>
 
-      <div className="bg-surface border border-border rounded-lg overflow-hidden">
-        <div className="p-4 border-b border-border bg-surface-hover/30 flex gap-4">
-          <div className="flex-1 font-semibold text-white">Client Name</div>
-          <div className="w-64 font-semibold text-white">Contact Person</div>
-          <div className="w-32 font-semibold text-white text-right">Projects</div>
-          <div className="w-24 font-semibold text-white text-right">Actions</div>
-        </div>
-        <div className="divide-y divide-[#3F3F46]">
-          {clients.map(client => (
-            <div key={client.id} className="p-4 flex gap-4 items-center hover:bg-surface-hover transition-colors">
-              <div className="flex-1">
-                <p className="font-medium text-white">{client.name}</p>
-              </div>
-              <div className="w-64">
-                <p className="text-sm text-white">{client.contactName}</p>
-                <a href={`mailto:${client.contactEmail}`} className="text-xs text-[#06B6D4] hover:underline">{client.contactEmail}</a>
-              </div>
-              <div className="w-32 text-right text-white">
-                {client.projects.length}
-              </div>
-              <div className="w-24 flex justify-end gap-2">
-                <Link href={`/clients/${client.id}/edit`} className="p-2 text-muted hover:text-white hover:bg-surface-light rounded-md transition-colors" title="Edit Client">
-                  <Edit className="w-4 h-4" />
-                </Link>
-                <DeleteClientButton id={client.id} clientName={client.name} />
-              </div>
+      <div className="bg-surface border border-border rounded-xl overflow-hidden">
+        {clients.length === 0 ? (
+          <div className="p-12 text-center">
+            <div className="w-16 h-16 rounded-full bg-surface-light flex items-center justify-center mx-auto mb-4">
+              <Users className="w-8 h-8 text-muted" />
             </div>
-          ))}
-          {clients.length === 0 && (
-            <div className="p-8 text-center text-muted">No clients found.</div>
-          )}
-        </div>
+            <p className="text-muted mb-4">Belum ada klien ditemukan.</p>
+            <Link href="/clients/new" className="text-primary hover:text-primary-hover font-medium">
+              Tambahkan klien pertama Anda
+            </Link>
+          </div>
+        ) : (
+          <>
+            <div className="p-4 border-b border-border bg-surface-light/50 grid grid-cols-12 gap-4">
+              <div className="col-span-4 font-semibold text-sm text-muted">Klien</div>
+              <div className="col-span-4 font-semibold text-sm text-muted">Kontak</div>
+              <div className="col-span-2 font-semibold text-sm text-muted text-center">Proyek</div>
+              <div className="col-span-2 font-semibold text-sm text-muted text-right">Aksi</div>
+            </div>
+            <div className="divide-y divide-border/50">
+              {clients.map(client => (
+                <div key={client.id} className="p-4 grid grid-cols-12 gap-4 items-center hover:bg-surface-hover/50 transition-colors group">
+                  <div className="col-span-4">
+                    <p className="font-medium text-white group-hover:text-primary transition-colors">{client.name}</p>
+                    {client.companyName && client.companyName !== client.name && (
+                      <p className="text-xs text-muted">{client.companyName}</p>
+                    )}
+                  </div>
+                  <div className="col-span-4">
+                    <p className="text-sm text-white">{client.contactName}</p>
+                    <a href={`mailto:${client.contactEmail}`} className="text-xs text-primary hover:underline">{client.contactEmail}</a>
+                  </div>
+                  <div className="col-span-2 text-center">
+                    <span className="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                      {client.projects.length}
+                    </span>
+                  </div>
+                  <div className="col-span-2 flex justify-end gap-2">
+                    <Link href={`/clients/${client.id}/edit`} className="p-2 text-muted hover:text-white hover:bg-surface-light rounded-lg transition-colors" title="Edit Klien">
+                      <Edit className="w-4 h-4" />
+                    </Link>
+                    <DeleteClientButton id={client.id} clientName={client.name} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
-    </div>
+    </FadeIn>
   );
 }

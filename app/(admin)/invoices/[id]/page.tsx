@@ -26,14 +26,14 @@ export default async function InvoiceDetailPage({
       <div className="flex justify-between items-center mb-8 print:hidden">
         <div className="text-sm text-muted">
           <Link href="/invoices" className="hover:text-white transition-colors">
-            &larr; Back to Invoices
+            &larr; Kembali ke Tagihan
           </Link>
         </div>
         <button 
           id="print-btn"
           className="bg-[#0F172A] border border-border hover:bg-[#1E293B] text-white px-4 py-2 rounded-md font-medium transition-colors"
         >
-          Download PDF / Print
+          Unduh PDF / Cetak
         </button>
       </div>
 
@@ -49,8 +49,8 @@ export default async function InvoiceDetailPage({
         {/* Header */}
         <div className="flex justify-between items-start mb-12">
           <div>
-            <h1 className="text-4xl font-black text-gray-900 mb-2">INVOICE</h1>
-            <p className="text-gray-500 text-sm font-medium">#{invoice.id.substring(0, 8).toUpperCase()}</p>
+            <h1 className="text-4xl font-black text-gray-900 mb-2">TAGIHAN</h1>
+            <p className="text-gray-500 text-sm font-medium">#{invoice.invoiceNumber || invoice.id.substring(0, 8).toUpperCase()}</p>
           </div>
           <div className="text-right">
             <h2 className="text-xl font-bold text-gray-900">Pytagotech</h2>
@@ -61,25 +61,25 @@ export default async function InvoiceDetailPage({
         {/* Info Grid */}
         <div className="grid grid-cols-2 gap-8 mb-12">
           <div>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Billed To</p>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Ditagihkan Kepada</p>
             <h3 className="font-bold text-gray-900 text-lg">{invoice.project.client.name}</h3>
             <p className="text-gray-600 mt-1 text-sm">{invoice.project.client.contactName}<br/>{invoice.project.client.contactEmail}</p>
           </div>
           <div className="text-right">
             <div className="mb-4">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Issue Date</p>
-              <p className="font-medium text-gray-900">{new Date(invoice.issueDate).toLocaleDateString()}</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Tanggal Terbit</p>
+              <p className="font-medium text-gray-900">{new Date(invoice.issueDate).toLocaleDateString('id-ID')}</p>
             </div>
             <div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Due Date</p>
-              <p className="font-medium text-gray-900">{new Date(invoice.dueDate).toLocaleDateString()}</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Jatuh Tempo</p>
+              <p className="font-medium text-gray-900">{new Date(invoice.dueDate).toLocaleDateString('id-ID')}</p>
             </div>
           </div>
         </div>
 
         {/* Project Info */}
         <div className="mb-8 border-b border-gray-200 pb-4">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Project</p>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Proyek</p>
           <p className="font-medium text-gray-900 text-lg">{invoice.project.name}</p>
         </div>
 
@@ -87,15 +87,15 @@ export default async function InvoiceDetailPage({
         <table className="w-full mb-12 text-left">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Description</th>
-              <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Amount</th>
+              <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Deskripsi</th>
+              <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Jumlah</th>
             </tr>
           </thead>
           <tbody>
             {/* For MVP we don't have line items, just the total amount */}
             <tr className="border-b border-gray-100">
-              <td className="py-4 text-gray-900">Services rendered for project: {invoice.project.name}</td>
-              <td className="py-4 text-gray-900 text-right font-medium">${Number(invoice.totalAmount).toLocaleString()}</td>
+              <td className="py-4 text-gray-900">Layanan untuk proyek: {invoice.project.name}</td>
+              <td className="py-4 text-gray-900 text-right font-medium">Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</td>
             </tr>
           </tbody>
         </table>
@@ -109,18 +109,18 @@ export default async function InvoiceDetailPage({
               ${invoice.status === 'PAID' ? 'bg-green-100 text-green-800 border-green-200' : 
                 invoice.status === 'OVERDUE' ? 'bg-red-100 text-red-800 border-red-200' : 
                 'bg-yellow-100 text-yellow-800 border-yellow-200'}`}>
-              {invoice.status}
+              {invoice.status === 'PAID' ? 'LUNAS' : invoice.status === 'SENT' ? 'TERKIRIM' : invoice.status === 'OVERDUE' ? 'JATUH TEMPO' : 'DRAFT'}
             </div>
           </div>
           <div className="text-right">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Due</p>
-            <p className="text-4xl font-black text-gray-900">${Number(invoice.totalAmount).toLocaleString()}</p>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Tagihan</p>
+            <p className="text-4xl font-black text-gray-900">Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</p>
           </div>
         </div>
 
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-          <p>Thank you for your business. Please remit payment by the due date.</p>
+          <p>Terima kasih atas kerja sama Anda. Harap lakukan pembayaran sebelum tanggal jatuh tempo.</p>
         </div>
 
       </div>

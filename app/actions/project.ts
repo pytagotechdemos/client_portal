@@ -120,3 +120,43 @@ export async function deleteProject(id: string) {
   revalidatePath("/projects");
   redirect("/projects");
 }
+
+const updateProjectSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  description: z.string().optional(),
+  status: z.enum(["ACTIVE", "COMPLETED", "PAUSED"]),
+  startDate: z.string().pipe(z.coerce.date()),
+  deadline: z.string().optional().transform(str => str ? new Date(str) : null),
+});
+
+export async function updateProject(formData: FormData) {
+  const rawData = Object.fromEntries(formData.entries());
+  const parsed = updateProjectSchema.safeParse(rawData);
+
+  if (!parsed.success) {
+    console.error("Validation failed", parsed.error);
+    throw new Error("Invalid form data");
+  }
+
+  const data = parsed.data;
+
+  try {
+    await prisma.project.update({
+      where: { id: data.id },
+      data: {
+        name: data.name,
+        description: data.description || null,
+        status: data.status,
+        startDate: data.startDate,
+        deadline: data.deadline,
+      }
+    });
+  } catch (error) {
+    console.error("Failed to update project:", error);
+    throw new Error("Internal Server Error");
+  }
+
+  revalidatePath(`/projects/${data.id}`);
+  redirect(`/projects/${data.id}`);
+}

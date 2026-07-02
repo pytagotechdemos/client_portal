@@ -100,12 +100,15 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
             <h2 className="text-2xl font-bold text-white">{project.name}</h2>
             <StatusBadge status={project.status === "ACTIVE" ? "in_progress" : "not_started"} label={project.status} />
           </div>
-          <p className="text-muted">Client: {project.client.name} | Deadline: {project.deadline ? new Date(project.deadline).toLocaleDateString() : "None"}</p>
+          <p className="text-muted">Klien: {project.client.name} | Tenggat Waktu: {project.deadline ? new Date(project.deadline).toLocaleDateString('id-ID') : "Belum ditentukan"}</p>
         </div>
         <div className="flex gap-3">
           <CopyPortalLink portalPath={`/portal/${project.portalToken}`} />
-          <Link href={`/projects/${project.id}/invoices/new`} className="bg-[#10B981] hover:bg-[#059669] text-white px-4 py-2 rounded-md transition-colors">
-            Generate Invoice
+          <Link href={`/projects/${project.id}/edit`} className="bg-surface-hover hover:bg-muted text-white px-4 py-2 rounded-md transition-colors font-medium border border-border">
+            Edit Proyek
+          </Link>
+          <Link href={`/projects/${project.id}/invoices/new`} className="bg-[#10B981] hover:bg-[#059669] text-white px-4 py-2 rounded-md transition-colors font-medium">
+            Buat Tagihan
           </Link>
           <DeleteProjectButton id={project.id} projectName={project.name} />
         </div>
@@ -115,17 +118,17 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
         {/* Main Content: Tabs / Deliverables */}
         <div className="col-span-2 space-y-6">
           {/* Tabs */}
-          <div className="flex border-b border-border">
-            <Link href={`/projects/${project.id}?tab=deliverables`} className={`px-4 py-2 ${currentTab === "deliverables" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Deliverables</Link>
-            <Link href={`/projects/${project.id}?tab=briefs`} className={`px-4 py-2 ${currentTab === "briefs" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Briefs</Link>
-            <Link href={`/projects/${project.id}?tab=changes`} className={`px-4 py-2 ${currentTab === "changes" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Change Requests</Link>
-            <Link href={`/projects/${project.id}?tab=invoices`} className={`px-4 py-2 ${currentTab === "invoices" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Invoices</Link>
-            <Link href={`/projects/${project.id}?tab=discussion`} className={`px-4 py-2 ${currentTab === "discussion" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Discussion</Link>
+          <div className="flex border-b border-border mb-6">
+            <Link href={`/projects/${project.id}?tab=deliverables`} className={`px-4 py-2 ${currentTab === "deliverables" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Hasil Pekerjaan</Link>
+            <Link href={`/projects/${project.id}?tab=briefs`} className={`px-4 py-2 ${currentTab === "briefs" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Brief</Link>
+            <Link href={`/projects/${project.id}?tab=changes`} className={`px-4 py-2 ${currentTab === "changes" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Permintaan Perubahan</Link>
+            <Link href={`/projects/${project.id}?tab=invoices`} className={`px-4 py-2 ${currentTab === "invoices" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Tagihan</Link>
+            <Link href={`/projects/${project.id}?tab=discussion`} className={`px-4 py-2 ${currentTab === "discussion" ? "text-white border-b-2 border-[#8B5CF6]" : "text-muted hover:text-white"}`}>Diskusi</Link>
           </div>
 
           {currentTab === "discussion" && (
             <div className="bg-surface border border-border rounded-lg p-6">
-              <h3 className="font-semibold text-white mb-6">Project Discussion</h3>
+              <h3 className="font-semibold text-white mb-6">Diskusi Proyek</h3>
               <CommentSection 
                 projectId={project.id} 
                 comments={project.comments} 
@@ -139,12 +142,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
             <>
               <div className="bg-surface border border-border rounded-lg overflow-hidden">
                 <div className="p-4 border-b border-border flex justify-between items-center bg-surface-hover/30">
-                  <h3 className="font-semibold text-white">Project Deliverables</h3>
+                  <h3 className="font-semibold text-white">Hasil Pekerjaan Proyek</h3>
                 </div>
                 
                 {project.deliverables.length === 0 ? (
                   <div className="p-8 text-center text-muted">
-                    No deliverables yet. Create the first one below.
+                    Belum ada hasil pekerjaan. Buat yang pertama di bawah.
                   </div>
                 ) : (
                   <div className="divide-y divide-[#3F3F46]">
@@ -155,11 +158,11 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                             <StatusBadge status={del.status.toLowerCase()} />
                             <div>
                               <p className="text-white font-medium group-hover:text-[#8B5CF6] transition-colors">{del.name}</p>
-                              <p className="text-xs text-muted mt-1">{del.type} • v{del.currentVersion}{del.assignedTo ? ` • Assigned to: ${del.assignedTo}` : ''}</p>
+                              <p className="text-xs text-muted mt-1">{del.type} • v{del.currentVersion}{del.assignedTo ? ` • Ditugaskan ke: ${del.assignedTo}` : ''}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-4">
-                            <div className="text-sm text-[#06B6D4]">View &rarr;</div>
+                            <div className="text-sm text-[#06B6D4]">Lihat &rarr;</div>
                             <div className="z-10 relative">
                               <DeleteDeliverableButton id={del.id} />
                             </div>
@@ -173,22 +176,22 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
 
               {/* Quick Add Deliverable Form */}
               <form action={addDeliverable} className="bg-surface border border-border rounded-lg p-4 flex gap-3">
-                <input data-testid="add-deliverable-name" required name="name" placeholder="New deliverable name (e.g. Logo Final)" className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
+                <input data-testid="add-deliverable-name" required name="name" placeholder="Nama hasil pekerjaan (misal: Desain Logo)" className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]" />
                 <select data-testid="add-deliverable-type" name="type" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
-                  <option value="DESIGN">Design</option>
-                  <option value="DOCUMENT">Document</option>
+                  <option value="DESIGN">Desain</option>
+                  <option value="DOCUMENT">Dokumen</option>
                   <option value="VIDEO">Video</option>
-                  <option value="COPY">Copy</option>
-                  <option value="OTHER">Other</option>
+                  <option value="COPY">Teks</option>
+                  <option value="OTHER">Lainnya</option>
                 </select>
                 <select data-testid="add-deliverable-assigned" name="assignedTo" className="bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-[#8B5CF6]">
-                  <option value="">Unassigned</option>
+                  <option value="">Belum Ditugaskan</option>
                   {adminUsers.map(u => (
                     <option key={u.id} value={u.name}>{u.name}</option>
                   ))}
                 </select>
-                <button data-testid="add-deliverable-button" type="submit" className="bg-surface-hover hover:bg-muted border border-border text-white px-4 py-2 rounded-md transition-colors">
-                  Add
+                <button data-testid="add-deliverable-button" type="submit" className="bg-primary hover:bg-primary-hover border border-border text-white px-4 py-2 rounded-md transition-colors font-medium">
+                  Tambah
                 </button>
               </form>
             </>
@@ -197,15 +200,15 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
           {currentTab === "briefs" && (
             <div className="bg-surface border border-border rounded-lg overflow-hidden">
               <div className="p-4 border-b border-border flex justify-between items-center bg-surface-hover/30">
-                <h3 className="font-semibold text-white">Project Briefs</h3>
+                <h3 className="font-semibold text-white">Brief Proyek</h3>
                 <Link href={`/projects/${project.id}/briefs/new`} className="text-sm bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-3 py-1.5 rounded transition-colors">
-                  Upload Brief
+                  Unggah Brief
                 </Link>
               </div>
               
               {project.briefs.length === 0 ? (
                 <div className="p-8 text-center text-muted">
-                  No briefs uploaded yet.
+                  Belum ada brief yang diunggah.
                 </div>
               ) : (
                 <div className="divide-y divide-[#3F3F46]">
@@ -213,10 +216,10 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                     <div key={brief.id} className="p-4 hover:bg-surface-hover hover:-translate-y-0.5 hover:shadow-md transition-all relative flex justify-between items-center">
                       <div>
                         <p className="text-white font-medium">{brief.title}</p>
-                        <p className="text-xs text-muted mt-1">{brief.category} • Uploaded by {brief.uploadedBy} on {new Date(brief.uploadedAt).toLocaleDateString()}</p>
+                        <p className="text-xs text-muted mt-1">{brief.category} • Diunggah oleh {brief.uploadedBy} pada {new Date(brief.uploadedAt).toLocaleDateString('id-ID')}</p>
                       </div>
                       <a href={brief.fileUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#06B6D4] hover:underline">
-                        View File &rarr;
+                        Lihat File &rarr;
                       </a>
                     </div>
                   ))}
@@ -228,12 +231,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
           {currentTab === "changes" && (
             <div className="bg-surface border border-border rounded-lg overflow-hidden">
               <div className="p-4 border-b border-border flex justify-between items-center bg-surface-hover/30">
-                <h3 className="font-semibold text-white">Change Requests (Scope Creep)</h3>
+                <h3 className="font-semibold text-white">Permintaan Perubahan</h3>
               </div>
               
               {project.changeRequests.length === 0 ? (
                 <div className="p-8 text-center text-muted">
-                  No change requests logged.
+                  Tidak ada permintaan perubahan.
                 </div>
               ) : (
                 <div className="divide-y divide-[#3F3F46]">
@@ -243,13 +246,13 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                         <div>
                           <StatusBadge status={cr.status.toLowerCase()} />
                           <p className="text-white mt-2">{cr.description}</p>
-                          <p className="text-xs text-muted mt-1">Requested by {cr.requestedBy} on {new Date(cr.createdAt).toLocaleDateString()}</p>
+                          <p className="text-xs text-muted mt-1">Diajukan oleh {cr.requestedBy} pada {new Date(cr.createdAt).toLocaleDateString('id-ID')}</p>
                         </div>
                       </div>
 
                       {cr.responseNote && (
                         <div className="bg-background rounded p-3 border border-[#3F3F46]">
-                          <p className="text-sm text-white"><span className="text-muted font-medium">PM Note:</span> {cr.responseNote}</p>
+                          <p className="text-sm text-white"><span className="text-muted font-medium">Catatan PM:</span> {cr.responseNote}</p>
                         </div>
                       )}
 
@@ -257,19 +260,19 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                         <form action={updateChangeRequestStatus} className="flex gap-2 mt-2">
                           <input type="hidden" name="changeRequestId" value={cr.id} />
                           <input type="hidden" name="projectId" value={project.id} />
-                          <input type="hidden" name="respondedBy" value="Admin" />
+                          <input type="hidden" name="respondedBy" value={session.user.name || "Admin"} />
                           <input 
                             name="responseNote" 
                             className="flex-1 bg-background border border-border rounded-md px-3 py-1.5 text-sm text-white focus:outline-none focus:border-[#8B5CF6]" 
-                            placeholder="Reason / Note (optional)"
+                            placeholder="Alasan / Catatan (opsional)"
                           />
                           <select name="status" className="bg-background border border-border rounded-md px-3 py-1.5 text-sm text-white focus:outline-none focus:border-[#8B5CF6]">
-                            <option value="ACCEPTED">Accept</option>
-                            <option value="REJECTED">Reject</option>
-                            <option value="DISCUSSED">Need Discussion</option>
+                            <option value="ACCEPTED">Terima</option>
+                            <option value="REJECTED">Tolak</option>
+                            <option value="DISCUSSED">Perlu Diskusi</option>
                           </select>
-                          <button type="submit" className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white text-sm px-3 py-1.5 rounded-md transition-colors">
-                            Update
+                          <button type="submit" className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white text-sm px-3 py-1.5 rounded-md transition-colors font-medium">
+                            Perbarui
                           </button>
                         </form>
                       )}
@@ -283,12 +286,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
           {currentTab === "invoices" && (
             <div className="bg-surface border border-border rounded-lg overflow-hidden">
               <div className="p-4 border-b border-border flex justify-between items-center bg-surface-hover/30">
-                <h3 className="font-semibold text-white">Invoices</h3>
+                <h3 className="font-semibold text-white">Tagihan</h3>
               </div>
               
               {project.invoices.length === 0 ? (
                 <div className="p-8 text-center text-muted">
-                  No invoices generated yet.
+                  Belum ada tagihan yang dibuat.
                 </div>
               ) : (
                 <div className="divide-y divide-[#3F3F46]">
@@ -299,10 +302,10 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                           <StatusBadge status={inv.status.toLowerCase()} />
                           <p className="text-white font-medium">{inv.invoiceNumber}</p>
                         </div>
-                        <p className="text-xs text-muted mt-1">Issued: {new Date(inv.issueDate).toLocaleDateString()} • Due: {new Date(inv.dueDate).toLocaleDateString()}</p>
+                        <p className="text-xs text-muted mt-1">Diterbitkan: {new Date(inv.issueDate).toLocaleDateString('id-ID')} • Jatuh Tempo: {new Date(inv.dueDate).toLocaleDateString('id-ID')}</p>
                       </div>
                       <div className="text-right flex items-center gap-4">
-                        <p className="text-lg font-bold text-[#10B981]">${Number(inv.totalAmount).toLocaleString()}</p>
+                        <p className="text-lg font-bold text-emerald-500">Rp {Number(inv.totalAmount).toLocaleString('id-ID')}</p>
                         <DeleteInvoiceButton id={inv.id} />
                       </div>
                     </div>
@@ -315,8 +318,8 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
 
         {/* Sidebar Info */}
         <div className="col-span-1 space-y-6">
-          <div className="bg-surface border border-border rounded-lg p-5">
-            <h3 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Client Contact</h3>
+          <div className="bg-surface border border-border rounded-lg p-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Kontak Klien</h3>
             <div className="space-y-3">
               <div>
                 <p className="text-white font-medium">{project.client.contactName}</p>
@@ -329,10 +332,10 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
             </div>
           </div>
           
-          <div className="bg-surface border border-border rounded-lg p-5">
-            <h3 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Project Portal</h3>
-            <p className="text-sm text-muted mb-3">Client can access this project via:</p>
-            <div className="bg-background p-2 rounded border border-border text-xs text-[#06B6D4] font-mono break-all">
+          <div className="bg-surface border border-border rounded-lg p-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Portal Proyek</h3>
+            <p className="text-sm text-muted mb-3">Klien dapat mengakses proyek ini melalui:</p>
+            <div className="bg-background p-3 rounded border border-border text-xs text-[#06B6D4] font-mono break-all selection:bg-[#06B6D4]/30">
               {`/portal/${project.portalToken}`}
             </div>
           </div>

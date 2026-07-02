@@ -28,9 +28,9 @@ export default async function ClientInvoicePage({
       <div className="print:hidden flex justify-between items-center mb-8">
         <Link 
           href={`/portal/${params.projectToken}?tab=invoices`} 
-          className="text-[#64748B] hover:text-foreground font-medium flex items-center gap-2"
+          className="text-[#64748B] hover:text-foreground font-medium flex items-center gap-2 transition-colors"
         >
-          &larr; Back to Portal
+          &larr; Kembali ke Portal
         </Link>
         <div className="flex items-center gap-3">
           <PDFExportButton invoice={invoice} project={project} />
@@ -48,14 +48,14 @@ export default async function ClientInvoicePage({
             <p className="text-[#64748B] mt-2">123 Creative Street<br/>Design City, DC 10001<br/>hello@pytagotech.com</p>
           </div>
           <div className="text-right">
-            <h2 className="text-3xl font-bold text-foreground uppercase tracking-wide">Invoice</h2>
-            <p className="text-[#64748B] font-medium mt-2">INV-{invoice.id.substring(invoice.id.length - 6).toUpperCase()}</p>
+            <h2 className="text-3xl font-bold text-foreground uppercase tracking-wide">Faktur</h2>
+            <p className="text-[#64748B] font-medium mt-2">{invoice.invoiceNumber || `INV-${invoice.id.substring(0, 8).toUpperCase()}`}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-8 mb-12">
           <div>
-            <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-2">Billed To</p>
+            <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-2">Ditagihkan Kepada</p>
             <p className="font-bold text-foreground text-lg">{project.client.companyName || project.client.name}</p>
             <p className="text-foreground">{project.client.contactName}</p>
             <p className="text-foreground">{project.client.contactEmail}</p>
@@ -63,33 +63,33 @@ export default async function ClientInvoicePage({
           </div>
           <div className="text-right">
             <div className="mb-4">
-              <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-1">Date Issued</p>
-              <p className="font-medium text-foreground">{new Date(invoice.createdAt).toLocaleDateString()}</p>
+              <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-1">Tanggal Terbit</p>
+              <p className="font-medium text-foreground">{new Date(invoice.createdAt).toLocaleDateString('id-ID')}</p>
             </div>
             <div>
-              <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-1">Due Date</p>
-              <p className="font-medium text-foreground">{invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : "Upon Receipt"}</p>
+              <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-1">Jatuh Tempo</p>
+              <p className="font-medium text-foreground">{invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString('id-ID') : "Saat Diterima"}</p>
             </div>
           </div>
         </div>
 
         <div className="mb-8">
-          <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-2">Project Reference</p>
+          <p className="text-sm font-bold text-[#64748B] uppercase tracking-wider mb-2">Referensi Proyek</p>
           <p className="font-medium text-foreground">{project.name}</p>
         </div>
 
         <table className="w-full mb-8">
           <thead>
             <tr className="border-b-2 border-foreground">
-              <th className="py-3 text-left font-bold text-foreground">Description</th>
-              <th className="py-3 text-right font-bold text-foreground">Amount</th>
+              <th className="py-3 text-left font-bold text-foreground">Deskripsi</th>
+              <th className="py-3 text-right font-bold text-foreground">Jumlah</th>
             </tr>
           </thead>
           <tbody>
             {(invoice.items as { name: string, price: number }[]).map((item, idx) => (
               <tr key={idx} className="border-b border-[#E2E8F0]">
                 <td className="py-4 text-foreground">{item.name}</td>
-                <td className="py-4 text-right font-medium text-foreground">${Number(item.price).toFixed(2)}</td>
+                <td className="py-4 text-right font-medium text-foreground">Rp {Number(item.price).toLocaleString('id-ID')}</td>
               </tr>
             ))}
           </tbody>
@@ -99,19 +99,19 @@ export default async function ClientInvoicePage({
           <div className="w-64">
             <div className="flex justify-between items-center py-2 border-b border-[#E2E8F0]">
                <span className="font-medium text-[#64748B]">Subtotal</span>
-               <span className="font-medium text-foreground">${Number(invoice.totalAmount).toFixed(2)}</span>
+               <span className="font-medium text-foreground">Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</span>
             </div>
             <div className="flex justify-between items-center py-4 border-b-2 border-foreground">
-               <span className="font-bold text-foreground text-lg">Total Due</span>
-               <span className="font-bold text-foreground text-xl">${Number(invoice.totalAmount).toFixed(2)}</span>
+               <span className="font-bold text-foreground text-lg">Total Tagihan</span>
+               <span className="font-bold text-foreground text-xl">Rp {Number(invoice.totalAmount).toLocaleString('id-ID')}</span>
             </div>
           </div>
         </div>
 
         <div className="pt-8 border-t border-[#E2E8F0] text-[#64748B] text-sm">
-          <p className="font-bold mb-2 text-foreground">Payment Instructions</p>
-          <p className="mb-1">Please remit payment via Bank Transfer or PayPal to payments@pytagotech.com.</p>
-          <p>If you have any questions about this invoice, please contact us.</p>
+          <p className="font-bold mb-2 text-foreground">Instruksi Pembayaran</p>
+          <p className="mb-1">Silakan lakukan pembayaran melalui Transfer Bank ke rekening resmi Pytagotech atau melalui gateway pembayaran yang tersedia.</p>
+          <p>Jika Anda memiliki pertanyaan tentang faktur ini, silakan hubungi kami.</p>
         </div>
       </div>
     </div>
