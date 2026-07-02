@@ -21,10 +21,10 @@ export default async function NewInvoicePage({ params }: { params: { id: string 
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <Link href={`/projects/${project.id}`} className="text-[#06B6D4] hover:underline mb-4 inline-block">
-          &larr; Back to Project
+          &larr; Kembali ke Proyek
         </Link>
-        <h1 className="text-3xl font-bold text-white">Generate Invoice</h1>
-        <p className="text-muted mt-2">Bill for {project.name}</p>
+        <h1 className="text-3xl font-bold text-white">Buat Tagihan</h1>
+        <p className="text-muted mt-2">Tagihan untuk {project.name}</p>
       </div>
 
       <div className="bg-surface border border-border rounded-lg p-6">

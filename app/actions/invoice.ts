@@ -94,20 +94,37 @@ export async function deleteInvoice(id: string) {
     throw new Error(error instanceof Error ? error.message : "Failed to delete invoice");
   }
 }
-export async function updateInvoice(formData: FormData) {
-  const id = formData.get("id") as string;
-  const projectId = formData.get("projectId") as string;
-  const totalAmount = parseFloat(formData.get("totalAmount") as string);
-  const status = formData.get("status") as InvoiceStatus;
+const updateInvoiceSchema = z.object({
+  id: z.string().min(1),
+  projectId: z.string().min(1),
+  totalAmount: z.number().min(0),
+  status: z.nativeEnum(InvoiceStatus),
+});
 
-  if (!id || !projectId || isNaN(totalAmount)) {
-    throw new Error("Missing required fields");
+export async function updateInvoice(formData: FormData) {
+  const rawData = {
+    id: formData.get("id") as string,
+    projectId: formData.get("projectId") as string,
+    totalAmount: parseFloat(formData.get("totalAmount") as string),
+    status: formData.get("status") as InvoiceStatus,
+  };
+
+  const parsed = updateInvoiceSchema.safeParse(rawData);
+
+  if (!parsed.success) {
+    throw new Error("Invalid form data");
   }
 
-  await prisma.invoice.update({
-    where: { id },
-    data: { totalAmount, status }
-  });
+  const { id, projectId, totalAmount, status } = parsed.data;
+
+  try {
+    await prisma.invoice.update({
+      where: { id },
+      data: { totalAmount, status }
+    });
+  } catch {
+    throw new Error("Failed to update invoice");
+  }
 
   revalidatePath("/projects");
   revalidatePath("/invoices");

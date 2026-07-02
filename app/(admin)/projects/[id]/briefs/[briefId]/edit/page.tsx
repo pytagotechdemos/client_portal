@@ -17,7 +17,7 @@ export default async function EditBriefPage({ params }: { params: { id: string, 
     <FadeIn className="max-w-2xl mx-auto space-y-6">
       <Link href={`/projects/${params.id}?tab=briefs`} className="inline-flex items-center text-sm text-muted hover:text-white transition-colors">
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Project
+        Kembali ke Proyek
       </Link>
       
       <div className="bg-surface border border-border rounded-xl p-6">
@@ -27,23 +27,23 @@ export default async function EditBriefPage({ params }: { params: { id: string, 
           <input type="hidden" name="projectId" value={params.id} />
           
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Title</label>
+            <label className="text-sm font-medium text-white">Judul</label>
             <input required name="title" defaultValue={brief.title} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
           
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Category</label>
+            <label className="text-sm font-medium text-white">Kategori</label>
             <input required name="category" defaultValue={brief.category} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">File URL</label>
+            <label className="text-sm font-medium text-white">Tautan File</label>
             <input required type="url" name="fileUrl" defaultValue={brief.fileUrl} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
 
           <div className="pt-4 flex justify-end gap-3">
-            <Link href={`/projects/${params.id}?tab=briefs`} className="btn btn-secondary text-sm">Cancel</Link>
-            <SubmitButton>Save Changes</SubmitButton>
+            <Link href={`/projects/${params.id}?tab=briefs`} className="btn btn-secondary text-sm">Batal</Link>
+            <SubmitButton>Simpan Perubahan</SubmitButton>
           </div>
         </form>
       </div>

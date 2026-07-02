@@ -1,61 +1,76 @@
 "use client";
 
-import { AlertTriangle, X } from "lucide-react";
+import React, { useEffect } from "react";
 
 interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  title?: string;
+  title: string;
   message: string;
+  confirmText?: string;
+  cancelText?: string;
+  isDestructive?: boolean;
   isPending?: boolean;
 }
 
-export function ConfirmModal({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
-  title = "Confirm", 
+export function ConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
   message,
-  isPending = false
+  confirmText = "Konfirmasi",
+  cancelText = "Batal",
+  isDestructive = true,
+  isPending = false,
 }: ConfirmModalProps) {
+  // Prevent scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-surface border border-border rounded-xl shadow-xl max-w-md w-full overflow-hidden" onClick={(e) => e.stopPropagation()}>
-        <div className="p-6">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-3 text-red-500">
-              <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5" />
-              </div>
-              <h3 className="text-lg font-semibold text-white">{title}</h3>
-            </div>
-            <button 
-              onClick={onClose}
-              disabled={isPending}
-              className="text-muted hover:text-white transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          <p className="text-muted text-sm">{message}</p>
-        </div>
-        <div className="p-4 bg-surface-light border-t border-border flex justify-end gap-3">
-          <button 
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div 
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+        onClick={onClose}
+      />
+      <div className="relative bg-surface border border-border shadow-2xl rounded-xl w-full max-w-md p-6 m-4 animate-in fade-in zoom-in-95 duration-200">
+        <h3 className="text-xl font-bold text-foreground mb-2">{title}</h3>
+        <p className="text-muted text-sm mb-6">{message}</p>
+        
+        <div className="flex justify-end gap-3">
+          <button
             onClick={onClose}
             disabled={isPending}
-            className="px-4 py-2 text-sm font-medium text-white bg-surface-hover border border-border rounded-lg hover:bg-surface-light transition-colors"
+            className="px-4 py-2 text-sm font-medium text-foreground bg-background hover:bg-surface-hover border border-border rounded-md transition-colors disabled:opacity-50"
           >
-            Cancel
+            {cancelText}
           </button>
-          <button 
-            onClick={onConfirm}
+          <button
+            onClick={() => {
+              onConfirm();
+              // Do not auto-close if pending state is managed externally, 
+              // or let the parent component close it when done.
+            }}
             disabled={isPending}
-            className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
+            className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors disabled:opacity-50 ${
+              isDestructive 
+                ? "bg-red-500 hover:bg-red-600" 
+                : "bg-primary hover:bg-primary-hover"
+            }`}
           >
-            {isPending ? "Processing..." : "Confirm"}
+            {isPending ? "Memproses..." : confirmText}
           </button>
         </div>
       </div>

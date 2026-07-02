@@ -114,21 +114,32 @@ export async function updateChangeRequestStatus(formData: FormData) {
   revalidatePath(`/projects/${projectId}`);
 }
 
-export async function updateChangeRequest(formData: FormData) {
-  const id = formData.get("id") as string;
-  const projectId = formData.get("projectId") as string;
-  const description = formData.get("description") as string;
-  const status = formData.get("status") as CRStatus;
-  const responseNote = formData.get("responseNote") as string;
+const updateCRBasicSchema = z.object({
+  id: z.string().min(1),
+  projectId: z.string().min(1),
+  description: z.string().min(1),
+  status: z.nativeEnum(CRStatus),
+  responseNote: z.string().optional(),
+});
 
-  if (!id || !projectId || !description || !status) {
-    throw new Error("Missing required fields");
+export async function updateChangeRequest(formData: FormData) {
+  const rawData = Object.fromEntries(formData.entries());
+  const parsed = updateCRBasicSchema.safeParse(rawData);
+
+  if (!parsed.success) {
+    throw new Error("Invalid form data");
   }
 
-  await prisma.changeRequest.update({
-    where: { id },
-    data: { description, status, responseNote: responseNote || null }
-  });
+  const { id, projectId, description, status, responseNote } = parsed.data;
 
-  revalidatePath("/projects");
+  try {
+    await prisma.changeRequest.update({
+      where: { id },
+      data: { description, status, responseNote: responseNote || null }
+    });
+  } catch {
+    throw new Error("Failed to update change request");
+  }
+
+  revalidatePath(`/projects/${projectId}`);
 }

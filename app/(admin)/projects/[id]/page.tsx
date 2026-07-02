@@ -100,7 +100,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
       <div className="mb-4">
         <Link href="/projects" className="inline-flex items-center text-sm text-muted hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Projects
+          Kembali ke Proyek
         </Link>
       </div>
       <div className="flex flex-col sm:flex-row sm:justify-between items-start mb-8 gap-4">

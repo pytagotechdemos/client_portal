@@ -16,21 +16,34 @@ export async function deleteDeliverable(id: string) {
     throw new Error(error instanceof Error ? error.message : "Failed to delete deliverable");
   }
 }
-export async function updateDeliverable(formData: FormData) {
-  const id = formData.get("id") as string;
-  const projectId = formData.get("projectId") as string;
-  const name = formData.get("name") as string;
-  const type = formData.get("type") as DeliverableType;
-  const assignedTo = formData.get("assignedTo") as string;
+import { z } from "zod";
 
-  if (!id || !projectId || !name || !type) {
-    throw new Error("Missing required fields");
+const updateDeliverableSchema = z.object({
+  id: z.string().min(1),
+  projectId: z.string().min(1),
+  name: z.string().min(1),
+  type: z.nativeEnum(DeliverableType),
+  assignedTo: z.string().optional(),
+});
+
+export async function updateDeliverable(formData: FormData) {
+  const rawData = Object.fromEntries(formData.entries());
+  const parsed = updateDeliverableSchema.safeParse(rawData);
+
+  if (!parsed.success) {
+    throw new Error("Invalid form data");
   }
 
-  await prisma.deliverable.update({
-    where: { id },
-    data: { name, type, assignedTo: assignedTo || null }
-  });
+  const { id, projectId, name, type, assignedTo } = parsed.data;
+
+  try {
+    await prisma.deliverable.update({
+      where: { id },
+      data: { name, type, assignedTo: assignedTo || null }
+    });
+  } catch {
+    throw new Error("Failed to update deliverable");
+  }
 
   revalidatePath(`/projects/${projectId}`);
 }

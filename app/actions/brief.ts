@@ -45,31 +45,50 @@ export async function createBrief(formData: FormData) {
   }
 }
 
-export async function updateBrief(formData: FormData) {
-  const id = formData.get("id") as string;
-  const projectId = formData.get("projectId") as string;
-  const title = formData.get("title") as string;
-  const category = formData.get("category") as string;
-  const fileUrl = formData.get("fileUrl") as string;
+const updateBriefSchema = z.object({
+  id: z.string().min(1),
+  projectId: z.string().min(1),
+  title: z.string().min(1, "Title is required"),
+  category: z.string().min(1, "Category is required"),
+  fileUrl: z.string().url("Must be a valid URL"),
+});
 
-  if (!id || !projectId || !title || !category || !fileUrl) {
-    throw new Error("Missing required fields");
+export async function updateBrief(formData: FormData) {
+  const rawData = Object.fromEntries(formData.entries());
+  const parsed = updateBriefSchema.safeParse(rawData);
+
+  if (!parsed.success) {
+    throw new Error("Invalid form data");
   }
 
-  await prisma.brief.update({
-    where: { id },
-    data: { title, category, fileUrl }
-  });
+  const { id, projectId, title, category, fileUrl } = parsed.data;
+
+  try {
+    await prisma.brief.update({
+      where: { id },
+      data: { title, category, fileUrl }
+    });
+  } catch {
+    throw new Error("Failed to update brief");
+  }
 
   revalidatePath(`/projects/${projectId}`);
 }
 
 export async function deleteBrief(id: string, projectId: string, portalToken?: string) {
-  await prisma.brief.delete({
-    where: { id }
-  });
-  revalidatePath(`/projects/${projectId}`);
-  if (portalToken) {
-    revalidatePath(`/portal/${portalToken}`);
+  try {
+    const existing = await prisma.brief.findUnique({ where: { id } });
+    if (!existing) {
+      throw new Error("Brief not found");
+    }
+    await prisma.brief.delete({
+      where: { id }
+    });
+    revalidatePath(`/projects/${projectId}`);
+    if (portalToken) {
+      revalidatePath(`/portal/${portalToken}`);
+    }
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "Failed to delete brief");
   }
 }

@@ -23,7 +23,7 @@ export default async function ClientDetailPage({ params }: { params: { id: strin
       <div className="flex items-center justify-between">
         <Link href="/clients" className="inline-flex items-center text-sm text-muted hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Clients
+          Kembali ke Klien
         </Link>
         <Link href={`/clients/${client.id}/edit`} className="btn btn-secondary h-9 text-sm px-4">
           <Edit className="w-4 h-4 mr-2" />

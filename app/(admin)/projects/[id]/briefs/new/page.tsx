@@ -23,10 +23,10 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <Link href={`/projects/${project.id}?tab=briefs`} className="text-[#06B6D4] hover:underline mb-4 inline-block">
-          &larr; Back to Project
+          &larr; Kembali ke Proyek
         </Link>
-        <h1 className="text-3xl font-bold text-white">Upload Brief</h1>
-        <p className="text-muted mt-2">Add a new brief or reference document to {project.name}</p>
+        <h1 className="text-3xl font-bold text-white">Unggah Brief</h1>
+        <p className="text-muted mt-2">Tambahkan brief atau dokumen referensi baru ke {project.name}</p>
       </div>
 
       <div className="bg-surface border border-border rounded-lg p-6">
@@ -35,32 +35,32 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
           <input type="hidden" name="uploadedBy" value={session?.user?.name || "Admin"} />
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">Brief Title</label>
+            <label className="block text-sm font-medium text-white mb-2">Judul Brief</label>
             <input 
               required 
               name="title" 
               className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
-              placeholder="e.g. Q3 Campaign Visual Guidelines"
+              placeholder="Contoh: Referensi Logo"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">Category</label>
+            <label className="block text-sm font-medium text-white mb-2">Kategori</label>
             <select 
               required 
               name="category" 
               className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             >
-              <option value="Visual Brief">Visual Brief</option>
-              <option value="Copy Brief">Copy Brief</option>
+              <option value="Visual Brief">Referensi Visual</option>
+              <option value="Copy Brief">Aset Teks/Copy</option>
               <option value="Brand Guideline">Brand Guideline</option>
-              <option value="Meeting Notes">Meeting Notes</option>
-              <option value="Other">Other</option>
+              <option value="Meeting Notes">Catatan Rapat</option>
+              <option value="Other">Lainnya</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white mb-2">File URL</label>
+            <label className="block text-sm font-medium text-white mb-2">Tautan File URL</label>
             <input 
               required 
               type="url"
@@ -68,7 +68,7 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
               className="w-full bg-background border border-border rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" 
               placeholder="https://..."
             />
-            <p className="text-xs text-muted mt-2">For the MVP, please provide a direct link to the file (Google Drive, Dropbox, etc.)</p>
+            <p className="text-xs text-muted mt-2">Berikan tautan langsung ke file (Google Drive, Dropbox, dll.)</p>
           </div>
 
           <div className="flex justify-end gap-3 pt-4 border-t border-border">
@@ -76,13 +76,13 @@ export default async function NewBriefPage({ params }: { params: { id: string } 
               href={`/projects/${project.id}?tab=briefs`}
               className="px-4 py-2 text-white bg-surface-hover hover:bg-muted border border-border rounded-md transition-colors"
             >
-              Cancel
+              Batal
             </Link>
             <button 
               type="submit" 
               className="px-4 py-2 bg-primary hover:bg-primary-hover text-white rounded-md transition-colors"
             >
-              Upload Brief
+              Unggah Brief
             </button>
           </div>
         </form>
