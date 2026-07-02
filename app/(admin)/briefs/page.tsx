@@ -3,9 +3,19 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { FileText, FolderKanban } from "lucide-react";
+import { SearchBar } from "@/components/admin/SearchBar";
+import { StatusFilter } from "@/components/admin/StatusFilter";
+import { ProjectStatus } from "@prisma/client";
 
-export default async function BriefsPage() {
+export default async function BriefsPage({ searchParams }: { searchParams?: { q?: string; status?: string } }) {
+  const q = searchParams?.q || "";
+  const status = searchParams?.status as ProjectStatus | undefined;
+
   const projects = await prisma.project.findMany({
+    where: {
+      ...(q ? { name: { contains: q, mode: 'insensitive' } } : {}),
+      ...(status ? { status } : {}),
+    },
     include: { client: true },
     orderBy: { createdAt: "desc" },
   });
@@ -21,6 +31,17 @@ export default async function BriefsPage() {
             <h2 className="text-2xl font-bold text-white">Repositori Brief</h2>
             <p className="text-sm text-muted">{projects.length} proyek dengan brief</p>
           </div>
+        </div>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+          <SearchBar placeholder="Cari proyek..." />
+          <StatusFilter 
+            options={[
+              { label: 'Aktif', value: 'ACTIVE' },
+              { label: 'Ditunda', value: 'ON_HOLD' },
+              { label: 'Selesai', value: 'COMPLETED' },
+              { label: 'Dibatalkan', value: 'CANCELLED' }
+            ]} 
+          />
         </div>
       </div>
 

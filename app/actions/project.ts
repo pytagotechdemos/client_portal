@@ -116,7 +116,15 @@ export async function createProject(formData: FormData) {
 }
 
 export async function deleteProject(id: string) {
-  await prisma.project.delete({ where: { id } });
+  try {
+    const existing = await prisma.project.findUnique({ where: { id } });
+    if (!existing) {
+      throw new Error("Project not found");
+    }
+    await prisma.project.delete({ where: { id } });
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "Failed to delete project");
+  }
   revalidatePath("/projects");
   redirect("/projects");
 }

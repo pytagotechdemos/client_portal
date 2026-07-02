@@ -9,6 +9,7 @@ import { DeleteDeliverableButton } from "@/components/admin/DeleteDeliverableBut
 import { DeleteInvoiceButton } from "@/components/admin/DeleteInvoiceButton";
 import { CommentSection } from "@/components/shared/CommentSection";
 import { CopyPortalLink } from "@/components/admin/CopyPortalLink";
+import { ArrowLeft, Edit } from "lucide-react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
@@ -94,6 +95,12 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
   return (
     <div>
       {/* Top Bar */}
+      <div className="mb-4">
+        <Link href="/projects" className="inline-flex items-center text-sm text-muted hover:text-white transition-colors">
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Projects
+        </Link>
+      </div>
       <div className="flex flex-col sm:flex-row sm:justify-between items-start mb-8 gap-4">
         <div>
           <div className="flex items-center gap-3 mb-2">
@@ -184,7 +191,10 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                             </div>
                           </div>
                           <div className="flex items-center gap-4">
-                            <div className="text-sm text-[#06B6D4]">Lihat &rarr;</div>
+                            <Link href={`/projects/${project.id}/deliverables/${del.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Deliverable">
+                              <Edit className="w-4 h-4" />
+                            </Link>
+                            <Link href={`/projects/${project.id}/deliverables/${del.id}`} className="text-sm text-[#06B6D4] hover:underline">Lihat &rarr;</Link>
                             <div className="z-10 relative">
                               <DeleteDeliverableButton id={del.id} />
                             </div>
@@ -221,9 +231,14 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                         <p className="text-white font-medium">{brief.title}</p>
                         <p className="text-xs text-muted mt-1">{brief.category} • Diunggah oleh {brief.uploadedBy} pada {new Date(brief.uploadedAt).toLocaleDateString('id-ID')}</p>
                       </div>
-                      <a href={brief.fileUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#06B6D4] hover:underline">
-                        Lihat File &rarr;
-                      </a>
+                      <div className="flex items-center gap-4">
+                        <a href={brief.fileUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#06B6D4] hover:underline">
+                          Lihat File &rarr;
+                        </a>
+                        <Link href={`/projects/${project.id}/briefs/${brief.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Brief">
+                          <Edit className="w-4 h-4" />
+                        </Link>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -251,6 +266,9 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                           <p className="text-white mt-2">{cr.description}</p>
                           <p className="text-xs text-muted mt-1">Diajukan oleh {cr.requestedBy} pada {new Date(cr.createdAt).toLocaleDateString('id-ID')}</p>
                         </div>
+                        <Link href={`/projects/${project.id}/change-requests/${cr.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Change Request">
+                          <Edit className="w-4 h-4" />
+                        </Link>
                       </div>
 
                       {cr.responseNote && (
@@ -309,6 +327,9 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                       </div>
                       <div className="text-right flex items-center gap-4">
                         <p className="text-lg font-bold text-emerald-500">Rp {Number(inv.totalAmount).toLocaleString('id-ID')}</p>
+                        <Link href={`/invoices/${inv.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Invoice">
+                          <Edit className="w-4 h-4" />
+                        </Link>
                         <DeleteInvoiceButton id={inv.id} />
                       </div>
                     </div>

@@ -3,9 +3,19 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { Plus, FolderKanban, ArrowRight, Calendar, CheckCircle } from "lucide-react";
+import { SearchBar } from "@/components/admin/SearchBar";
+import { StatusFilter } from "@/components/admin/StatusFilter";
+import { ProjectStatus } from "@prisma/client";
 
-export default async function ProjectsPage() {
+export default async function ProjectsPage({ searchParams }: { searchParams?: { q?: string; status?: string } }) {
+  const q = searchParams?.q || "";
+  const status = searchParams?.status as ProjectStatus | undefined;
+
   const projects = await prisma.project.findMany({
+    where: {
+      ...(q ? { name: { contains: q, mode: 'insensitive' } } : {}),
+      ...(status ? { status } : {}),
+    },
     include: {
       client: true,
       deliverables: true,
@@ -25,9 +35,20 @@ export default async function ProjectsPage() {
             <p className="text-sm text-muted">{projects.length} total proyek</p>
           </div>
         </div>
-        <Link href="/projects/new" className="btn btn-primary h-10 text-sm px-4">
-          <Plus className="w-4 h-4 mr-2" /> Proyek Baru
-        </Link>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+          <SearchBar placeholder="Cari proyek..." />
+          <StatusFilter 
+            options={[
+              { label: 'Aktif', value: 'ACTIVE' },
+              { label: 'Ditunda', value: 'ON_HOLD' },
+              { label: 'Selesai', value: 'COMPLETED' },
+              { label: 'Dibatalkan', value: 'CANCELLED' }
+            ]} 
+          />
+          <Link href="/projects/new" className="btn btn-primary h-10 text-sm px-4 whitespace-nowrap flex items-center justify-center">
+            <Plus className="w-4 h-4 mr-2" /> Proyek Baru
+          </Link>
+        </div>
       </div>
 
       {projects.length === 0 ? (

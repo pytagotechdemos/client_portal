@@ -44,3 +44,22 @@ export async function createBrief(formData: FormData) {
     throw new Error("Internal Server Error");
   }
 }
+
+export async function updateBrief(formData: FormData) {
+  const id = formData.get("id") as string;
+  const projectId = formData.get("projectId") as string;
+  const title = formData.get("title") as string;
+  const category = formData.get("category") as string;
+  const fileUrl = formData.get("fileUrl") as string;
+
+  if (!id || !projectId || !title || !category || !fileUrl) {
+    throw new Error("Missing required fields");
+  }
+
+  await prisma.brief.update({
+    where: { id },
+    data: { title, category, fileUrl }
+  });
+
+  revalidatePath(`/projects/${projectId}`);
+}

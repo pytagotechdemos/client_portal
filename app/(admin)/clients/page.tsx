@@ -3,9 +3,13 @@ import Link from "next/link";
 import { Plus, Edit, Users } from "lucide-react";
 import { DeleteClientButton } from "@/components/admin/DeleteClientButton";
 import { FadeIn } from "@/components/shared/FadeIn";
+import { SearchBar } from "@/components/admin/SearchBar";
 
-export default async function ClientsPage() {
+export default async function ClientsPage({ searchParams }: { searchParams?: { q?: string } }) {
+  const q = searchParams?.q || "";
+
   const clients = await prisma.agencyClient.findMany({
+    where: q ? { name: { contains: q, mode: 'insensitive' } } : undefined,
     include: {
       projects: true
     },
@@ -24,9 +28,12 @@ export default async function ClientsPage() {
             <p className="text-sm text-muted">{clients.length} total klien</p>
           </div>
         </div>
-        <Link href="/clients/new" className="btn btn-primary h-10 text-sm px-4">
-          <Plus className="w-4 h-4 mr-2" /> Tambah Klien
-        </Link>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+          <SearchBar placeholder="Cari klien..." />
+          <Link href="/clients/new" className="btn btn-primary h-10 text-sm px-4 whitespace-nowrap">
+            <Plus className="w-4 h-4 mr-2" /> Tambah Klien
+          </Link>
+        </div>
       </div>
 
       <div className="bg-surface border border-border rounded-xl overflow-hidden overflow-x-auto">
@@ -52,7 +59,9 @@ export default async function ClientsPage() {
               {clients.map(client => (
                 <div key={client.id} className="p-4 grid grid-cols-12 gap-4 items-center hover:bg-surface-hover/50 transition-colors group">
                   <div className="col-span-4">
-                    <p className="font-medium text-white group-hover:text-primary transition-colors">{client.name}</p>
+                    <Link href={`/clients/${client.id}`} className="font-medium text-white group-hover:text-primary transition-colors hover:underline">
+                      {client.name}
+                    </Link>
                     {client.companyName && client.companyName !== client.name && (
                       <p className="text-xs text-muted">{client.companyName}</p>
                     )}
@@ -67,6 +76,9 @@ export default async function ClientsPage() {
                     </span>
                   </div>
                   <div className="col-span-2 flex justify-end gap-2">
+                    <Link href={`/clients/${client.id}`} className="px-3 py-1.5 text-xs font-medium text-white bg-surface-hover hover:bg-primary hover:text-white rounded-lg transition-colors border border-border hover:border-primary flex items-center justify-center">
+                      View
+                    </Link>
                     <Link href={`/clients/${client.id}/edit`} className="p-2 text-muted hover:text-white hover:bg-surface-light rounded-lg transition-colors" title="Edit Klien">
                       <Edit className="w-4 h-4" />
                     </Link>

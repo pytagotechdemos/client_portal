@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { Receipt, CheckCircle, Clock } from "lucide-react";
+import { SearchBar } from "@/components/admin/SearchBar";
+import { StatusFilter } from "@/components/admin/StatusFilter";
+import { InvoiceStatus } from "@prisma/client";
 
 const formatRupiah = (amount: number) => {
   return new Intl.NumberFormat('id-ID', {
@@ -12,8 +15,20 @@ const formatRupiah = (amount: number) => {
   }).format(amount);
 };
 
-export default async function InvoicesPage() {
+export default async function InvoicesPage({ searchParams }: { searchParams?: { q?: string; status?: string } }) {
+  const q = searchParams?.q || "";
+  const status = searchParams?.status as InvoiceStatus | undefined;
+
   const invoices = await prisma.invoice.findMany({
+    where: {
+      ...(q ? {
+        OR: [
+          { invoiceNumber: { contains: q, mode: 'insensitive' } },
+          { project: { name: { contains: q, mode: 'insensitive' } } }
+        ]
+      } : {}),
+      ...(status ? { status } : {}),
+    },
     include: {
       project: {
         include: { client: true }
@@ -37,13 +52,22 @@ export default async function InvoicesPage() {
             <p className="text-sm text-muted">{invoices.length} total tagihan</p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="flex items-center gap-1.5 text-emerald-500">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mt-4 sm:mt-0">
+          <SearchBar placeholder="Cari tagihan..." />
+          <StatusFilter 
+            options={[
+              { label: 'Draf', value: 'DRAFT' },
+              { label: 'Terkirim', value: 'SENT' },
+              { label: 'Lunas', value: 'PAID' },
+              { label: 'Jatuh Tempo', value: 'OVERDUE' }
+            ]} 
+          />
+          <div className="hidden lg:flex items-center gap-2 text-sm ml-2">
+            <span className="flex items-center gap-1.5 text-emerald-500 whitespace-nowrap">
               <CheckCircle className="w-4 h-4" /> {paidCount} Lunas
             </span>
             <span className="text-muted">|</span>
-            <span className="flex items-center gap-1.5 text-amber-500">
+            <span className="flex items-center gap-1.5 text-amber-500 whitespace-nowrap">
               <Clock className="w-4 h-4" /> {pendingCount} Tertunda
             </span>
           </div>

@@ -2,45 +2,41 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+
+const updateSettingsSchema = z.object({
+  agencyName: z.string().min(1),
+  contactEmail: z.string().email(),
+  logoUrl: z.string().optional(),
+  primaryColor: z.string().optional(),
+  duitkuMerchantCode: z.string().optional(),
+  duitkuApiKey: z.string().optional(),
+  duitkuEnv: z.string().optional(),
+});
 
 export async function updateSettings(formData: FormData) {
-  const agencyName = formData.get("agencyName") as string;
-  const contactEmail = formData.get("contactEmail") as string;
-  const duitkuMerchantCode = formData.get("duitkuMerchantCode") as string;
-  const duitkuApiKey = formData.get("duitkuApiKey") as string;
-  const duitkuEnv = formData.get("duitkuEnv") as string;
+  const rawData = Object.fromEntries(formData.entries());
+  const parsed = updateSettingsSchema.safeParse(rawData);
 
-  const logoUrl = formData.get("logoUrl") as string;
-  const primaryColor = formData.get("primaryColor") as string;
+  if (!parsed.success) {
+    throw new Error("Invalid form data");
+  }
 
-  // We assume there's only one settings row.
-  const existing = await prisma.agencySettings.findFirst();
+  try {
+    const existing = await prisma.agencySettings.findFirst();
 
-  if (existing) {
-    await prisma.agencySettings.update({
-      where: { id: existing.id },
-      data: {
-        agencyName,
-        contactEmail,
-        logoUrl,
-        primaryColor,
-        duitkuMerchantCode,
-        duitkuApiKey,
-        duitkuEnv,
-      }
-    });
-  } else {
-    await prisma.agencySettings.create({
-      data: {
-        agencyName,
-        contactEmail,
-        logoUrl,
-        primaryColor,
-        duitkuMerchantCode,
-        duitkuApiKey,
-        duitkuEnv,
-      }
-    });
+    if (existing) {
+      await prisma.agencySettings.update({
+        where: { id: existing.id },
+        data: parsed.data
+      });
+    } else {
+      await prisma.agencySettings.create({
+        data: parsed.data
+      });
+    }
+  } catch {
+    throw new Error("Failed to update settings");
   }
 
   revalidatePath("/settings");
