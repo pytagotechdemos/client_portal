@@ -114,8 +114,7 @@ export async function updateInvoice(formData: FormData) {
   if (!parsed.success) {
     throw new Error("Invalid form data");
   }
-
-  const { id, projectId, totalAmount, status } = parsed.data;
+  const { id, totalAmount, status } = parsed.data;
 
   try {
     await prisma.invoice.update({
