@@ -3,11 +3,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PDFExportButton } from "@/components/client/PDFExportButton";
 import { DuitkuPaymentButton } from "@/components/client/DuitkuPaymentButton";
+import { CheckCircle } from "lucide-react";
+
+type InvoiceItem = {
+  description: string;
+  amount: number;
+  deliverableId?: string;
+};
 
 export default async function ClientInvoicePage({
   params,
+  searchParams,
 }: {
   params: { projectToken: string; id: string };
+  searchParams: { status?: string };
 }) {
   const project = await prisma.project.findUnique({
     where: { portalToken: params.projectToken },
@@ -22,12 +31,26 @@ export default async function ClientInvoicePage({
 
   if (!invoice || invoice.projectId !== project.id) notFound();
 
+  const isPaymentSuccess = searchParams.status === "success";
+  const items = (invoice.items as InvoiceItem[]) || [];
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
+      {/* Success Banner */}
+      {isPaymentSuccess && (
+        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mb-6 flex items-center gap-3">
+          <CheckCircle className="w-6 h-6 text-emerald-500" />
+          <div>
+            <p className="font-semibold text-emerald-500">Pembayaran Berhasil!</p>
+            <p className="text-sm text-muted">Tagihan Anda telah lunas. Terima kasih!</p>
+          </div>
+        </div>
+      )}
+
       {/* Navigation (Hidden on Print) */}
-      <div className="print:hidden flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center mb-8">
-        <Link 
-          href={`/portal/${params.projectToken}?tab=invoices`} 
+      <div className="Print:hidden flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center mb-8">
+        <Link
+          href={`/portal/${params.projectToken}?tab=invoices`}
           className="text-[#64748B] hover:text-foreground font-medium flex items-center gap-2 transition-colors"
         >
           &larr; Kembali ke Portal
@@ -87,10 +110,10 @@ export default async function ClientInvoicePage({
               </tr>
             </thead>
             <tbody>
-              {(invoice.items as { name: string, price: number }[]).map((item, idx) => (
+              {items.map((item, idx) => (
                 <tr key={idx} className="border-b border-[#E2E8F0]">
-                  <td className="py-4 text-foreground">{item.name}</td>
-                  <td className="py-4 text-right font-medium text-foreground">Rp {Number(item.price).toLocaleString('id-ID')}</td>
+                  <td className="py-4 text-foreground">{item.description || "Item"}</td>
+                  <td className="py-4 text-right font-medium text-foreground">Rp {Number(item.amount || 0).toLocaleString('id-ID')}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 export function CopyPortalLink({ portalPath }: { portalPath: string }) {
   const handleCopy = async () => {
     try {
@@ -7,9 +9,10 @@ export function CopyPortalLink({ portalPath }: { portalPath: string }) {
       const baseUrl = window.location.origin;
       const fullUrl = `${baseUrl}${portalPath}`;
       await navigator.clipboard.writeText(fullUrl);
-      alert("Portal link copied to clipboard!");
+      toast.success("Link portal berhasil disalin!");
     } catch (err) {
       console.error("Failed to copy:", err);
+      toast.error("Gagal menyalin link");
     }
   };
 
@@ -19,7 +22,7 @@ export function CopyPortalLink({ portalPath }: { portalPath: string }) {
       onClick={handleCopy}
       className="bg-surface border border-border hover:bg-surface-hover text-white px-4 h-10 rounded-md transition-colors text-sm font-medium flex items-center justify-center whitespace-nowrap"
     >
-      Copy Portal Link
+      Salin Tautan Portal
     </button>
   );
 }

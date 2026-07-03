@@ -5,10 +5,16 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { DollarSign, TrendingUp, Briefcase, Users, Clock, CheckCircle, ArrowRight } from "lucide-react";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
+
+  // Redirect to login if not authenticated
+  if (!session) {
+    redirect("/login");
+  }
 
   const allProjects = await prisma.project.findMany({
     select: { status: true }

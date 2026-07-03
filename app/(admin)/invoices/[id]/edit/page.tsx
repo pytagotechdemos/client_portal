@@ -27,13 +27,13 @@ export default async function EditInvoicePage({ params }: { params: { id: string
           <input type="hidden" name="projectId" value={invoice.projectId} />
           
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Total Jumlah (Rp)</label>
-            <input required type="number" step="0.01" name="totalAmount" defaultValue={Number(invoice.totalAmount)} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
+            <label htmlFor="totalAmount" className="text-sm font-medium text-white">Total Jumlah (Rp)</label>
+            <input id="totalAmount" required type="number" step="0.01" name="totalAmount" defaultValue={Number(invoice.totalAmount)} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none" />
           </div>
-          
+
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Status</label>
-            <select name="status" defaultValue={invoice.status} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none">
+            <label htmlFor="status" className="text-sm font-medium text-white">Status</label>
+            <select id="status" name="status" defaultValue={invoice.status} className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:border-primary focus:outline-none">
               <option value="DRAFT">Draf</option>
               <option value="SENT">Terkirim</option>
               <option value="PAID">Lunas</option>

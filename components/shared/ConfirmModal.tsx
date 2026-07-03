@@ -60,13 +60,13 @@ export function ConfirmModal({
           <button
             onClick={() => {
               onConfirm();
-              // Do not auto-close if pending state is managed externally, 
-              // or let the parent component close it when done.
+              // Parent must call onClose when ready. Do NOT auto-close here.
+              // If parent passes async onConfirm, it should close after completion.
             }}
             disabled={isPending}
             className={`px-4 py-2 text-sm font-medium text-white rounded-md transition-colors disabled:opacity-50 ${
-              isDestructive 
-                ? "bg-red-500 hover:bg-red-600" 
+              isDestructive
+                ? "bg-red-500 hover:bg-red-600"
                 : "bg-primary hover:bg-primary-hover"
             }`}
           >

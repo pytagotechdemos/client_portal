@@ -56,7 +56,7 @@ export default function NewProjectPage() {
 
           <div>
             <label className="block text-sm font-medium text-muted mb-1">Kata Sandi Portal untuk Klien *</label>
-            <input data-testid="project-client-password" required name="clientPassword" type="text" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="misal: Rahasia123" />
+            <input data-testid="project-client-password" required name="clientPassword" type="password" autoComplete="new-password" className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Minimal 6 karakter" />
           </div>
         </section>
 

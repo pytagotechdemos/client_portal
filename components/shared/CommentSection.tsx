@@ -56,8 +56,9 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
       await addComment(formData);
       formRef.current?.reset();
       mutate(); // trigger immediate re-fetch
+      toast.success("Komentar berhasil dikirim");
     } catch {
-      toast.error("Failed to post comment");
+      toast.error("Gagal mengirim komentar");
     }
   };
 
@@ -65,9 +66,9 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
     try {
       await deleteComment(id, projectId);
       mutate();
-      toast.success("Comment deleted");
+      toast.success("Komentar berhasil dihapus");
     } catch {
-      toast.error("Failed to delete comment");
+      toast.error("Gagal menghapus komentar");
     }
   };
 
@@ -77,7 +78,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
     <div className="flex flex-col gap-6">
       <div ref={scrollRef} className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
         {displayComments.length === 0 ? (
-          <p className="text-sm text-center py-4 text-muted">No comments yet. Start the conversation!</p>
+          <p className="text-sm text-center py-4 text-muted">Belum ada komentar. Mulai percakapan!</p>
         ) : (
           displayComments.map((comment) => (
             <div 
@@ -121,10 +122,10 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
         <input type="hidden" name="authorRole" value={currentUser.role} />
         {deliverableId && <input type="hidden" name="deliverableId" value={deliverableId} />}
         
-        <textarea 
+        <textarea
           data-testid="comment-input"
           name="content"
-          placeholder="Type a message..."
+          placeholder="Ketik pesan..."
           required
           rows={1}
           className="flex-1 rounded-xl px-4 py-3 transition-colors resize-none overflow-hidden focus:outline-none focus:ring-1 bg-surface border border-border text-foreground focus:border-primary focus:ring-primary"
@@ -135,7 +136,7 @@ export function CommentSection({ projectId, comments: initialComments, currentUs
           }}
         />
         <SubmitButton data-testid="comment-submit" className="self-end px-5 py-3 rounded-xl shadow-lg shadow-primary/20">
-          Send
+          Kirim
         </SubmitButton>
       </form>
     </div>

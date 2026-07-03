@@ -106,7 +106,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams?: { 
                     <p className="text-xs text-muted">{invoice.project.client.name}</p>
                   </div>
                   <div className="col-span-2 text-center text-sm text-muted">
-                    {new Date(invoice.createdAt).toLocaleDateString('id-ID')}
+                    {new Date(invoice.issueDate).toLocaleDateString('id-ID')}
                   </div>
                   <div className="col-span-2 text-right">
                     <span className="text-white font-semibold">{formatRupiah(Number(invoice.totalAmount))}</span>

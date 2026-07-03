@@ -83,7 +83,7 @@ export default async function ClientsPage({ searchParams }: { searchParams?: { q
                   </div>
                   <div className="col-span-2 flex justify-end gap-2">
                     <Link href={`/clients/${client.id}`} className="px-3 py-1.5 text-xs font-medium text-white bg-surface-hover hover:bg-primary hover:text-white rounded-lg transition-colors border border-border hover:border-primary flex items-center justify-center">
-                      View
+                      Lihat
                     </Link>
                     <Link href={`/clients/${client.id}/edit`} className="p-2 text-muted hover:text-white hover:bg-surface-light rounded-lg transition-colors" title="Edit Klien">
                       <Edit className="w-4 h-4" />

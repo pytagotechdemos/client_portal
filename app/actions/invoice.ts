@@ -80,6 +80,7 @@ export async function createInvoice(formData: FormData) {
   }
 
   revalidatePath(`/projects/${projectId}`);
+  revalidatePath(`/invoices`);
 }
 
 export async function deleteInvoice(id: string) {
@@ -88,8 +89,10 @@ export async function deleteInvoice(id: string) {
     if (!invoice) {
       throw new Error("Invoice not found");
     }
+    const projectId = invoice.projectId;
     await prisma.invoice.delete({ where: { id } });
-    revalidatePath(`/projects/${invoice.projectId}`);
+    revalidatePath(`/projects/${projectId}`);
+    revalidatePath("/invoices");
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Failed to delete invoice");
   }

@@ -91,11 +91,10 @@ export default async function ClientPortalDashboard({ params, searchParams }: { 
         <div className="max-w-3xl">
           <div className="bg-surface border border-border rounded-xl p-6 shadow-md">
             <h3 className="text-xl font-bold text-white mb-6">Diskusi Proyek</h3>
-            <CommentSection 
-              projectId={project.id} 
-              comments={project.comments} 
-              currentUser={{ name: project.client.contactName, role: "CLIENT" }} 
-              theme="dark"
+            <CommentSection
+              projectId={project.id}
+              comments={project.comments}
+              currentUser={{ name: project.client.contactName, role: "CLIENT" }}
             />
           </div>
         </div>

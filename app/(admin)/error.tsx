@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function ErrorPage({
   error,
@@ -11,6 +12,7 @@ export default function ErrorPage({
 }) {
   useEffect(() => {
     console.error(error);
+    toast.error("Terjadi kesalahan: " + error.message);
   }, [error]);
 
   return (
@@ -21,15 +23,15 @@ export default function ErrorPage({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h2 className="text-xl font-semibold mb-2">Something went wrong!</h2>
+        <h2 className="text-xl font-semibold mb-2 text-white">Terjadi Kesalahan!</h2>
         <p className="text-muted text-sm mb-6">
-          We encountered an error while trying to process your request.
+          Kami mengalami masalah saat memproses permintaan Anda.
         </p>
         <button
           onClick={() => reset()}
           className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors"
         >
-          Try again
+          Coba Lagi
         </button>
       </div>
     </div>

@@ -26,13 +26,13 @@ export default function LoginPage() {
       });
 
       if (res?.error) {
-        setError("Invalid email or password");
+        setError("Email atau kata sandi tidak valid");
       } else {
         router.push("/projects");
         router.refresh();
       }
     } catch {
-      setError("An unexpected error occurred");
+      setError("Terjadi kesalahan yang tidak terduga");
     } finally {
       setLoading(false);
     }
@@ -43,11 +43,11 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-surface border border-border rounded-xl shadow-2xl overflow-hidden relative">
         {/* Accent Bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-[#D946EF]"></div>
-        
+
         <div className="p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 tracking-tight">Pytagotech</h1>
-            <p className="text-muted text-sm">Sign in to the Admin Portal</p>
+            <p className="text-muted text-sm">Masuk ke Portal Admin</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -59,7 +59,7 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-1.5" htmlFor="email">
-                Email Address
+                Alamat Email
               </label>
               <input
                 id="email"
@@ -75,7 +75,7 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-1.5" htmlFor="password">
-                Password
+                Kata Sandi
               </label>
               <div className="relative">
                 <input
@@ -110,16 +110,16 @@ export default function LoginPage() {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               ) : (
-                "Sign In"
+                "Masuk"
               )}
             </button>
           </form>
         </div>
       </div>
-      
+
       <p className="text-muted text-xs mt-8 text-center">
-        &copy; {new Date().getFullYear()} Pytagotech. All rights reserved.<br/>
-        Client portal access is sent via direct email links.
+        &copy; {new Date().getFullYear()} Pytagotech. Hak cipta dilindungi.<br/>
+        Akses portal klien dikirim melalui tautan email langsung.
       </p>
     </div>
   );

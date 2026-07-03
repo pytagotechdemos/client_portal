@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Inter } from "next/font/google";
 import { prisma } from "@/lib/prisma";
+import { ClientLogoutButton } from "@/components/client/ClientLogoutButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +12,7 @@ export default async function ClientLayout({
 }) {
   const settings = await prisma.agencySettings.findFirst();
   const primaryColor = settings?.primaryColor || "#7C3AED";
-  
+
   return (
     <div className={`min-h-screen bg-background text-foreground ${inter.className}`}>
       <style suppressHydrationWarning>{`
@@ -30,10 +31,10 @@ export default async function ClientLayout({
         )}
         <div className="flex gap-4 items-center">
           <span className="text-sm font-medium text-muted">Client Portal</span>
-          <button className="text-sm font-medium border border-border hover:bg-surface-hover text-white h-10 px-4 rounded-md transition-colors">Logout</button>
+          <ClientLogoutButton />
         </div>
       </header>
-      
+
       {/* Main Content */}
       <main className="max-w-5xl mx-auto p-4 md:p-8">
         {children}

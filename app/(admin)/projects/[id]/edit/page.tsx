@@ -36,55 +36,61 @@ export default async function EditProjectPage({ params }: { params: { id: string
           <input type="hidden" name="id" value={project.id} />
           
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Nama Proyek</label>
-            <input 
-              name="name" 
+            <label htmlFor="name" className="text-sm font-medium text-white">Nama Proyek</label>
+            <input
+              id="name"
+              name="name"
               defaultValue={project.name}
-              required 
+              required
               className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Deskripsi Singkat</label>
-            <textarea 
-              name="description" 
+            <label htmlFor="description" className="text-sm font-medium text-white">Deskripsi Singkat</label>
+            <textarea
+              id="description"
+              name="description"
               defaultValue={project.description || ""}
-              rows={3} 
+              rows={3}
               className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             ></textarea>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Status</label>
-              <select 
-                name="status" 
+              <label htmlFor="status" className="text-sm font-medium text-white">Status</label>
+              <select
+                id="status"
+                name="status"
                 defaultValue={project.status}
                 className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               >
                 <option value="ACTIVE">Aktif</option>
-                <option value="PAUSED">Ditunda</option>
+                <option value="ON_HOLD">Ditunda</option>
                 <option value="COMPLETED">Selesai</option>
+                <option value="CANCELLED">Dibatalkan</option>
               </select>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Tanggal Mulai</label>
-              <input 
-                name="startDate" 
-                type="date" 
+              <label htmlFor="startDate" className="text-sm font-medium text-white">Tanggal Mulai</label>
+              <input
+                id="startDate"
+                name="startDate"
+                type="date"
                 defaultValue={new Date(project.startDate).toISOString().split('T')[0]}
-                required 
+                required
                 className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white">Tenggat Waktu (Opsional)</label>
-              <input 
-                name="deadline" 
+              <label htmlFor="deadline" className="text-sm font-medium text-white">Tenggat Waktu (Opsional)</label>
+              <input
+                id="deadline"
+                name="deadline"
                 type="date"
                 defaultValue={project.deadline ? new Date(project.deadline).toISOString().split('T')[0] : ""}
                 className="w-full bg-background border border-border rounded-md px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"

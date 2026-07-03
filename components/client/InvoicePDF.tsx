@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type InvoiceItem = { name: string; price: number };
+type InvoiceItem = { description?: string; amount?: number; name?: string; price?: number };
 
 interface ProjectWithClient extends Project {
   client: AgencyClient;
@@ -148,10 +148,19 @@ interface InvoicePDFProps {
   project: ProjectWithClient;
 }
 
+// Helper to safely get item values (handles both naming conventions)
+function getItemDescription(item: InvoiceItem): string {
+  return item.description || item.name || "Item";
+}
+
+function getItemAmount(item: InvoiceItem): number {
+  return Number(item.amount || item.price || 0);
+}
+
 export const InvoicePDF = ({ invoice, project }: InvoicePDFProps) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      
+
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -199,11 +208,11 @@ export const InvoicePDF = ({ invoice, project }: InvoicePDFProps) => (
           <Text style={[styles.descCol, styles.colHeader]}>Description</Text>
           <Text style={[styles.amountCol, styles.colHeader]}>Amount</Text>
         </View>
-        
+
         {((invoice.items as unknown) as InvoiceItem[]).map((item, idx) => (
           <View key={idx} style={styles.tableRow}>
-            <Text style={styles.descCol}>{item.name}</Text>
-            <Text style={styles.amountCol}>Rp {Number(item.price).toLocaleString('id-ID')}</Text>
+            <Text style={styles.descCol}>{getItemDescription(item)}</Text>
+            <Text style={styles.amountCol}>Rp {getItemAmount(item).toLocaleString('id-ID')}</Text>
           </View>
         ))}
       </View>

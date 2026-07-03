@@ -46,7 +46,7 @@ export const NewInvoiceEmail = ({
 
           <Section style={detailsContainer}>
             <Text style={detailsText}><strong>Invoice Number:</strong> {invoiceNumber}</Text>
-            <Text style={detailsText}><strong>Total Amount:</strong> ${totalAmount.toLocaleString()}</Text>
+            <Text style={detailsText}><strong>Total Amount:</strong> Rp {totalAmount.toLocaleString('id-ID')}</Text>
             <Text style={detailsText}><strong>Due Date:</strong> {dueDate}</Text>
           </Section>
 

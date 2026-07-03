@@ -27,7 +27,7 @@ export default async function ClientDetailPage({ params }: { params: { id: strin
         </Link>
         <Link href={`/clients/${client.id}/edit`} className="btn btn-secondary h-9 text-sm px-4">
           <Edit className="w-4 h-4 mr-2" />
-          Edit Client
+          Edit Klien
         </Link>
       </div>
 
@@ -49,13 +49,13 @@ export default async function ClientDetailPage({ params }: { params: { id: strin
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-border">
           <div>
-            <h3 className="text-sm font-medium text-white mb-4">Contact Information</h3>
+            <h3 className="text-sm font-medium text-white mb-4">Informasi Kontak</h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3 text-sm">
                 <Users className="w-4 h-4 text-muted mt-0.5" />
                 <div>
                   <p className="text-white">{client.contactName}</p>
-                  <p className="text-muted text-xs">Primary Contact</p>
+                  <p className="text-muted text-xs">Kontak Utama</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 text-sm">
@@ -71,16 +71,16 @@ export default async function ClientDetailPage({ params }: { params: { id: strin
             </div>
           </div>
           <div>
-            <h3 className="text-sm font-medium text-white mb-4">Client Details</h3>
+            <h3 className="text-sm font-medium text-white mb-4">Detail Klien</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <Calendar className="w-4 h-4 text-muted" />
-                <span className="text-muted">Added:</span>
-                <span className="text-white">{new Date(client.createdAt).toLocaleDateString()}</span>
+                <span className="text-muted">Ditambahkan:</span>
+                <span className="text-white">{new Date(client.createdAt).toLocaleDateString('id-ID')}</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <FolderOpen className="w-4 h-4 text-muted" />
-                <span className="text-muted">Total Projects:</span>
+                <span className="text-muted">Total Proyek:</span>
                 <span className="text-white">{client.projects.length}</span>
               </div>
             </div>
@@ -89,12 +89,12 @@ export default async function ClientDetailPage({ params }: { params: { id: strin
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-bold text-white">Projects</h2>
+        <h2 className="text-lg font-bold text-white">Proyek</h2>
         {client.projects.length === 0 ? (
           <div className="bg-surface border border-border rounded-xl p-8 text-center">
-            <p className="text-muted mb-4">No projects found for this client.</p>
+            <p className="text-muted mb-4">Tidak ada proyek untuk klien ini.</p>
             <Link href={`/projects/new?clientId=${client.id}`} className="btn btn-primary text-sm">
-              Create Project
+              Buat Proyek
             </Link>
           </div>
         ) : (

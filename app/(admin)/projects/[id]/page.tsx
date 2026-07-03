@@ -138,11 +138,10 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
           {currentTab === "discussion" && (
             <div className="bg-surface border border-border rounded-lg p-6">
               <h3 className="font-semibold text-white mb-6">Diskusi Proyek</h3>
-              <CommentSection 
-                projectId={project.id} 
-                comments={project.comments} 
-                currentUser={{ name: session.user.name || "Admin", role: "ADMIN" }} 
-                theme="dark"
+              <CommentSection
+                projectId={project.id}
+                comments={project.comments}
+                currentUser={{ name: session.user.name || "Admin", role: "ADMIN" }}
               />
             </div>
           )}
@@ -196,7 +195,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                             </div>
                           </div>
                           <div className="flex items-center gap-4">
-                            <Link href={`/projects/${project.id}/deliverables/${del.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Deliverable">
+                            <Link href={`/projects/${project.id}/deliverables/${del.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Hasil Pekerjaan">
                               <Edit className="w-4 h-4" />
                             </Link>
                             <Link href={`/projects/${project.id}/deliverables/${del.id}`} className="text-sm text-[#06B6D4] hover:underline">Lihat &rarr;</Link>
@@ -281,7 +280,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                           <p className="text-xs text-muted mt-1">Diajukan oleh {cr.requestedBy} pada {new Date(cr.createdAt).toLocaleDateString('id-ID')}</p>
                         </div>
                         <div className="flex items-center gap-4">
-                          <Link href={`/projects/${project.id}/change-requests/${cr.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Change Request">
+                            <Link href={`/projects/${project.id}/change-requests/${cr.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Permintaan Perubahan">
                             <Edit className="w-4 h-4" />
                           </Link>
                           <DeleteChangeRequestButton id={cr.id} />
@@ -347,7 +346,7 @@ export default async function ProjectDetailPage({ params, searchParams }: { para
                       </div>
                       <div className="text-right flex items-center gap-4">
                         <p className="text-lg font-bold text-emerald-500">Rp {Number(inv.totalAmount).toLocaleString('id-ID')}</p>
-                        <Link href={`/invoices/${inv.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Invoice">
+                        <Link href={`/invoices/${inv.id}/edit`} className="text-muted hover:text-white transition-colors" title="Edit Tagihan">
                           <Edit className="w-4 h-4" />
                         </Link>
                         <DeleteInvoiceButton id={inv.id} />
